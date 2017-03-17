@@ -40,6 +40,27 @@ module.exports = function(grunt) {
           ]
         ]
       }
+    }, 
+    gauge: {
+      src: ['js/src/gauge.js'],
+      dest: 'js/gauge.min.js',
+      options: {
+        plugin: [
+          [
+            'minifyify', {
+              map: 'gauge.min.js.map',
+              output: './js/gauge.min.js.map'
+            }
+          ]
+        ],
+        transform: [
+          [
+            'babelify', {
+              presets: ['es2015']
+            }
+          ]
+        ]
+      }
     }
   };
 
@@ -85,7 +106,7 @@ module.exports = function(grunt) {
     },
     js: {
       files: ['js/src/**/*.js'],
-      tasks: ['browserify:app']
+      tasks: ['browserify:app', 'browserify:gauge']
     }
   };
 

@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import scatterline from './scatterline.js';
+import scatterlineSquare from './scatterline-square.js';
 
 
 window.onload = function(){
@@ -7,8 +7,6 @@ window.onload = function(){
 
 	d3.json(`http://${window.ROOT_URL}/data/tract-data2.geojson`, (err, data) => {
 		if (err) throw err;
-		console.log(data);
-		
 
 		const features = data.features;
 
@@ -28,12 +26,13 @@ window.onload = function(){
 			const category = div.dataset.chart;
 			console.log(scatterlineData);
 
-			const gauge = new scatterline({
+			const gauge = new scatterlineSquare({
 				container: div,
 				data: scatterlineData,
 				categoryToChart:category,
-				margin: {top:0,right:20,bottom:20,left:20},
-				circleRadius: 4
+				margin: {top:0,right:0,bottom:0,left:0},
+				rectHeight: 28,
+				rectWidth:4
 			});
 		}
 
