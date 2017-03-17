@@ -6,9 +6,13 @@ module.exports = function(grunt) {
   // You'll also have to install them using a command similar to:
   //     npm install --save jquery
   var VENDOR_LIBRARIES = [
-    //'jquery',
-    //'underscore'
+    'd3',
+    'leaflet',
+    'leaflet-providers',
+    'underscore',
+    '@turf/turf'
   ];
+
 
   config.browserify = {
     options: {

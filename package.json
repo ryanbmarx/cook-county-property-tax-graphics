@@ -1,5 +1,5 @@
 {
-  "name": "property-tax-assessments-map",
+  "name": "property_tax_assessments_map",
   "version": "0.0.1",
   "description": "",
   "main": "js/src/app.js",
@@ -12,8 +12,7 @@
     "type": "git",
     "url": ""
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "author": "Chicago Tribune News Applications",
   "license": "MIT",
   "devDependencies": {
@@ -30,5 +29,13 @@
   "browserify": {
     "debug": true
   },
-  "tribune": {}
+  "tribune": {},
+  "dependencies": {
+    "@turf/turf": "^3.12.2",
+    "d3": "^4.5.0",
+    "leaflet": "^1.0.3",
+    "leaflet-providers": "^1.1.16",
+    "tribune-bing-geocoder": "^0.2.0",
+    "underscore": "^1.8.3"
+  }
 }

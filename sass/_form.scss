@@ -1,0 +1,70 @@
+$submit-button-width:50px;
+
+.trb_mainContent .profile-lookup{
+	@include clearfix();
+	// display:flex;
+	// flex-wrap:wrap;
+	// justify-content:space-between;
+
+	label{
+		@include sans-serif();
+		font-weight: bold;
+		display:block;
+		margin: 0 0 10px 0;
+		width:100%;
+	}
+
+	&__inner{
+		position:relative;
+		width:100%;
+		height:50px;
+	    background: #f0f0f0;
+	    overflow:hidden;
+	}
+	
+	&__note{
+		@include agate();
+	}
+
+	input[type='text']{
+		@include sans-serif();
+
+	    background:transparent;
+	    position:absolute;
+	    top:0;
+	    left:0;
+	    width: 100%; // fallback
+		width: calc(100% - 15px - #{$submit-button-width});
+	    height:100%;
+		padding: 0;
+		margin: 0 0 0 15px;
+		border: 0;
+		transition:all 150ms ease;
+	}
+
+	button[type='submit']{
+		opacity:.2;
+		position:absolute;
+		top:50%;
+		right:0;
+		width: $submit-button-width;
+		height: $submit-button-width;
+		margin:#{$submit-button-width / -2} 0 0 0;
+
+		cursor:pointer;
+
+		background:rgba(white, .25);
+		padding:0;
+		border:none;
+		transition:all 150ms ease;
+
+		img{
+			width:25px;
+		}
+	}
+
+	input[type='text']:focus ~ button[type='submit']{
+		opacity:1;
+		transition:all 150ms ease;
+	}
+}

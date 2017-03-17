@@ -40,5 +40,6 @@ S3_BUCKETS = {
 # Default template variables
 DEFAULT_CONTEXT = {
     'name': 'property-tax-assessments-map',
-    'title': 'Property Tax assesments map app'
+    'title': 'Property Tax assesments map app',
+    'GEOCODER_URL': 'https://qyf1ag22mj.execute-api.us-east-1.amazonaws.com/production/locations'
 }

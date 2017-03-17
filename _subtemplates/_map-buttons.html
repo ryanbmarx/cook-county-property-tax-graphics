@@ -1,0 +1,16 @@
+<p>Choose data to map</p>
+<div class='map-buttons'>
+  {% for button in map_data if button.publish == 1 %}
+    {% if loop.first %}
+        {% set activeClass = "map-button--active" %}
+      {% else %}
+        {% set activeClass = " " %}
+    {% endif %}
+    <button class='map-button {{ activeClass }}' data-chart='{{ button.column }}'>
+      <span class='map-button__inner'>
+        <h2>{{ button.label }}</h2>
+        {{ button.description|markdown }}
+      </span>
+    </button>
+  {% endfor %}
+</div>

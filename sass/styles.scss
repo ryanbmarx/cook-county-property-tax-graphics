@@ -1,0 +1,181 @@
+// Enables for Tribune colors, but is required for everything.
+@import 'base-variables';
+
+// ---- ADD MORE VARIABLES HERE ---------------------------------------------
+$tablet-max-width:849px;
+$mobile-max-width:449px;
+
+
+// Required for everything, too, but can be broken down into smaller explicit imports if desired. 
+@import 'base-mixins';
+
+// ---- MAKE OR IMPORT MORE MIXINS HERE ---------------------------------------------
+
+
+// Class imports. Uncomment the ones you want to use.
+// @import 'ngux-visibility-toggles';
+// @import 'trib-bulletbox';
+// @import 'trib-buttons';
+// @import 'trib-colors';
+// @import 'trib-images-charts';
+// @import 'trib-legends';
+// @import 'trib-skeleton';
+// @import 'trib-tables';
+// @import 'trib-timeline-basic';
+// @import 'trib-typography';
+// @import 'trib-utilities';
+
+
+// ---- IMPORT PROJECT STYLES FROM PARTIAL FILES HERE ---------------------------------------------
+@import 'leaflet';
+@import 'form';
+
+// ---- WRITE MORE PROJECT STYLES HERE ---------------------------------------------
+
+
+
+.row{
+	display:flex;
+	align-items:flex-start;
+	justify-content: space-between;
+	
+	&__profile-wrapper{
+		width: 38%;
+		position:relative;
+	}
+
+	&__map-wrapper{
+		width: 58%;
+		position:relative
+	}
+
+	&__legend{
+		height: 30px;
+		width:100%;
+		position:relative;
+		// background:black;
+	}
+}
+
+.legend{
+	&__label{
+		@include agate();
+		position: absolute;
+		margin:0;
+		top:0;
+	}
+
+	&__box{
+		height:10px;
+		position:absolute;
+		bottom:0;
+		padding:0;
+	}
+}
+
+.trb_mainContent .map-menu{
+	width: 150px;
+	position:absolute;
+	top:25px;
+	right: 25px;
+	padding:15px;
+	background:rgba(white, .8);
+	z-index:1000;
+
+	&__label{
+		@include sans-serif();
+		margin:0 0 7px 0;
+	}
+
+	select{
+		width:100%;
+	}
+
+	&__legend{
+		width:100%;
+		background: white;
+		margin: 5px 0 0 0;
+	}
+}
+
+#map{
+	height:700px;
+	background:#eee;
+}
+
+
+.map-buttons{
+	display:flex;
+	align-items:flex-start;
+	flex-wrap:wrap;
+	justify-content:space-between;
+	margin: 15px 0;
+}
+
+.trb_mainContent .map-button{
+	display: block;
+	width: 33%;
+	border:none;
+	background:transparent;
+	padding: 0;
+	margin: 0;
+	cursor:pointer;
+
+
+	&--active, &--active.map-button:hover {
+		background:$trib-grey4;
+	}
+
+	&:hover{
+		background:rgba($trib-grey4, .4) ;
+	}
+
+
+	&__inner{
+		display:block;
+		padding:15px;
+	}
+
+	h2{
+		@include label7();
+		margin:0 0 7px 0;
+	}
+
+	p{
+		@include sans-serif();
+		margin:0;
+	}
+
+}
+
+
+
+.trb_mainContent .profile{
+	&__address{
+		@include label6();
+		margin: 0 0 5px 0;
+	}
+
+	&__sub-label{
+		@include label7();
+	}
+
+	&__community-area{
+		@include sans-serif();
+		margin:0;
+		font-style:italic;
+	}
+
+	&__attributes{
+		@include sans-serif();
+	}
+}
+
+@media all and (max-width: $tablet-max-width){
+
+}
+
+
+@media all and (max-width: $mobile-max-width){
+
+}
