@@ -5,6 +5,8 @@
 $tablet-max-width:849px;
 $mobile-max-width:449px;
 
+$profile_column_width:280px;
+$profile_column_gutter:25px;
 
 // Required for everything, too, but can be broken down into smaller explicit imports if desired. 
 @import 'base-mixins';
@@ -29,6 +31,7 @@ $mobile-max-width:449px;
 // ---- IMPORT PROJECT STYLES FROM PARTIAL FILES HERE ---------------------------------------------
 @import 'leaflet';
 @import 'form';
+@import 'profile';
 
 // ---- WRITE MORE PROJECT STYLES HERE ---------------------------------------------
 
@@ -40,8 +43,10 @@ $mobile-max-width:449px;
 	justify-content: space-between;
 	
 	&__profile-wrapper{
-		width: 38%;
-		position:relative;
+	    width:100%;
+	    max-width: $profile_column_width;
+	    position: relative;
+	    margin-right: $profile_column_gutter;
 	}
 
 	&__map-wrapper{
@@ -150,26 +155,16 @@ $mobile-max-width:449px;
 
 
 
-.trb_mainContent .profile{
-	&__address{
-		@include label6();
-		margin: 0 0 5px 0;
+.trb_mainContent .credits{
+	.methodology-label{
+		@include label5();
 	}
 
-	&__sub-label{
-		@include label7();
-	}
-
-	&__community-area{
-		@include sans-serif();
-		margin:0;
-		font-style:italic;
-	}
-
-	&__attributes{
-		@include sans-serif();
+	p{
+		@include agate();
 	}
 }
+
 
 @media all and (max-width: $tablet-max-width){
 
