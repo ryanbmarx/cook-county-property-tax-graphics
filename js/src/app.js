@@ -1,6 +1,7 @@
 import * as L from "leaflet";
 import 'leaflet-providers';
 import {scaleQuantize} from 'd3';
+import {scaleLinear} from 'd3';
 import {extent} from 'd3';
 import {json} from 'd3';
 import * as turf from '@turf/turf';
@@ -8,6 +9,7 @@ import * as turf from '@turf/turf';
 import displayProfile from './display-profile.js';
 import choroplethRatioScale from './ratio-scale.js';
 import inlineQuantLegend from './inline-quant-legend.js';
+import * as d3 from 'd3';
 
 
 // This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
@@ -49,6 +51,30 @@ function drawMap(container, data, propertyToMap){
 	// L.tileLayer.provider('OpenStreetMap.BlackAndWhite').addTo(map);
 	L.tileLayer.provider('Stamen.TonerBackground').addTo(map);
 
+	// Build the scales for our little ratio gauges
+	console.log(data);
+	var gaugeAttributes = ['ratio', 'ratio1', 'value'];
+	gaugeAttributes.forEach(attribute => {
+		console.log('making scale for', attribute);
+
+		let max = d3.max(data['features'], d => {
+			// console.log(d);
+			return parseFloat(d['properties'][attribute])
+		});
+		
+		let min = d3.min(data['features'], d => {
+			// console.log(d);
+			return parseFloat(d['properties'][attribute])
+		});
+
+		window[`gauge${attribute}`] = scaleLinear()
+			.range([0,100])
+			.domain([min, max])
+			.nice();
+	});
+			
+
+	
 	redrawGeojson(data, propertyToMap);
 }
 
@@ -56,8 +82,10 @@ function redrawGeojson(data, propertyToMap){
 	// Adds the geojson data and styles it using a d3 scale for the choropleth
 	console.log('adding tract data', data);
 	console.log(propertyToMap);
-	// Make a scale using the desired feature attriobute.
 
+
+
+	// Make a scale using the desired feature attriobute.
 	const dataExtent = extent(data.features, d => parseFloat(d.properties[propertyToMap]));
 	
 	// If the property to map is one of the ratio values, then we need to use our custom 
@@ -81,16 +109,26 @@ function redrawGeojson(data, propertyToMap){
 		inlineQuantLegend(mapDataScale);
 	}
 
+	// Remove the existing choropleth layer, if it exists, because we want to put lovely new data onto it.
+	
+	if (window.map.hasLayer(choroplethData)){
+		window.map.removeLayer(choroplethData);
+	}
+
 	// This applies the geojson to the map 
-		L.geoJSON(data, {
-			style: function(feature){
-				// console.log(mapDataScale(parseFloat(feature.properties[propertyToMap])), feature.properties[propertyToMap]);
-				const 	featureFillColor = mapDataScale(parseFloat(feature.properties[propertyToMap]));
-				// Returns a style object for each tract
-				return styleFeature(featureFillColor);
-			},
-			onEachFeature: onEachFeature
-		}).addTo(window.map);
+	let choroplethData = L.layerGroup();
+
+	L.geoJSON(data, {
+		style: function(feature){
+			// console.log(mapDataScale(parseFloat(feature.properties[propertyToMap])), feature.properties[propertyToMap]);
+			const 	featureFillColor = mapDataScale(parseFloat(feature.properties[propertyToMap]));
+			// Returns a style object for each tract
+			return styleFeature(featureFillColor);
+		},
+		onEachFeature: onEachFeature
+	}).addTo(choroplethData);
+
+	choroplethData.addTo(window.map);
 }
 
 
