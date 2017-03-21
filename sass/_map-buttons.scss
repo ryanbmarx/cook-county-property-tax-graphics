@@ -1,0 +1,59 @@
+.map-buttons{
+	display:flex;
+	align-items:flex-start;
+	flex-wrap:wrap;
+	justify-content:space-between;
+	margin: 15px 0;
+}
+
+.trb_mainContent .map-button{
+	display: block;
+	width: 33%;
+	border:none;
+	background:transparent;
+	padding: 0;
+	margin: 0;
+	cursor:pointer;
+
+
+	&--active, &--active.map-button:hover {
+		background:$trib-grey4;
+	}
+
+	&:hover{
+		background:rgba($trib-grey4, .4) ;
+	}
+
+
+	&__inner{
+		display:block;
+		padding:15px;
+	}
+
+	h2{
+		@include label7();
+		margin:0 0 7px 0;
+	}
+
+	p{
+		@include sans-serif();
+		margin:0;
+	}
+
+}
+
+
+
+@media all and (max-width: $tablet-max-width){
+
+}
+
+
+@media all and (max-width: $mobile-max-width){
+
+	.map-buttons .map-button{
+		width:100%;
+		margin-bottom:5px;
+	}
+
+}

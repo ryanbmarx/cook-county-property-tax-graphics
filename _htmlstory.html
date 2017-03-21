@@ -14,8 +14,15 @@
     </div>
   </div>
   <section class='credits'>
-    <h2>{{ methodology_headline }}</h2>
+    <h2>{{ map_methodology_headline }}</h2>
+    <style type="text/css">
+      .trb_mainContent .methods p{
+        color:#aaa;
+      }
+    </style>
+    <div class='methods'>
     {{ map_methodology_blurb|markdown }}
+    </div>
     {{ map_sources|markdown }}
     {{ map_credits|markdown }}
   </section>

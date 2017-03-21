@@ -68,3 +68,13 @@ $submit-button-width:50px;
 		transition:all 150ms ease;
 	}
 }
+
+
+@media all and (max-width: $tablet-max-width){
+
+}
+
+
+@media all and (max-width: $mobile-max-width){
+	.trb_mainContent .profile-lookup{ margin-top:15px; }
+}
