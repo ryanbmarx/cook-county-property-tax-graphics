@@ -13,6 +13,12 @@
       <div id='map'></div>
     </div>
   </div>
+  <section class='credits'>
+    <h2>{{ methodology_headline }}</h2>
+    {{ map_methodology_blurb|markdown }}
+    {{ map_sources|markdown }}
+    {{ map_credits|markdown }}
+  </section>
 </div>
 {% endblock content %}
 
