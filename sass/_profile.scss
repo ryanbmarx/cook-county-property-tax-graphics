@@ -1,0 +1,76 @@
+$triangle-dimension: 8px;
+
+.trb_mainContent .profile{
+	&__address{
+		@include label6();
+		margin: 0 0 5px 0;
+	}
+
+	&__sub-label{
+		@include label7();
+	}
+
+	&__community-area{
+		@include sans-serif();
+		margin:0;
+		font-style:italic;
+	}
+
+	&__attributes{
+		list-style-type: none;
+		margin:0;
+		padding:0;
+
+		li{
+			@include sans-serif();
+			margin:0 0 7px 0;
+			border-bottom:1px solid $trib-gray4;
+		}
+	}
+}
+
+
+.gauge{
+	position:relative;
+	height:55px + 17px;
+	// background:#eee;
+
+	&__label{
+		@include sans-serif();
+		position:absolute;
+		top:0;
+		margin:0 0 0 0;
+	}
+
+	&__label--axis{
+		@include agate();
+		position:absolute;
+		bottom:0;
+		top:auto;
+		margin:0 0 0 0;
+	}
+
+
+	&__triangle{
+		position:absolute;
+		width:$triangle-dimension;
+		height:$triangle-dimension;
+		top:19px;
+		margin: 0 0 0 #{$triangle-dimension / -2};
+	}
+
+	&__chart{
+		// width: 100%;
+		// height: 25px;
+		position: absolute;
+		bottom: 17px;
+	}
+}
+@media all and (max-width: $tablet-max-width){
+
+}
+
+
+@media all and (max-width: $mobile-max-width){
+
+}

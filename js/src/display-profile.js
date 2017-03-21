@@ -29,18 +29,18 @@ function addGauge(value, formatter, scale, valueName){
 	
 		profileString += `
 			<span class='gauge__label gauge__label--axis' style='left:0'>
-				${scaleDomain[0]}
+				${formatter(scaleDomain[0])}
 			</span>`
 		
 		profileString += `
 			<span class='gauge__label gauge__label--axis' style='right:0;text-align:right'>
-				${scaleDomain[1]}
+				${formatter(scaleDomain[1])}
 			</span>`
 
 
 		// If the attribute is a ratio, then we want to highlight 1, whereever it is on the gauge.
 		if (valueName.indexOf('ratio') > -1){
-			profileString += `<span class='gauge__label gauge__label--axis gauge__label--center' style='left:${scale(1)}%'>1</span>`
+			profileString += `<span class='gauge__label gauge__label--axis gauge__label--center' style='left:${scale(1)}%'>${formatter(1)}</span>`
 		}
 
 		return profileString + "</div>";
@@ -66,28 +66,24 @@ function displayProfile(feature, placeData){
 	<h2 class='profile__address'>${placeName}</h2>
 	<p class='profile__community-area'>${properties.community} community area</p>
 	<h3 class='profile__sub-label profile__sub-label--tract'>${properties.NAMELSAD10}</h3>
-	<dl class='profile__attributes profile__attributes--tract'>
-		<dt>Median ratio of homes' assessed value to market value: </dt>
-		<dd>
+	<ul class='profile__attributes profile__attributes--tract'>
+		<li>
+			<strong>Median ratio of homes' assessed value to market value:</strong>
 			${addGauge(properties.ratio,formatters.ratio, window.gaugeratio, "ratio")}
-		</dd>
-		<dt>Median home value ratio after any appeals:</dt>
-		<dd class='gauge'>
-			${addGauge(properties.ratio1,formatters.ratio, window.gaugeratio1, "ratio1")}			
-		</dd>
-		<dt>Assessed value:</dt>
-		<dd>
+		</li>
+		<li>
+			<strong>Median home value ratio after any appeals:</strong>
+			${addGauge(properties.ratio1,formatters.ratio, window.gaugeratio1, "ratio1")}
+		</li>
+		<li>
+			<strong>Assessed value:</strong>
 			${addGauge(properties.value,formatters.currencyRounded, window.gaugevalue, "value")}			
-		</dd>
-		<dt>Taxes</dt>
-		<dd>${formatters.currencyRounded(properties.taxes)}</dd>
-		<dt>Appealed value: </dt>
-		<dd>${formatters.currency(properties.av)}</dd>
-		<dt>Median household income:</dt>
-		<dd>${formatters.currencyRounded(properties.medhinc)}</dd>
-		<dt>Percentage white, not hispanic:</dt>
-		<dd>${formatters.percentage(properties.white)}</dd>
-	</dl>`;
+		</li>
+		<li><strong>Taxes: </strong>${formatters.currencyRounded(properties.taxes)}</li>
+		<li><strong>Appealed value: </strong>${formatters.currency(properties.av)}</li>
+		<li><strong>Median household income: </strong>${formatters.currencyRounded(properties.medhinc)}</li>
+		<li><strong>Percentage white, not hispanic: </strong>${formatters.percentage(properties.white)}</li>
+	</ul>`;
 
 	// center the labels
 	const gaugeLabels = document.querySelectorAll('.gauge__label--center');
