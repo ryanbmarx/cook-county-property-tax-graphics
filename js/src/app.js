@@ -49,7 +49,8 @@ function drawMap(container, data, propertyToMap){
 	
 	// L.tileLayer.provider('Hydda.Full').addTo(map);
 	// L.tileLayer.provider('OpenStreetMap.BlackAndWhite').addTo(map);
-	L.tileLayer.provider('Stamen.TonerBackground').addTo(map);
+	L.tileLayer.provider('Stamen.TonerBackground').addTo(window.map);
+	window.choroplethData = L.layerGroup().addTo(window.map);
 
 	// Build the scales for our little ratio gauges
 	console.log(data);
@@ -73,7 +74,6 @@ function drawMap(container, data, propertyToMap){
 			.nice();
 	});
 			
-
 	
 	redrawGeojson(data, propertyToMap);
 }
@@ -109,15 +109,10 @@ function redrawGeojson(data, propertyToMap){
 		inlineQuantLegend(mapDataScale);
 	}
 
-	// Remove the existing choropleth layer, if it exists, because we want to put lovely new data onto it.
+	// Remove the existing choropleth data because we want to put lovely new data onto it.	
+	window.choroplethData.clearLayers(0);
 	
-	if (window.map.hasLayer(choroplethData)){
-		window.map.removeLayer(choroplethData);
-	}
-
-	// This applies the geojson to the map 
-	let choroplethData = L.layerGroup();
-
+	// Apply the geojson to the map 
 	L.geoJSON(data, {
 		style: function(feature){
 			// console.log(mapDataScale(parseFloat(feature.properties[propertyToMap])), feature.properties[propertyToMap]);
@@ -126,9 +121,9 @@ function redrawGeojson(data, propertyToMap){
 			return styleFeature(featureFillColor);
 		},
 		onEachFeature: onEachFeature
-	}).addTo(choroplethData);
+	}).addTo(window.choroplethData);
 
-	choroplethData.addTo(window.map);
+	window.choroplethData.addTo(window.map);
 }
 
 
@@ -213,12 +208,6 @@ window.onload = function(){
 				redrawGeojson(tractData, this.dataset.chart);
 			});
 		}
-
-		// menu.addEventListener('change', e => {
-		// 	e.preventDefault();
-		// 	let propertyToMap = e.target.value;
-		// 	redrawGeojson(tractData, propertyToMap);
-		// });
 	});
 
 
