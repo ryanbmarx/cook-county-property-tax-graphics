@@ -19,7 +19,7 @@ page.onError = function (msg, trace) {
 };
 
 
-page.open('http://graphics.chicagotribune.com/property-tax-assessments-map/gauges.html', function(status){
+page.open('http://127.0.0.1:5000/gauges.html', function(status){
 	console.log('status: ', status);
 	if (status == "success"){
 		setTimeout(function(){
