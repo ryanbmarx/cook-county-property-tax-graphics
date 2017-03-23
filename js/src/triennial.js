@@ -6,6 +6,7 @@ function filterData(rawData, category){
 	let retval = [];
 	rawData.forEach(datum => {
 		retval.push({
+			townName: datum['Descr'],
 			town:datum['Town'],
 			tri: datum['Tri'],
 			y: parseFloat(datum[category]),
@@ -25,6 +26,7 @@ function filterToTown(data, town){
 	})
 	return retval;
 }
+
 
 function drawChart(rawData, container, category, chartTitle){
 	// update the headline
@@ -82,8 +84,26 @@ function drawChart(rawData, container, category, chartTitle){
 		.attr('transform', `translate(${margin.left}, 0)`)
 		.call(yAxis);
 	
-	const uniqueListOfTowns = _.uniq(data, false, d => d.town);
+
+function highlightLine(direction, d, i, line){
+	console.log(direction, d, i, line);
+	if (direction == "over"){
+		d3.selectAll('.triennial')
+			.style('opacity', .2);
+		d3.select(line)
+			.style('opacity', 1)
+			.style('stroke-width', 3);
+
+	} else {
+		d3.selectAll('.triennial')
+			.style('opacity', 1)
+			.style('stroke-width', 1.5);
+	}
 	
+}
+
+
+	const uniqueListOfTowns = _.uniq(data, false, d => d.town);	
 	uniqueListOfTowns.forEach(town => {
 		const townData = filterToTown(data, town.town);
 		
@@ -98,7 +118,15 @@ function drawChart(rawData, container, category, chartTitle){
 			.attr('class', d => {
 				return `triennial triennial--${d[0]['tri']}`;
 			})
-			.attr('id', d => d[0]['town']);		
+			.attr('id', d => d[0]['town'])
+            .on("mouseover", function(d,i){
+            	console.log('hovering one');
+            	highlightLine("over", d,i, this);
+            })
+            .on("mouseout", function(d,i){
+            	console.log('hovering off');
+            	highlightLine("off", d,i, this);
+            });
 	})
 
 
@@ -107,7 +135,7 @@ function drawChart(rawData, container, category, chartTitle){
 window.onload = function(){
 
 	const 	container = d3.select('#triennial-chart'),
-			category = "median_sales",
+			category = "prd",
 			categoryLookup = {
 				Town :" Township ID",
 				N :" Sample size",
