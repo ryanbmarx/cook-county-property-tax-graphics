@@ -5,9 +5,10 @@
   "main": "js/src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "grunt",
+    "build": "npm run getCharts && grunt",
     "watch": "grunt watch",
-    "getCharts": "mkdir -p img/src && phantomjs scripts/render-charts.js"
+    "build:svg": "npm run getCharts",
+    "getCharts": "rm -rf screen.png && phantomjs --debug=false scripts/render2.js"
   },
   "repository": {
     "type": "git",
