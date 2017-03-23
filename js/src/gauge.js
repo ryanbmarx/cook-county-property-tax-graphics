@@ -21,6 +21,7 @@ window.onload = function(){
 		for (var i=0; i< divs.length; i++){
 			const div = divs[i];
 			const category = div.dataset.chart;
+			const bbox = divs[i].getBoundingClientRect();
 			// console.log(scatterlineData);
 
 			const gauge = new scatterlineSquare({
@@ -28,8 +29,8 @@ window.onload = function(){
 				data: scatterlineData,
 				categoryToChart:category,
 				margin: {top:0,right:0,bottom:0,left:0},
-				rectHeight: 28,
-				rectWidth:4
+				rectHeight: bbox.height,
+				rectWidth:3
 			});
 		}
 
