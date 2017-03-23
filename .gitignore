@@ -11,3 +11,4 @@ css/*.map
 js/*.js
 js/*.map 
 .DS_Store
+img/*.svg
