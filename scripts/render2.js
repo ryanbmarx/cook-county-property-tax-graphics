@@ -23,15 +23,6 @@ page.open('http://127.0.0.1:5000/gauges.html', function(status){
 	console.log('status: ', status);
 	if (status == "success"){
 		setTimeout(function(){
-			try{
-				console.log('Rendering image');
-				page.render('screen.png');
-			}
-			catch (e){
-				console.log('Error rendering screenshot!');
-				console.log(e);
-			}
-
 			var code = page.evaluate( function(){
 				var elements = document.querySelectorAll("div");
 				

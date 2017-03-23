@@ -14,7 +14,7 @@
 </head>
 <body>
 
-	{% for chart in ['ratio1', 'value', 'erate', 'taxes', 'av1', 'white', 'appeal_fla'] %}
+	{% for chart in ['ratio1', 'value', 'erate', 'taxes', 'av1', 'white', 'appeal_fla', 'medhinc'] %}
 		{{ chart }}
 		<div id='{{ chart }}' class='chart' title='{{ chart }}' data-chart='{{ chart }}'></div>
 	{% endfor %}
