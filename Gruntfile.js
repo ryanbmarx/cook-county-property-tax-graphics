@@ -61,6 +61,27 @@ module.exports = function(grunt) {
           ]
         ]
       }
+    },
+    triennial: {
+      src: ['js/src/triennial.js'],
+      dest: 'js/triennial.min.js',
+      options: {
+        plugin: [
+          [
+            'minifyify', {
+              map: 'triennial.min.js.map',
+              output: './js/triennial.min.js.map'
+            }
+          ]
+        ],
+        transform: [
+          [
+            'babelify', {
+              presets: ['es2015']
+            }
+          ]
+        ]
+      }
     }
   };
 
@@ -94,7 +115,8 @@ module.exports = function(grunt) {
     },
     app: {
       files: {
-        'css/styles.css': 'sass/styles.scss'
+        'css/styles.css': 'sass/styles.scss',
+        'css/triennial-styles.css': 'sass/triennial-styles.scss'
       }
     }
   };
@@ -104,14 +126,35 @@ module.exports = function(grunt) {
       files: ['sass/**/*.scss'],
       tasks: ['sass']
     },
+    svg: {
+      files: ['img/src/**/*.svg'],
+      tasks: ['svgstore']
+    },
     js: {
       files: ['js/src/**/*.js'],
-      tasks: ['browserify:app', 'browserify:gauge']
+      tasks: ['browserify:app', 'browserify:triennial', 'browserify:gauge']
+      // tasks: ['browserify:triennial', 'browserify:app', 'browserify:gauge']
     }
+  };
+
+  config.svgstore = {
+    options: {
+      // prefix : 'icon-', // This will prefix each ID 
+      // svg: { // will add and overide the the default xmlns="http://www.w3.org/2000/svg" attribute to the resulting SVG 
+      //   viewBox : '0 0 100 100',
+      //   xmlns: 'http://www.w3.org/2000/svg'
+      // }
+    },
+    min: {
+      // Target-specific file lists and/or options go here. 
+      src:['img/src/**/*.svg'],
+      dest:'img/sprite.svg'
+    },
   };
 
   grunt.initConfig(config);
 
+  grunt.loadNpmTasks('grunt-svgstore');
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -119,6 +162,7 @@ module.exports = function(grunt) {
   var defaultTasks = [];
 
   defaultTasks.push('sass');
+  defaultTasks.push('svgstore');
   defaultTasks.push('browserify');
 
   grunt.registerTask('default', defaultTasks);
