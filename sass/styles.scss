@@ -13,6 +13,23 @@ $profile_column_gutter:25px;
 
 // ---- MAKE OR IMPORT MORE MIXINS HERE ---------------------------------------------
 
+@mixin text_stroke(
+	// Puts a stroke (blurred or not) around text;
+	$text-color:black, 
+	$stroke-color:white, 
+	$stroke-width:1px, 
+	$stroke-opacity:1,
+	$stroke-blur:0){
+	  
+
+  color:$text-color;
+  text-shadow:
+	#{0-$stroke-width} #{0-$stroke-width} $stroke-blur rgba($stroke-color, $stroke-opacity),  
+	$stroke-width #{0-$stroke-width} $stroke-blur rgba($stroke-color, $stroke-opacity),
+	#{0-$stroke-width} $stroke-width $stroke-blur rgba($stroke-color, $stroke-opacity),
+	$stroke-width $stroke-width $stroke-blur rgba($stroke-color, $stroke-opacity);
+}
+
 
 // Class imports. Uncomment the ones you want to use.
 // @import 'ngux-visibility-toggles';
@@ -33,6 +50,7 @@ $profile_column_gutter:25px;
 @import 'form';
 @import 'profile';
 @import 'map-buttons';
+@import 'legends';
 
 // ---- WRITE MORE PROJECT STYLES HERE ---------------------------------------------
 
@@ -64,21 +82,7 @@ $profile_column_gutter:25px;
 	}
 }
 
-.legend{
-	&__label{
-		@include agate();
-		position: absolute;
-		margin:0;
-		top:0;
-	}
 
-	&__box{
-		height:10px;
-		position:absolute;
-		bottom:0;
-		padding:0;
-	}
-}
 
 .trb_mainContent .map-menu{
 	width: 150px;

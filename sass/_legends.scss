@@ -1,0 +1,32 @@
+.legend{
+	&__label{
+		@include agate();
+		position: absolute;
+		margin:0;
+		top:0;
+	}
+
+	&__box{
+		height:10px;
+		position:absolute;
+		bottom:0;
+		padding:0;
+	}
+}
+
+.ratio-scale-label {
+	@include agate();
+	@include text_stroke();
+	margin:0;
+	padding:0;
+	position:absolute;
+	top: 30px;
+	z-index: 1000;
+
+	&--over-valued{	
+		margin-left:5px;
+	}
+	&--under-valued{
+		text-align: right;
+	}
+}
