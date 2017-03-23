@@ -68,21 +68,37 @@ function displayProfile(feature, placeData){
 	<h3 class='profile__sub-label profile__sub-label--tract'>${properties.NAMELSAD10}</h3>
 	<ul class='profile__attributes profile__attributes--tract'>
 		<li>
-			<strong>Median ratio of homes' assessed value to market value:</strong>
-			${addGauge(properties.ratio,formatters.ratio, window.gaugeratio, "ratio")}
-		</li>
-		<li>
-			<strong>Median home value ratio after any appeals:</strong>
+			<strong>Median home value ratio (after any appeals):</strong>
 			${addGauge(properties.ratio1,formatters.ratio, window.gaugeratio1, "ratio1")}
 		</li>
 		<li>
 			<strong>Assessed value:</strong>
 			${addGauge(properties.value,formatters.currencyRounded, window.gaugevalue, "value")}			
 		</li>
-		<li><strong>Taxes: </strong>${formatters.currencyRounded(properties.taxes)}</li>
-		<li><strong>Appealed value: </strong>${formatters.currency(properties.av)}</li>
-		<li><strong>Median household income: </strong>${formatters.currencyRounded(properties.medhinc)}</li>
-		<li><strong>Percentage white, not hispanic: </strong>${formatters.percentage(properties.white)}</li>
+		<li>
+			<strong>Taxes: </strong>
+			${addGauge(properties.taxes,formatters.currencyRounded, window.gaugetaxes, "taxes")}			
+		</li>
+		<li>
+			<strong>Home value: </strong>
+			${addGauge(properties.av1, formatters.currency, window.gaugeav1, "av1")}			
+		</li>
+		<li>
+			<strong>Median household income: </strong>
+			${addGauge(properties.medhinc,formatters.currencyRounded, window.gaugemedhinc, "medhinc")}			
+		</li>
+		<li>
+			<strong>Percentage white, not hispanic: </strong>
+			${addGauge(properties.white,formatters.percentage, window.gaugewhite, "white")}			
+		</li>
+		<li>
+			<strong>Effective overall tax rate: </strong>
+			${addGauge(properties.erate,formatters.percentage, window.gaugeerate, "erate")}			
+		</li>
+		<li>
+			<strong>Percentage of assessment appeals: </strong>
+			${addGauge(properties.appeal_fla, formatters.percentage, window.gaugeappeal_fla, "appeal_fla")}			
+		</li>
 	</ul>`;
 
 	// center the labels
