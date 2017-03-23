@@ -64,6 +64,8 @@ $triangle-dimension: 8px;
 		// height: 25px;
 		position: absolute;
 		bottom: 17px;
+		fill:$trib-blue2;
+		fill-opacity:.2;
 	}
 }
 @media all and (max-width: $tablet-max-width){
