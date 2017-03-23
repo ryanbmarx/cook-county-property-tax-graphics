@@ -22,10 +22,7 @@ function addGauge(value, formatter, scale, valueName){
 				${formatter(value)}
 			</span>
 			<svg class='gauge__triangle' style='left:${scale(value)}%' viewBox="0 0 25 25" ><use xlink:href="#triangle" /></svg>
-			<img class='gauge__chart' src='http://${ window.ROOT_URL }/img/ratio.svg' />`;
-
-// <img class='gauge__triangle' style='left:${scale(value)}%' src='http://${ window.ROOT_URL }/img/triangle.svg' />
-			
+			<svg class='gauge__chart' viewBox="0 0 280 28" ><use xlink:href="#${valueName}" /></svg>`;			
 
 		// Now add the min and max. I would do it with a domain.forEach, but there only are two and each 
 		// needs a slightly different treatment, so manual it is.
