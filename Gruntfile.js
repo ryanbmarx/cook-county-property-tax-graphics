@@ -132,13 +132,14 @@ module.exports = function(grunt) {
     },
     js: {
       files: ['js/src/**/*.js'],
-      tasks: ['browserify:app', 'browserify:triennial', 'browserify:gauge']
-      // tasks: ['browserify:triennial', 'browserify:app', 'browserify:gauge']
+      tasks: ['browserify:app', 'browserify:gauge']
     }
   };
 
   config.svgstore = {
     options: {
+      cleanup:true,
+      cleanupdefs:true
       // prefix : 'icon-', // This will prefix each ID 
       // svg: { // will add and overide the the default xmlns="http://www.w3.org/2000/svg" attribute to the resulting SVG 
       //   viewBox : '0 0 100 100',
