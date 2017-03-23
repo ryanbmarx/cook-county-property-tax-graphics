@@ -39,8 +39,8 @@ function drawMap(container, data, propertyToMap){
 	// instantiates the leaflet map
 	window.map =  L.map(container,
 		{
-			center: [41.886635, -87.637839],
-			zoom: 10,
+			center: [41.804425, -87.915862],
+			zoom: 9,
 			scrollWheelZoom:false,
 			maxZoom:16
 			// maxBounds:L.latLngBounds(L.latLng(36.590379, -92.133247),L.latLng(42.478624, -87.015605))
@@ -53,18 +53,23 @@ function drawMap(container, data, propertyToMap){
 	window.choroplethData = L.layerGroup().addTo(window.map);
 
 	// Build the scales for our little ratio gauges
-	console.log(data);
-	var gaugeAttributes = ['ratio', 'ratio1', 'value'];
+	var gaugeAttributes = [
+		'taxes', 
+		'ratio1', 
+		'value',
+		'av1', 
+		'medhinc',
+		'white',
+		'erate',
+		'appeal_fla'
+	];
 	gaugeAttributes.forEach(attribute => {
-		console.log('making scale for', attribute);
-
+		console.log('making gauge scale for ', attribute);
 		let max = d3.max(data['features'], d => {
-			// console.log(d);
 			return parseFloat(d['properties'][attribute])
 		});
 		
 		let min = d3.min(data['features'], d => {
-			// console.log(d);
 			return parseFloat(d['properties'][attribute])
 		});
 
@@ -80,10 +85,6 @@ function drawMap(container, data, propertyToMap){
 
 function redrawGeojson(data, propertyToMap){
 	// Adds the geojson data and styles it using a d3 scale for the choropleth
-	console.log('adding tract data', data);
-	console.log(propertyToMap);
-
-
 
 	// Make a scale using the desired feature attriobute.
 	const dataExtent = extent(data.features, d => parseFloat(d.properties[propertyToMap]));
@@ -105,8 +106,9 @@ function redrawGeojson(data, propertyToMap){
 		mapDataScale = scaleQuantize()
 			.domain(dataExtent)
 			.range(hotRamp);
-
-		inlineQuantLegend(mapDataScale);
+			
+		console.log(propertyToMap);
+		inlineQuantLegend(mapDataScale, propertyToMap);
 	}
 
 	// Remove the existing choropleth data because we want to put lovely new data onto it.	
@@ -115,7 +117,6 @@ function redrawGeojson(data, propertyToMap){
 	// Apply the geojson to the map 
 	L.geoJSON(data, {
 		style: function(feature){
-			// console.log(mapDataScale(parseFloat(feature.properties[propertyToMap])), feature.properties[propertyToMap]);
 			const 	featureFillColor = mapDataScale(parseFloat(feature.properties[propertyToMap]));
 			// Returns a style object for each tract
 			return styleFeature(featureFillColor);
@@ -193,8 +194,6 @@ window.onload = function(){
 			propertyToMap = activeButton.dataset.chart,
 			mapButtons = document.querySelectorAll('.map-button');
 
-	console.log(propertyToMap);
-
 	json(`http://${window.ROOT_URL}/data/tract-data2.geojson`, tractData => {
 		window.tractDataFeatures = tractData.features;
 		drawMap(container, tractData, propertyToMap);
@@ -202,7 +201,6 @@ window.onload = function(){
 		for (var button of mapButtons){
 			button.addEventListener('click', function(e) {
 				e.preventDefault();
-				console.log(document.querySelector('.map-button--active'));
 				document.querySelector('.map-button--active').classList.remove('map-button--active');
 				this.classList.add('map-button--active');
 				redrawGeojson(tractData, this.dataset.chart);
@@ -229,7 +227,7 @@ window.onload = function(){
 
 				const requestUrl = `https://qyf1ag22mj.execute-api.us-east-1.amazonaws.com/production/locations?q=${encodeURI(address)}&userLocation=41.8337329,-87.7321555`
 				const geoRequest = json(requestUrl)
-
+				
 				var request = new XMLHttpRequest();
 				request.open('GET', requestUrl);
 
@@ -256,7 +254,6 @@ window.onload = function(){
 		getCoord(address)
 			.then(function(response) {
 				const data = JSON.parse(response);
-				console.log(data);
 				const userCoordinates =  {
 					address: data.resourceSets[0].resources[0].name,
 					coordinates:[
@@ -280,4 +277,5 @@ window.onload = function(){
 			});
 
 	});	
+
 };
