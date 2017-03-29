@@ -193,6 +193,7 @@ function mapUserGeo(point, polygon){
 window.onload = function(){
   	const pymChild = new pym.Child({});
   	pymChild.sendHeight();
+  	pymChild.sendMessage('childLoaded');
 
 	const 	activeButton = document.querySelector('.map-button--active'),
 			container = document.getElementById('map'),

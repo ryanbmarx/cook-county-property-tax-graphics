@@ -1,6 +1,10 @@
 import * as d3 from 'd3';
 import getTribColors from'./getTribColors.js'
-var pym = require('pym.js');
+const pym = require('pym.js');
+
+// https://github.com/fivethirtyeight/d3-pre
+var Prerender = require('d3-pre');
+var prerender = Prerender(d3);
 
 // This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
 // as outlined in this Stack Overflow question: http://stackoverflow.com/questions/22754315/foreach-loop-for-htmlcollection-elements
@@ -27,7 +31,6 @@ class CookCountyMap{
 		 app.options = options;
 		 app.mapContainer = options.mapContainer;
 		 app.data = options.data;
-		 app.ROOT_URL = options.ROOT_URL;
 
 
 
@@ -37,6 +40,9 @@ class CookCountyMap{
 	}
 
 	drawMap(){
+		console.log(prerender);
+		prerender.start();
+
 		const 	app = this;
 		const 	containerBox = app.mapContainer.node().getBoundingClientRect(),
 				width = containerBox.width,
@@ -85,14 +91,15 @@ class CookCountyMap{
 
 window.onload = function(){
 	console.log('Window is onloaded');
+	
 	const pymChild = new pym.Child({});
 	pymChild.sendHeight();
-	d3.json(`http://${window.ROOT_URL}/data/tract-data2.geojson`, (err, data) =>{
+
+	d3.json(`data/tract-data2.geojson`, (err, data) =>{
 		console.log(data);
 		const fairnessMap = new CookCountyMap({
 			mapContainer: d3.select('#map'),
-			data: data,
-			ROOT_URL:window.ROOT_URL
+			data: data
 		});		
 	})
 

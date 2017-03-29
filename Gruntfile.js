@@ -11,7 +11,8 @@ module.exports = function(grunt) {
     'leaflet-providers',
     'underscore',
     '@turf/turf',
-    'pym.js'
+    'pym.js',
+    'd3-pre'
   ];
 
 
