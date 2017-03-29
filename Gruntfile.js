@@ -10,7 +10,8 @@ module.exports = function(grunt) {
     'leaflet',
     'leaflet-providers',
     'underscore',
-    '@turf/turf'
+    '@turf/turf',
+    'pym.js'
   ];
 
 
@@ -82,6 +83,27 @@ module.exports = function(grunt) {
           ]
         ]
       }
+    },
+    fairness: {
+      src: ['js/src/fairness-map.js'],
+      dest: 'js/fairness-map.min.js',
+      options: {
+        plugin: [
+          [
+            'minifyify', {
+              map: 'fairness-map.min.js.map',
+              output: './js/fairness-map.min.js.map'
+            }
+          ]
+        ],
+        transform: [
+          [
+            'babelify', {
+              presets: ['es2015']
+            }
+          ]
+        ]
+      }
     }
   };
 
@@ -116,7 +138,9 @@ module.exports = function(grunt) {
     app: {
       files: {
         'css/styles.css': 'sass/styles.scss',
-        'css/triennial-styles.css': 'sass/triennial-styles.scss'
+        'css/triennial-styles.css': 'sass/triennial-styles.scss',
+        'css/fairness-styles.css': 'sass/fairness-styles.scss'
+
       }
     }
   };
@@ -132,7 +156,7 @@ module.exports = function(grunt) {
     },
     js: {
       files: ['js/src/**/*.js'],
-      tasks: ['browserify:app', 'browserify:gauge']
+      tasks: ['browserify:fairness']
     }
   };
 

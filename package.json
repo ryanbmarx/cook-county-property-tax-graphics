@@ -39,6 +39,7 @@
     "d3": "^4.5.0",
     "leaflet": "^1.0.3",
     "leaflet-providers": "^1.1.16",
+    "pym.js": "^1.2.0",
     "tribune-bing-geocoder": "^0.2.0",
     "underscore": "^1.8.3"
   }
