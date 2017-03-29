@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fairness map</title>
+  <script src="//{{ ROOT_URL }}/js/vendor.min.js"></script>
+  <script type="text/javascript">
+  	window.ROOT_URL = "{{ ROOT_URL }}";
+  </script>
+  <link rel="stylesheet" type="text/css" href="//{{ ROOT_URL }}/css/fairness-styles.css">
+
+</head>
+<body>
+  <div class='map-wrapper'>
+	<div class='map-meta'>
+		<h1 class='map-meta__headline'>Map title goes here Map title goes here</h1>
+		<p class='map-meta__description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum quos doloribus sed aut perferendis ex atque velit aperiam, quas ullam ab, enim repellendus voluptatibus voluptate quae nam unde delectus deleniti. This map shows, by Cook County census tract, whether the median home is ...</p>
+		<dl class='map-meta__legend'>
+			<dt>
+				<span class='map-meta__legend-box map-meta__legend-box--over'></span>
+			</dt>
+
+			<dd>... overvalued</dd>
+						<dt>
+				<span class='map-meta__legend-box map-meta__legend-box--perfect'></span>
+			</dt>
+
+			<dd>... correctly valued</dd>
+			<dt>
+				<span class='map-meta__legend-box map-meta__legend-box--under'></span>
+			</dt>
+			<dd>... undervalued</dd>
+			
+		</dl>
+	</div>
+  	<div id='map' class=""></div>
+  </div>
+  <script src="//{{ ROOT_URL }}/js/fairness-map.min.js"></script>
+
+</body>
+</html>
+
