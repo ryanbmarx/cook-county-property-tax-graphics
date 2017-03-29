@@ -84,7 +84,7 @@ $profile_column_gutter:25px;
 
 
 
-.trb_mainContent .map-menu{
+ .map-menu{
 	width: 150px;
 	position:absolute;
 	top:25px;
@@ -123,7 +123,7 @@ $profile_column_gutter:25px;
 // 	margin: 15px 0;
 // }
 
-// .trb_mainContent .map-button{
+//  .map-button{
 // 	display: block;
 // 	width: 33%;
 // 	border:none;
@@ -161,7 +161,7 @@ $profile_column_gutter:25px;
 
 
 
-.trb_mainContent .credits{
+ .credits{
 	.methodology-label{
 		@include label5();
 	}

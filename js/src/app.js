@@ -10,6 +10,8 @@ import displayProfile from './display-profile.js';
 import choroplethRatioScale from './ratio-scale.js';
 import inlineQuantLegend from './inline-quant-legend.js';
 import * as d3 from 'd3';
+var pym = require('pym.js');
+
 
 
 // This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
@@ -189,6 +191,9 @@ function mapUserGeo(point, polygon){
 }
 
 window.onload = function(){
+  	const pymChild = new pym.Child({});
+  	pymChild.sendHeight();
+
 	const 	activeButton = document.querySelector('.map-button--active'),
 			container = document.getElementById('map'),
 			propertyToMap = activeButton.dataset.chart,
@@ -270,7 +275,7 @@ window.onload = function(){
 
 				// Call the profile function, sending it our desired tract
 				displayProfile(userGeo.tract, userCoordinates);
-
+				pymChild.sendHeight();
 			}, function(error) {
 				const userCoordinates = error;
 				console.error("User location geocoding failed", error);

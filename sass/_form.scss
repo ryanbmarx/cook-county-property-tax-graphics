@@ -1,6 +1,6 @@
 $submit-button-width:50px;
 
-.trb_mainContent .profile-lookup{
+ .profile-lookup{
 	@include clearfix();
 	// display:flex;
 	// flex-wrap:wrap;
@@ -76,5 +76,5 @@ $submit-button-width:50px;
 
 
 @media all and (max-width: $mobile-max-width){
-	.trb_mainContent .profile-lookup{ margin-top:15px; }
+	 .profile-lookup{ margin-top:15px; }
 }
