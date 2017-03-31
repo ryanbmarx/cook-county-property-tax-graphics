@@ -6,7 +6,7 @@
   <script type="text/javascript">
     window.ROOT_URL="{{ ROOT_URL }}";
   </script>
-  {# <script src="//{{ ROOT_URL }}/js/vendor.min.js"></script> #}
+  <script src="//{{ ROOT_URL }}/js/vendor.min.js"></script>
 </head>
 <body>
   {# Gauges (and a couple other things) sprite #}
@@ -18,26 +18,12 @@
     
         {% include '_subtemplates/_form.html' %}
         <div id="profile" class='profile'>
-          <div class="profile__meta">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias dolores provident quae officiis qui, eius tempora ducimus mollitia, necessitatibus magni ullam natus? Assumenda voluptates suscipit accusamus minima soluta similique ullam.</p>
-          </div>
-          <div class="profile__map"></div>
+          <div id='profile__meta' class="profile__meta"></div>
+          <div id='map' class="profile__map"></div>
           <div class='profile__columns'>
-            <div class="profile__column profile__column--1">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
-            </div>
-            <div class="profile__column profile__column--2">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
-            </div>
-            <div class="profile__column profile__column--3">
-              Lorem ipsum d              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
-olor sit amet, consectetur adipisicing elit. Beatae dolores ipsa corporis, totam quidem impedit nobis. Dolore expedita iure dolores enim rem explicabo nam optio, quidem dolor delectus nihil tempora.
-            </div>
+            <div id='profile__column--1' class="profile__column profile__column--1"></div>
+            <div  id='profile__column--2' class="profile__column profile__column--2"></div>
+            <div  id='profile__column--3' class="profile__column profile__column--3"></div>
           </div>
         </div>
 
@@ -69,7 +55,7 @@ olor sit amet, consectetur adipisicing elit. Beatae dolores ipsa corporis, totam
       {# {{ map_credits|markdown }} #}
     {# </section> #}
   </div>
-  {# <script src="//{{ ROOT_URL }}/js/app.min.js"></script> #}
+  <script src="//{{ ROOT_URL }}/js/app.min.js"></script>
 
 
 </body>
