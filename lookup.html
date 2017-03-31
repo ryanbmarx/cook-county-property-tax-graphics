@@ -2,42 +2,74 @@
 <html>
 <head>
   <title></title>
-  <link rel="stylesheet" type="text/css" href="//{{ ROOT_URL }}/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="//{{ ROOT_URL }}/css/lookup-styles.css">
   <script type="text/javascript">
     window.ROOT_URL="{{ ROOT_URL }}";
   </script>
-  <script src="//{{ ROOT_URL }}/js/vendor.min.js"></script>
+  {# <script src="//{{ ROOT_URL }}/js/vendor.min.js"></script> #}
 </head>
 <body>
+  {# Gauges (and a couple other things) sprite #}
   <div style='display:none;height:0'>{% include 'img/sprite.svg' %}</div>
-  <div class="graphic-wrapper">
+  <div class="graphic-wrapper" style='max-width: 100%;margin:auto;'>
+    <h1>Now find your crap</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatum, dignissimos ex ad, sit veritatis, perspiciatis veniam nemo maiores laborum temporibus, dolor atque itaque eaque natus. Vel explicabo id earum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatum, dignissimos ex ad, sit veritatis, perspiciatis veniam nemo maiores laborum temporibus, dolor atque itaque eaque natus. Vel explicabo id earum!</p>
-    {% include '_subtemplates/_map-buttons.html' %}
-    <div class='row'>
-      <div class='row__profile-wrapper'>
+    {# {% include '_subtemplates/_map-buttons.html' %} #}
+    
         {% include '_subtemplates/_form.html' %}
-        <div id="profile" class='profile'></div>
-      </div>
-      <div class='row__map-wrapper'>
-        <div id='legend' class='row__legend'></div>
-        <div id='map'></div>
-      </div>
-    </div>
-    <section class='credits'>
+        <div id="profile" class='profile'>
+          <div class="profile__meta">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias dolores provident quae officiis qui, eius tempora ducimus mollitia, necessitatibus magni ullam natus? Assumenda voluptates suscipit accusamus minima soluta similique ullam.</p>
+          </div>
+          <div class="profile__map"></div>
+          <div class='profile__columns'>
+            <div class="profile__column profile__column--1">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
+            </div>
+            <div class="profile__column profile__column--2">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
+            </div>
+            <div class="profile__column profile__column--3">
+              Lorem ipsum d              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, alias assumenda eaque. Ex unde ut dolor consequatur nesciunt laborum eligendi aut enim, nulla, non placeat numquam aliquid atque recusandae dolorum.
+olor sit amet, consectetur adipisicing elit. Beatae dolores ipsa corporis, totam quidem impedit nobis. Dolore expedita iure dolores enim rem explicabo nam optio, quidem dolor delectus nihil tempora.
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {# <section class='credits'>
       <h2>{{ map_methodology_headline }}</h2>
       <style type="text/css">
         .trb_mainContent .methods p{
           color:#aaa;
         }
-      </style>
-      <div class='methods'>
+      </style> #}
+{#       <div class='methods'>
         {{ map_methodology_blurb|markdown }}
-      </div>
-      {{ map_sources|markdown }}
-      {{ map_credits|markdown }}
-    </section>
+      </div> #}
+      {# {{ map_sources|markdown }} #}
+      {# {{ map_credits|markdown }} #}
+    {# </section> #}
   </div>
-  <script src="//{{ ROOT_URL }}/js/app.min.js"></script>
+  {# <script src="//{{ ROOT_URL }}/js/app.min.js"></script> #}
 
 
 </body>

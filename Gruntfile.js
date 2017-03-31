@@ -140,8 +140,8 @@ module.exports = function(grunt) {
       files: {
         'css/styles.css': 'sass/styles.scss',
         'css/triennial-styles.css': 'sass/triennial-styles.scss',
-        'css/fairness-styles.css': 'sass/fairness-styles.scss'
-
+        'css/fairness-styles.css': 'sass/fairness-styles.scss',
+        'css/lookup-styles.css': 'sass/lookup-styles.scss'
       }
     }
   };
