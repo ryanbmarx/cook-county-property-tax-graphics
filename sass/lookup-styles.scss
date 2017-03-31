@@ -20,24 +20,6 @@ $triangle-dimension: 8px;
 
 // ---- MAKE OR IMPORT MORE MIXINS HERE ---------------------------------------------
 
-@mixin text_stroke(
-	// Puts a stroke (blurred or not) around text;
-	$text-color:black, 
-	$stroke-color:white, 
-	$stroke-width:1px, 
-	$stroke-opacity:1,
-	$stroke-blur:0){
-	  
-
-  color:$text-color;
-  text-shadow:
-	#{0-$stroke-width} #{0-$stroke-width} $stroke-blur rgba($stroke-color, $stroke-opacity),  
-	$stroke-width #{0-$stroke-width} $stroke-blur rgba($stroke-color, $stroke-opacity),
-	#{0-$stroke-width} $stroke-width $stroke-blur rgba($stroke-color, $stroke-opacity),
-	$stroke-width $stroke-width $stroke-blur rgba($stroke-color, $stroke-opacity);
-}
-
-
 // Class imports. Uncomment the ones you want to use.
 // @import 'ngux-visibility-toggles';
 // @import 'trib-bulletbox';
@@ -58,7 +40,12 @@ $triangle-dimension: 8px;
 @import 'profile';
 // @import 'map-buttons';
 // @import 'legends';
-
+.lookup{
+	&__headline{
+		@include label4();
+		margin:0 0 10px 0;
+	}
+}
 
 
 .profile{
@@ -86,25 +73,30 @@ $triangle-dimension: 8px;
 		
 		width:100%;
 
-		&--1{
-			// background:rgba(black, .2);
-		}
+		// &--1{
+		// 	// background:rgba(black, .2);
+		// }
 		
-		&--2{
-			// background:rgba(black, .4);
-		}
+		// &--2{
+		// 	// background:rgba(black, .4);
+		// }
 
-		&--3{
-			// background:rgba(black, .2);
-		}
+		// &--3{
+		// 	// background:rgba(black, .2);
+		// }
 	}
 }
 
+.credits{
+	@include agate();
+}
+
 @media all and (min-width:$tablet-min-width){
-	.graphic-wrapper{
+	.lookup{
 		border:1px solid black;
 		padding:25px;
 	}
+	
 	.profile{		
 		&__map{
 			width: 40%;

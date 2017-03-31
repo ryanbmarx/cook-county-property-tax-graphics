@@ -5,6 +5,17 @@ $triangle-dimension: 8px;
 
 
  .profile{
+    transition: max-height 1000ms ease;
+    overflow: hidden;
+    max-height:0;
+
+    &.profile--visible{
+    	// This is the class which will create a css animation when the profile opens. Cribbed from here:
+    	// http://stackoverflow.com/questions/3508605/how-can-i-transition-height-0-to-height-auto-using-css
+		max-height:100vh;
+		transition: max-height 1000ms ease;
+    }
+
 	&__address{
 		@include label6();
 		margin: 0 0 5px 0;

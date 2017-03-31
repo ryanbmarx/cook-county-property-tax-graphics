@@ -173,6 +173,10 @@ function displayProfile(feature, placeData){
 			gaugeLabel.style.marginLeft = `${width * -0.5}px`;
 		}
 	}
+	// Now animate the profile open by using our css class
+	const profile = document.querySelector('.profile');
+	profile.classList.add('profile--visible');
+
 }
 
 
