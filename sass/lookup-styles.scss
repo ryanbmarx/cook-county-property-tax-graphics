@@ -39,10 +39,23 @@ $triangle-dimension: 8px;
 @import 'profile';
 // @import 'map-buttons';
 // @import 'legends';
+body{
+	// For some reason there is a margin showing up in iframes
+    margin:0;
+}
+
+
+
 .lookup{
 	&__headline{
 		@include label4();
 		margin:0 0 10px 0;
+	    position: absolute;
+	    top: 0;
+	    background: white;
+	    border-left: 1px solid black;
+	    border-right: 1px solid black;
+	    padding: 3px 10px;
 	}
 }
 
@@ -52,7 +65,7 @@ $triangle-dimension: 8px;
 	justify-content:space-between;
 	align-items: flex-start;
 	flex-wrap:wrap;
-    transition: max-height 1000ms ease;
+    // transition: max-height 1000ms ease;
     overflow: hidden;
     max-height:0;
 
@@ -60,7 +73,7 @@ $triangle-dimension: 8px;
     	// This is the class which will create a css animation when the profile opens. Cribbed from here:
     	// http://stackoverflow.com/questions/3508605/how-can-i-transition-height-0-to-height-auto-using-css
 		max-height:10000000vh;
-		transition: max-height 1000ms ease;
+		// transition: max-height 1000ms ease;
     }
 	&__meta{
 		width:100%;
@@ -85,10 +98,22 @@ $triangle-dimension: 8px;
 }
 
 @media all and (min-width:$tablet-min-width){
+	body{ padding-top: 22px; }
 	.lookup{
 		border:1px solid black;
 		padding:25px;
+	
+		&__headline{
+		    position: absolute;
+		    top: 0;
+		    background: white;
+		    border-left: 1px solid black;
+		    border-right: 1px solid black;
+		    padding: 3px 10px;
+		}
 	}
+
+
 
 	.profile{		
 		&__map{

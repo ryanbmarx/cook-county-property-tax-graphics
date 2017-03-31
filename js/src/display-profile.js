@@ -1,3 +1,4 @@
+var pym = require('pym.js');
 import {format} from 'd3';
 
 // This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
@@ -51,7 +52,6 @@ function displayProfile(feature, placeData){
 	// TODO: Add Township data
 	
 	const properties = feature.properties;
-	console.log(properties, placeData);
 	
 	const formatters = {
 		ratio: format('.2f'),
@@ -176,7 +176,6 @@ function displayProfile(feature, placeData){
 	// Now animate the profile open by using our css class
 	const profile = document.querySelector('.profile');
 	profile.classList.add('profile--visible');
-
 }
 
 

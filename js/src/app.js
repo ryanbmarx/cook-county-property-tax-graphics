@@ -149,9 +149,9 @@ function mapUserGeo(point, polygon){
 
 window.onload = function(){
   	// Initialize pym, so this can be a child page in a pymFrame.
-  	const pymChild = new pym.Child({});
-  	pymChild.sendHeight();
-  	pymChild.sendMessage('childLoaded');
+  	window.pymChild = new pym.Child({});
+  	// pymChild.sendHeight();
+  	window.pymChild.sendMessage('childLoaded');
 
   	// Create a trigger to detect whether we are on a mobile width, which is < 450
   	// Also, keep monitoring the window width so when the profile finally is shown, 
@@ -159,7 +159,6 @@ window.onload = function(){
   	
   	function checkIfMobile(){
   		window.mobile = window.innerWidth < 450 ? true : false;
-  		console.log(window.mobile);
   	}
   	// Init the variable
 	window.mobile = window.innerWidth < 450 ? true : false;
@@ -198,7 +197,7 @@ window.onload = function(){
 
 				// Call the profile function, sending it our desired tract
 				displayProfile(userGeo.tract, userCoordinates);
-				pymChild.sendHeight();
+				window.pymChild.sendHeight();
 			}, function(error) {
 				const userCoordinates = error;
 				console.error("User location geocoding failed", error);
