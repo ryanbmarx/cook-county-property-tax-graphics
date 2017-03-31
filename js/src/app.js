@@ -1,15 +1,9 @@
 import * as L from "leaflet";
 import 'leaflet-providers';
-import {scaleQuantize} from 'd3';
-import {scaleLinear} from 'd3';
-import {extent} from 'd3';
-import {json} from 'd3';
-import * as turf from '@turf/turf';
-// import geocodeAddress from './geocode-address.js';
+import {debounce} from 'underscore';
+import {scaleLinear, json, max, min} from 'd3';
+import {point, inside} from '@turf/turf';
 import displayProfile from './display-profile.js';
-import choroplethRatioScale from './ratio-scale.js';
-import inlineQuantLegend from './inline-quant-legend.js';
-import * as d3 from 'd3';
 var pym = require('pym.js');
 
 
@@ -19,23 +13,37 @@ var pym = require('pym.js');
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
-function styleFeature(featureFillColor){
-	// http://leafletjs.com/reference.html#path-options
-	return {
-		color: "#eee",
-		stroke:true,
-		weight:1,
-		fillColor:featureFillColor,
-		className:'tract',
-		fillOpacity: .9
-	};
+function getCoord(address){
+	// Generates a promise used to download a small json object with the user's coordiates based on the input address
+	return new Promise(function(resolve, reject){
+		// Make the request
+
+		const requestUrl = `https://qyf1ag22mj.execute-api.us-east-1.amazonaws.com/production/locations?q=${encodeURI(address)}&userLocation=41.8337329,-87.7321555`
+		const geoRequest = json(requestUrl)
+		
+		var request = new XMLHttpRequest();
+		request.open('GET', requestUrl);
+
+		request.onload = function(){
+			if (request.status == 200){
+				// success
+				resolve(request.response);
+			} else {
+				// Failure
+				reject(Error('ERROR!'));
+			}
+		}
+	    // Handle network errors
+	    request.onerror = function() {
+	      reject(Error("Network Error"));
+	    };
+
+	    // Make the request
+	    request.send();
+	});
 }
 
-function onEachFeature(feature, layer){
-	// Everything in this function is executed on each feature.
-	layer.id = feature.properties.NAME10;
-	layer.bindPopup(feature.properties.NAMELSAD10);
-}
+
 
 function drawMap(container, data, propertyToMap){
 	// instantiates the leaflet map
@@ -45,16 +53,15 @@ function drawMap(container, data, propertyToMap){
 			zoom: 9,
 			scrollWheelZoom:false,
 			maxZoom:16
-			// maxBounds:L.latLngBounds(L.latLng(36.590379, -92.133247),L.latLng(42.478624, -87.015605))
 		}
 	);
 	
-	// L.tileLayer.provider('Hydda.Full').addTo(map);
+	L.tileLayer.provider('Hydda.Full').addTo(map);
 	// L.tileLayer.provider('OpenStreetMap.BlackAndWhite').addTo(map);
-	L.tileLayer.provider('Stamen.TonerBackground').addTo(window.map);
-	window.choroplethData = L.layerGroup().addTo(window.map);
+	// L.tileLayer.provider('Stamen.TonerBackground').addTo(window.map);
+	// window.choroplethData = L.layerGroup().addTo(window.map);
 
-	// Build the scales for our little ratio gauges
+	// Build the needed scales for our little ratio gauges
 	var gaugeAttributes = [
 		'taxes', 
 		'ratio1', 
@@ -66,83 +73,33 @@ function drawMap(container, data, propertyToMap){
 		'appeal_fla'
 	];
 	gaugeAttributes.forEach(attribute => {
-		console.log('making gauge scale for ', attribute);
-		let max = d3.max(data['features'], d => {
+		const gMax = max(data['features'], d => {
 			return parseFloat(d['properties'][attribute])
 		});
 		
-		let min = d3.min(data['features'], d => {
+		const gMin = min(data['features'], d => {
 			return parseFloat(d['properties'][attribute])
 		});
 
 		window[`gauge${attribute}`] = scaleLinear()
 			.range([0,100])
-			.domain([min, max])
+			.domain([gMin, gMax])
 			.nice();
 	});
-			
-	
-	redrawGeojson(data, propertyToMap);
 }
-
-function redrawGeojson(data, propertyToMap){
-	// Adds the geojson data and styles it using a d3 scale for the choropleth
-
-	// Make a scale using the desired feature attriobute.
-	const dataExtent = extent(data.features, d => parseFloat(d.properties[propertyToMap]));
-	
-	// If the property to map is one of the ratio values, then we need to use our custom 
-	// ratio scale. If it isn't, go with a vanilla D3 scale. Do this by testing for the substring "ratio"
-	// in the name of the property to map.
-	let mapDataScale;
-	if (propertyToMap.toUpperCase().includes('RATIO')){
-		mapDataScale = choroplethRatioScale(dataExtent);
-	} else {
-		const hotRamp = [
-			"#FFFFC4",
-			"#F5F50A",
-			"#EB964F",
-			"#C11B17"
-		]
-
-		mapDataScale = scaleQuantize()
-			.domain(dataExtent)
-			.range(hotRamp);
-			
-		console.log(propertyToMap);
-		inlineQuantLegend(mapDataScale, propertyToMap);
-	}
-
-	// Remove the existing choropleth data because we want to put lovely new data onto it.	
-	window.choroplethData.clearLayers(0);
-	
-	// Apply the geojson to the map 
-	L.geoJSON(data, {
-		style: function(feature){
-			const 	featureFillColor = mapDataScale(parseFloat(feature.properties[propertyToMap]));
-			// Returns a style object for each tract
-			return styleFeature(featureFillColor);
-		},
-		onEachFeature: onEachFeature
-	}).addTo(window.choroplethData);
-
-	window.choroplethData.addTo(window.map);
-}
-
-
 
 function findTract(coordinates){
 	// This function takes a pair of coordinates in [<long>, <lat>] format
 	// and finds the corresponding census tract
 
 	// Create a geojson point of the user's address, using turf so it's compatible with the turf analysis functions.
-	const pointLoc = turf.point(coordinates);
+	const pointLoc = point(coordinates);
 
 	for (var i=0; i< window.tractDataFeatures.length; i++){
 		// For every feature (tract) in the data, test if the point is inside it.
 		const tract = window.tractDataFeatures[i];
 
-		if (turf.inside(pointLoc, tract) ){
+		if (inside(pointLoc, tract) ){
 			// If the tract is the one we're looking for, then return our data object
 			return {
 				point: pointLoc,
@@ -191,27 +148,29 @@ function mapUserGeo(point, polygon){
 }
 
 window.onload = function(){
+  	// Initialize pym, so this can be a child page in a pymFrame.
   	const pymChild = new pym.Child({});
   	pymChild.sendHeight();
   	pymChild.sendMessage('childLoaded');
 
-	const 	activeButton = document.querySelector('.map-button--active'),
-			container = document.getElementById('map'),
-			propertyToMap = activeButton.dataset.chart,
-			mapButtons = document.querySelectorAll('.map-button');
+  	// Create a trigger to detect whether we are on a mobile width, which is < 450
+  	// Also, keep monitoring the window width so when the profile finally is shown, 
+  	// it fits the current width.
+  	
+  	function checkIfMobile(){
+  		window.mobile = window.innerWidth < 450 ? true : false;
+  		console.log(window.mobile);
+  	}
+  	// Init the variable
+	window.mobile = window.innerWidth < 450 ? true : false;
+	// Keep tracking the variable
+	window.onresize = debounce(checkIfMobile, 300)
 
+
+	const mapContainer = document.getElementById('map');
 	json(`http://${window.ROOT_URL}/data/tract-data2.geojson`, tractData => {
 		window.tractDataFeatures = tractData.features;
-		drawMap(container, tractData, propertyToMap);
-
-		for (var button of mapButtons){
-			button.addEventListener('click', function(e) {
-				e.preventDefault();
-				document.querySelector('.map-button--active').classList.remove('map-button--active');
-				this.classList.add('map-button--active');
-				redrawGeojson(tractData, this.dataset.chart);
-			});
-		}
+		drawMap(mapContainer, tractData);
 	});
 
 
@@ -219,43 +178,6 @@ window.onload = function(){
 	document.getElementById('search-address-submit').addEventListener('click', e => {
 		// Get the input address from the form
 		const address = document.getElementById('search-address').value;
-
-		// Convert it to coordinates in long/lat format, for turfJS compatibility
-		//init promise
-		//feed async function
-		// handle result in promise.then()
-		// const userCoordinates = geocodeAddress(address);
-		
-
-		function getCoord(address){
-			return new Promise(function(resolve, reject){
-				// Make the request
-
-				const requestUrl = `https://qyf1ag22mj.execute-api.us-east-1.amazonaws.com/production/locations?q=${encodeURI(address)}&userLocation=41.8337329,-87.7321555`
-				const geoRequest = json(requestUrl)
-				
-				var request = new XMLHttpRequest();
-				request.open('GET', requestUrl);
-
-				request.onload = function(){
-					if (request.status == 200){
-						// success
-						resolve(request.response);
-					} else {
-						// Failure
-						reject(Error('ERROR!'));
-					}
-				}
-			    // Handle network errors
-			    request.onerror = function() {
-			      reject(Error("Network Error"));
-			    };
-
-			    // Make the request
-			    request.send();
-			});
-		}
-
 
 		getCoord(address)
 			.then(function(response) {
