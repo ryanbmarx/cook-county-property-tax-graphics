@@ -33,7 +33,6 @@ $triangle-dimension: 8px;
 // @import 'trib-typography';
 // @import 'trib-utilities';
 
-
 // ---- IMPORT PROJECT STYLES FROM PARTIAL FILES HERE ---------------------------------------------
 @import 'leaflet';
 @import 'form';
@@ -53,7 +52,16 @@ $triangle-dimension: 8px;
 	justify-content:space-between;
 	align-items: flex-start;
 	flex-wrap:wrap;
-	
+    transition: max-height 1000ms ease;
+    overflow: hidden;
+    max-height:0;
+
+   &.profile--visible{
+    	// This is the class which will create a css animation when the profile opens. Cribbed from here:
+    	// http://stackoverflow.com/questions/3508605/how-can-i-transition-height-0-to-height-auto-using-css
+		max-height:10000000vh;
+		transition: max-height 1000ms ease;
+    }
 	&__meta{
 		width:100%;
 		// background:yellow
@@ -69,22 +77,7 @@ $triangle-dimension: 8px;
 
 	&__columns{ width: 100%; }
 
-	&__column{
-		
-		width:100%;
-
-		// &--1{
-		// 	// background:rgba(black, .2);
-		// }
-		
-		// &--2{
-		// 	// background:rgba(black, .4);
-		// }
-
-		// &--3{
-		// 	// background:rgba(black, .2);
-		// }
-	}
+	&__column{ width:100%; }
 }
 
 .credits{
@@ -96,7 +89,7 @@ $triangle-dimension: 8px;
 		border:1px solid black;
 		padding:25px;
 	}
-	
+
 	.profile{		
 		&__map{
 			width: 40%;
