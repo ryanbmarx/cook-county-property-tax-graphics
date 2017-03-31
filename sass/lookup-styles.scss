@@ -50,12 +50,6 @@ body{
 	&__headline{
 		@include label4();
 		margin:0 0 10px 0;
-	    position: absolute;
-	    top: 0;
-	    background: white;
-	    border-left: 1px solid black;
-	    border-right: 1px solid black;
-	    padding: 3px 10px;
 	}
 }
 
@@ -88,7 +82,13 @@ body{
 		border:1px solid $trib-gray2;
 	}
 
-	&__columns{ width: 100%; }
+	&__columns{ 
+		display: flex;
+		justify-content:space-between;
+		align-items: flex-start;
+		flex-wrap:wrap;
+		width: 100%; 
+	}
 
 	&__column{ width:100%; }
 }
@@ -109,23 +109,23 @@ body{
 		    background: white;
 		    border-left: 1px solid black;
 		    border-right: 1px solid black;
-		    padding: 3px 10px;
+		    padding: 1px 10px;
 		}
 	}
 
-
-
 	.profile{		
 		&__map{
-			width: 40%;
+			width: 100%;
 			padding-bottom:0;
 			height:200px;
 		}
 		
 		&__columns{
-			width:55%;
+			
 		}
-
+		&__column{
+			width:47%;
+		}
 	}
 }
 
