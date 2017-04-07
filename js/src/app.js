@@ -13,8 +13,9 @@ var pym = require('pym.js');
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
-function triggerWarning(trigger){
+function triggerWarning(trigger, message){
 	if (trigger == 'trigger'){
+		document.querySelector('.profile-lookup__error-message').innerHTML = message;
 		document.querySelector('.profile-lookup').classList.add('profile-lookup--error');
 	} else if (trigger == 'clear') {
 		document.querySelector('.profile-lookup').classList.remove('profile-lookup--error');
@@ -22,6 +23,7 @@ function triggerWarning(trigger){
 }
 
 function isInCookCounty(coordinates){
+	const pointLoc = point(coordinates);
 	return true;
 }
 
@@ -119,6 +121,7 @@ function findTract(coordinates){
 			};
 		}
 	}
+	return false
 }
 
 function mapUserGeo(point, polygon){
@@ -224,22 +227,24 @@ window.onload = function(){
 							data.resources[0].geocodePoints[0].coordinates[0]
 						]
 					}
-
-					if (isInCookCounty(userCoordinates.coordinates)){
-						console.log("it's in cook county!")
-					}
+					
 					// Generate an object the with geojson for both the user's address and corresponding tract
 					const userGeo = findTract(userCoordinates.coordinates);
 
-					// Map the user's geo stuff
-					mapUserGeo(userGeo.point, userGeo.tract);
-
-					// Call the profile function, sending it our desired tract
-					displayProfile(userGeo.tract, userCoordinates);
+					if (!userGeo){
+						console.log("it's not in cook county!");
+						triggerWarning("trigger", window.error_not_in_cook_county);
+					} else {					
+						// Map the user's geo stuff
+						mapUserGeo(userGeo.point, userGeo.tract);
+	
+						// Call the profile function, sending it our desired tract
+						displayProfile(userGeo.tract, userCoordinates);
+					}
 				} else {
 					// If the geocoding returned no entries
 					console.error("User location geocoding failed");
-					triggerWarning("trigger")
+					triggerWarning("trigger", window.error_not_found)
 					
 				}
 				window.pymChild.sendHeight();
