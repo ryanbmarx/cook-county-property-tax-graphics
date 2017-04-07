@@ -192,13 +192,22 @@ window.onload = function(){
 
 		getCoord(address)
 			.then(function(response) {
+
+				console.log(JSON.parse(response));
 				const data = JSON.parse(response);
-				const userCoordinates =  {
-					address: data.resourceSets[0].resources[0].name,
-					coordinates:[
-						data.resourceSets[0].resources[0].geocodePoints[0].coordinates[1],
-						data.resourceSets[0].resources[0].geocodePoints[0].coordinates[0]
-					]
+				try {
+					document.querySelector('.profile-lookup').classList.remove('profile-lookup--error');
+					const userCoordinates =  {
+						address: data.resourceSets[0].resources[0].name,
+						coordinates:[
+							data.resourceSets[0].resources[0].geocodePoints[0].coordinates[1],
+							data.resourceSets[0].resources[0].geocodePoints[0].coordinates[0]
+						]
+					}
+				}
+				catch (error) {
+					console.error("User location geocoding failed", error);
+					document.querySelector('.profile-lookup').classList.add('profile-lookup--error');
 				}
 
 				// Generate an object the with geojson for both the user's address and corresponding tract
@@ -216,5 +225,12 @@ window.onload = function(){
 			});
 
 	});	
+
+	// Reset the red/errored form after 300ms of typing to "clear" the error.
+	document.getElementById('search-address').addEventListener('input', e => {
+		setTimeout(function(){
+			document.querySelector('.profile-lookup').classList.remove('profile-lookup--error');	
+		}, 300);
+	});
 
 };
