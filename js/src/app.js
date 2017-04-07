@@ -13,6 +13,18 @@ var pym = require('pym.js');
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
+function triggerWarning(trigger){
+	if (trigger == 'trigger'){
+		document.querySelector('.profile-lookup').classList.add('profile-lookup--error');
+	} else if (trigger == 'clear') {
+		document.querySelector('.profile-lookup').classList.remove('profile-lookup--error');
+	}
+}
+
+function isInCookCounty(coordinates){
+	return true;
+}
+
 function getCoord(address){
 	// Generates a promise used to download a small json object with the user's coordiates based on the input address
 	return new Promise(function(resolve, reject){
@@ -193,31 +205,43 @@ window.onload = function(){
 		getCoord(address)
 			.then(function(response) {
 
-				console.log(JSON.parse(response));
-				const data = JSON.parse(response);
-				try {
-					document.querySelector('.profile-lookup').classList.remove('profile-lookup--error');
+				
+				const data = JSON.parse(response).resourceSets[0];
+				console.log(JSON.parse(response).resourceSets[0]);
+				if (data.estimatedTotal > 0) {
+					// if the geocoding returns at least one entry, then
+					// do this. This ain't no guarantee that the address 
+					// is the correct one, but at least we know it's a real
+					// address. Only in this case will we show a profile.
+					
+					// Start by clearing any existing error
+					triggerWarning("clear")
+
 					const userCoordinates =  {
-						address: data.resourceSets[0].resources[0].name,
+						address: data.resources[0].name,
 						coordinates:[
-							data.resourceSets[0].resources[0].geocodePoints[0].coordinates[1],
-							data.resourceSets[0].resources[0].geocodePoints[0].coordinates[0]
+							data.resources[0].geocodePoints[0].coordinates[1],
+							data.resources[0].geocodePoints[0].coordinates[0]
 						]
 					}
+
+					if (isInCookCounty(userCoordinates.coordinates)){
+						console.log("it's in cook county!")
+					}
+					// Generate an object the with geojson for both the user's address and corresponding tract
+					const userGeo = findTract(userCoordinates.coordinates);
+
+					// Map the user's geo stuff
+					mapUserGeo(userGeo.point, userGeo.tract);
+
+					// Call the profile function, sending it our desired tract
+					displayProfile(userGeo.tract, userCoordinates);
+				} else {
+					// If the geocoding returned no entries
+					console.error("User location geocoding failed");
+					triggerWarning("trigger")
+					
 				}
-				catch (error) {
-					console.error("User location geocoding failed", error);
-					document.querySelector('.profile-lookup').classList.add('profile-lookup--error');
-				}
-
-				// Generate an object the with geojson for both the user's address and corresponding tract
-				const userGeo = findTract(userCoordinates.coordinates);
-
-				// Map the user's geo stuff
-				mapUserGeo(userGeo.point, userGeo.tract);
-
-				// Call the profile function, sending it our desired tract
-				displayProfile(userGeo.tract, userCoordinates);
 				window.pymChild.sendHeight();
 			}, function(error) {
 				const userCoordinates = error;
@@ -229,7 +253,7 @@ window.onload = function(){
 	// Reset the red/errored form after 300ms of typing to "clear" the error.
 	document.getElementById('search-address').addEventListener('input', e => {
 		setTimeout(function(){
-			document.querySelector('.profile-lookup').classList.remove('profile-lookup--error');	
+			triggerWarning("clear")
 		}, 300);
 	});
 
