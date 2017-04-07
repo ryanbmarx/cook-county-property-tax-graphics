@@ -157,7 +157,7 @@ module.exports = function(grunt) {
     },
     js: {
       files: ['js/src/**/*.js'],
-      tasks: ['browserify:fairness']
+      tasks: ['browserify:app']
     }
   };
 
