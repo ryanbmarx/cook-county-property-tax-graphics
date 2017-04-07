@@ -147,11 +147,23 @@ function mapUserGeo(point, polygon){
 	window.map.setView([point.geometry.coordinates[1],point.geometry.coordinates[0]], 13);
 }
 
+function startUpPym(){
+	window.pymChild = new pym.Child({ polling: 500 });
+	pymChild.sendHeight();
+	pymChild.sendMessage('childLoaded');
+	document.getElementById('methodology-link').addEventListener('click', function(e){
+		e.preventDefault();
+		var scrollTarget = e.target.href.split("#")[1] + "-methodology";
+		pymChild.scrollParentTo(scrollTarget);	
+	})
+}
+// Listen for the loaded event then run the pym stuff.
+window.addEventListener('load', function() {  
+	startUpPym(); 
+}, false);
+
+
 window.onload = function(){
-  	// Initialize pym, so this can be a child page in a pymFrame.
-  	window.pymChild = new pym.Child({});
-  	// pymChild.sendHeight();
-  	window.pymChild.sendMessage('childLoaded');
 
   	// Create a trigger to detect whether we are on a mobile width, which is < 450
   	// Also, keep monitoring the window width so when the profile finally is shown, 
