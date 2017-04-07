@@ -44,12 +44,25 @@ body{
     margin:0;
 }
 
+.methodology-link{
+	@include agate();
+	margin-top:15px;
+  text-decoration:none;
+
+  &:hover{
+    text-decoration: none;
+  }
+}
+
 
 
 .lookup{
 	&__headline{
 		@include label4();
 		margin:0 0 10px 0;
+	}
+	&__chatter{
+		@include sans-serif-text(16px, 1.5em, normal);
 	}
 }
 
