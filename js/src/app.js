@@ -22,11 +22,6 @@ function triggerWarning(trigger, message){
 	}
 }
 
-function isInCookCounty(coordinates){
-	const pointLoc = point(coordinates);
-	return true;
-}
-
 function getCoord(address){
 	// Generates a promise used to download a small json object with the user's coordiates based on the input address
 	return new Promise(function(resolve, reject){
