@@ -66,6 +66,8 @@ body{
 
 
 .lookup{
+    margin-top: 19px;
+    
 	&__headline{
 		@include label4();
 		margin:0 0 10px 0;
