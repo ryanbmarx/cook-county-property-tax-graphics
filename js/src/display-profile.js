@@ -72,106 +72,120 @@ function displayProfile(feature, placeData){
 	
 	if (window.mobile){
 		// if the window width suggests a mobile device, we just want a nice batch of lists for the profile.
-		document.getElementById('profile__column--1').innerHTML = `
-			<ul class='profile__attributes profile__attributes--tract'>
-				<li>
+			document.querySelector('.profile__column--gauges').innerHTML = `
+			<ul class='profile__attributes'>
+				<li class='attribute attribute--ratio'>
 					<strong>Median home value ratio (after any appeals):</strong>
-					${formatters.ratio(properties.ratio1)}
+					${addGauge(properties.ratio1,formatters.ratio, window.gaugeratio1, "ratio1")}
 				</li>
-				<li>
+				<li class='attribute attribute--assessed'>
 					<strong>Assessed value:</strong>
-					${formatters.currencyRounded(properties.value)}			
+					${addGauge(properties.value,formatters.currencyRounded, window.gaugevalue, "value")}			
 				</li>
-				<li>
+				<li class='attribute attribute--market-value'>
 					<strong>Home value: </strong>
-					${formatters.currency(properties.av1)}
-				</li>
-			</ul>`;	
-
-		// Column 2
-		document.getElementById('profile__column--2').innerHTML = `
-			<ul class='profile__attributes profile__attributes--tract'>
-				<li>
-					<strong>Percentage of assessment appeals: </strong>
-					${formatters.percentage(properties.appeal_fla)}
-				</li>
-				<li>
-					<strong>Taxes: </strong>
-					${formatters.currencyRounded(properties.taxes)}
-				</li>
-				<li>
-					<strong>Effective overall tax rate: </strong>
-					${formatters.percentage(properties.erate)}
+					${addGauge(properties.av1, formatters.currency, window.gaugeav1, "av1")}			
 				</li>
 			</ul>`;
 
-		// Column 3
-		document.getElementById('profile__column--3').innerHTML = `
-			<ul class='profile__attributes profile__attributes--tract'>
-				<li>
-					<strong>Median household income: </strong>
-					${formatters.currencyRounded(properties.medhinc)}
+		// // Column 3
+		document.querySelector('.profile__column--numbers').innerHTML = `
+			<ul class='profile__attributes profile__attributes--numbers'>
+				<li class='attribute'>
+					<strong>Appealed assessments: </strong>
+					${formatters.percentage(properties.appeal_fla)}			
 				</li>
-				<li>
+				<li class='attribute'>
+					<strong>Effective overall tax rate: </strong>
+					${formatters.percentage(properties.erate)}			
+				</li>
+				<li class='attribute'>
+					<strong>Taxes: </strong>
+					${formatters.currencyRounded(properties.taxes)}			
+				</li>
+				<li class='attribute'>
+					<strong>Median household income: </strong>
+					${formatters.currencyRounded(properties.medhinc)}			
+				</li>
+				<li class='attribute'>
 					<strong>Percentage white, not hispanic: </strong>
-					${formatters.percentage(properties.white)}
+					${formatters.percentage(properties.white)}			
+				</li>
+				<li class='attribute'>
+					<strong>Number of homes in dataset: </strong>
+					TK
 				</li>
 			</ul>`;
 	} else {
 		// If the window width suggests a tablet or greater, then we should do gauges.
 		// Column 1
-		document.getElementById('profile__column--1').innerHTML = `
-			<ul class='profile__attributes profile__attributes--tract'>
-				<li>
+		document.querySelector('.profile__column--gauges').innerHTML = `
+			<ul class='profile__attributes'>
+				<li class='attribute attribute--ratio'>
 					<strong>Median home value ratio (after any appeals):</strong>
 					${addGauge(properties.ratio1,formatters.ratio, window.gaugeratio1, "ratio1")}
 				</li>
-				<li>
+				<li class='attribute attribute--assessed'>
 					<strong>Assessed value:</strong>
 					${addGauge(properties.value,formatters.currencyRounded, window.gaugevalue, "value")}			
 				</li>
-				<li>
+				<li class='attribute attribute--market-value'>
 					<strong>Home value: </strong>
 					${addGauge(properties.av1, formatters.currency, window.gaugeav1, "av1")}			
 				</li>
-			</ul>`;	
 		
-		// Column 2
-		document.getElementById('profile__column--2').innerHTML = `
-			<ul class='profile__attributes profile__attributes--tract'>
-				<li>
+				<li class='attribute attribute--appeals'>
 					<strong>Percentage of assessment appeals: </strong>
 					${addGauge(properties.appeal_fla, formatters.percentage, window.gaugeappeal_fla, "appeal_fla")}			
 				</li>
-				<li>
-					<strong>Taxes: </strong>
-					${addGauge(properties.taxes,formatters.currencyRounded, window.gaugetaxes, "taxes")}			
-				</li>
-				<li>
+				<li class='attribute attribute--tax-rate'>
 					<strong>Effective overall tax rate: </strong>
 					${addGauge(properties.erate,formatters.percentage, window.gaugeerate, "erate")}			
 				</li>
 			</ul>`;
 
-		// Column 3
-		document.getElementById('profile__column--3').innerHTML = `
-			<ul class='profile__attributes profile__attributes--tract'>
-				<li>
-					<strong>Median household income: </strong>
-					${addGauge(properties.medhinc,formatters.currencyRounded, window.gaugemedhinc, "medhinc")}			
+		// // Column 3
+		document.querySelector('.profile__column--numbers').innerHTML = `
+			<ul class='profile__attributes profile__attributes--numbers'>
+				<li class='attribute'>
+					<strong>Taxes: </strong>
+					${formatters.currencyRounded(properties.taxes)}			
 				</li>
-				<li>
+				<li class='attribute'>
+					<strong>Median household income: </strong>
+					${formatters.currencyRounded(properties.medhinc)}			
+				</li>
+				<li class='attribute'>
 					<strong>Percentage white, not hispanic: </strong>
-					${addGauge(properties.white,formatters.percentage, window.gaugewhite, "white")}			
+					${formatters.percentage(properties.white)}			
+				</li>
+				<li class='attribute'>
+					<strong>Number of homes in dataset: </strong>
+					TK
 				</li>
 			</ul>`;
+// document.querySelector('.profile__column--numbers').innerHTML = `
+// 			<ul class='profile__attributes profile__attributes--tract'>
+// 				<li>
+// 					<strong>Taxes: </strong>
+// 					${addGauge(properties.taxes,formatters.currencyRounded, window.gaugetaxes, "taxes")}			
+// 				</li>
+// 				<li>
+// 					<strong>Median household income: </strong>
+// 					${addGauge(properties.medhinc,formatters.currencyRounded, window.gaugemedhinc, "medhinc")}			
+// 				</li>
+// 				<li>
+// 					<strong>Percentage white, not hispanic: </strong>
+// 					${addGauge(properties.white,formatters.percentage, window.gaugewhite, "white")}			
+// 				</li>
+// 			</ul>`;
 
-		// center the labels
-		const gaugeLabels = document.querySelectorAll('.gauge__label--center');
-		for (var gaugeLabel of gaugeLabels){
-			const width = gaugeLabel.getBoundingClientRect().width
-			gaugeLabel.style.marginLeft = `${width * -0.5}px`;
-		}
+	}
+	// center the labels
+	const gaugeLabels = document.querySelectorAll('.gauge__label--center');
+	for (var gaugeLabel of gaugeLabels){
+		const width = gaugeLabel.getBoundingClientRect().width
+		gaugeLabel.style.marginLeft = `${width * -0.5}px`;
 	}
 	// Now animate the profile open by using our css class
 	const profile = document.querySelector('.profile');

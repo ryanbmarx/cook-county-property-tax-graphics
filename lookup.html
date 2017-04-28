@@ -22,11 +22,13 @@
         {% include '_subtemplates/_form.html' %}
         <div id="profile" class='profile'>
           <div id='profile__meta' class="profile__meta"></div>
-          <div id='map' class="profile__map"></div>
+          
           <div class='profile__columns'>
-            <div id='profile__column--1' class="profile__column profile__column--1"></div>
-            <div  id='profile__column--2' class="profile__column profile__column--2"></div>
-            <div  id='profile__column--3' class="profile__column profile__column--3"></div>
+            <div class='profile__column profile__column--map'>
+              <div id='map' class="profile__map"></div>
+            </div>
+            <div class='profile__column profile__column--gauges'></div>
+            <div class='profile__column profile__column--numbers'></div>
           </div>
         </div>
   </section>

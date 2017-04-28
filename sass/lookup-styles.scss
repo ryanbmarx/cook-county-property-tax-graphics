@@ -14,6 +14,11 @@ $profile_column_gutter:25px;
 // Gauge chart triangle
 $triangle-dimension: 8px;
 
+// DESKTOP VARS
+$map-width:250px;
+$numbers-width:150px;
+$numbers-width-padding:15px;
+
 
 // Required for everything, too, but can be broken down into smaller explicit imports if desired. 
 @import 'base-mixins';
@@ -93,10 +98,10 @@ body{
 
 	&__map{
 		width:100%;
-		height:0;
-		padding-bottom:75%;
+		height:100%;
+		// padding-bottom:75%;
 		margin-bottom: 15px;
-		border:1px solid $trib-gray2;
+		// border:1px solid $trib-gray2;
 	}
 
 	&__columns{ 
@@ -105,10 +110,28 @@ body{
 		align-items: flex-start;
 		flex-wrap:wrap;
 		width: 100%; 
+		align-items:stretch;
 	}
 
-	&__column{ width:100%; }
+	&__column{ 
+		width:100%; 
+		
+		&--map{
+			width:100%;
+			height: 250px;
+			margin-bottom:15px;
+		}
+		
+		// &--numbers{
+		// 	margin-top:15px;
+		// 	padding-top:15px;
+		// 	border-top: 1px solid $trib-gray4;
+		// }
+	}
 }
+
+
+
 
 .credits{
 	@include agate();
@@ -143,38 +166,48 @@ body{
 			padding-bottom:0;
 			height:200px;
 		}
-		
-		&__columns{
-			
-		}
-		&__column{
-			width:47%;
-		}
 	}
 }
 
 @media all and (min-width:$desktop-min-width){
+
+
+	.profile__column--gauges{
+		width:300px; // fallback
+		width: calc(100% - #{$numbers-width} - #{$map-width} - 50px);
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+	.profile__column--numbers{
+		margin-top:0;
+		border-top: none;
+		width: $numbers-width - ($numbers-width-padding * 2);
+		padding:$numbers-width-padding;
+		background:rgba($trib-blue2, .05);
+
+	}
+	.profile__column--map{
+		width: $map-width;
+		height:auto;
+	}
+
 	.profile{
 		@include clearfix();
 		display:block;
 
 		&__map{
-			width: 250px;
-			height:250px;
-			float:left;
+			height:100%;
 		}
 		
 		&__columns{
 			width:auto;
-			margin-left:275px;
+			// margin-left:275px;
 			display: flex;
 			justify-content:space-between;
-			align-items: flex-start;
+			align-items: stretch;
 			flex-wrap:wrap;
 		}
 
-		&__column{
-			width:30%;
-		}
 	}
 }
