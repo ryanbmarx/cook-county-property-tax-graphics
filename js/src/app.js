@@ -256,5 +256,4 @@ window.onload = function(){
 			triggerWarning("clear")
 		}, 300);
 	});
-
 };
