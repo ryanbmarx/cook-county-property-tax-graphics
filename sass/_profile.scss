@@ -25,13 +25,12 @@ $numbers-width-padding:15px;
     // transition: max-height 1000ms ease;
     overflow: hidden;
     max-height:0;
-    margin-top:25px;
 
    &.profile--visible{
     	// This is the class which will create a css animation when the profile opens. Cribbed from here:
     	// http://stackoverflow.com/questions/3508605/how-can-i-transition-height-0-to-height-auto-using-css
 		max-height:10000000vh;
-		// transition: max-height 1000ms ease;
+	    margin-top:25px;
     }
 	
 	&__meta{
@@ -155,6 +154,9 @@ p, span, strong{
 	}
 }
 
+.profile__columns--gauges{
+	display:none;
+}
 
 
 @media all and (min-width:$tablet-min-width){
