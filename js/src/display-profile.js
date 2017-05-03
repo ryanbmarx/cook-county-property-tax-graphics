@@ -57,7 +57,8 @@ function displayProfile(feature, placeData){
 		ratio: format('.2f'),
 		currency: format('$,.2f'),
 		currencyRounded: format('$,.0f'),
-		percentage: format('.1%')
+		percentage: format('.1%'),
+		integer: format(',')
 	}
 
 	const placeName = placeData.address;
@@ -113,7 +114,7 @@ function displayProfile(feature, placeData){
 				</li>
 				<li class='attribute'>
 					<strong>Number of homes in dataset: </strong>
-					TK
+					${formatters.percentage(properties.N)}
 				</li>
 			</ul>`;
 	} else {
@@ -126,16 +127,16 @@ function displayProfile(feature, placeData){
 					${addGauge(properties.ratio1,formatters.ratio, window.gaugeratio1, "ratio1")}
 				</li>
 				<li class='attribute attribute--assessed'>
-					<strong>Assessed value:</strong>
+					<strong>Median market value:</strong>
 					${addGauge(properties.value,formatters.currencyRounded, window.gaugevalue, "value")}			
 				</li>
 				<li class='attribute attribute--market-value'>
-					<strong>Home value: </strong>
+					<strong>Median assessed value: </strong>
 					${addGauge(properties.av1, formatters.currency, window.gaugeav1, "av1")}			
 				</li>
 		
 				<li class='attribute attribute--appeals'>
-					<strong>Percentage of assessment appeals: </strong>
+					<strong>Assessments appealed (%): </strong>
 					${addGauge(properties.appeal_fla, formatters.percentage, window.gaugeappeal_fla, "appeal_fla")}			
 				</li>
 				<li class='attribute attribute--tax-rate'>
@@ -160,8 +161,8 @@ function displayProfile(feature, placeData){
 					${formatters.percentage(properties.white)}			
 				</li>
 				<li class='attribute'>
-					<strong>Number of homes in dataset: </strong>
-					TK
+					<strong>Homes in this tract's data: </strong>
+					${properties.N}
 				</li>
 			</ul>`;
 // document.querySelector('.profile__column--numbers').innerHTML = `

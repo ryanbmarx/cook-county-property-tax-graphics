@@ -190,6 +190,7 @@ window.onload = function(){
 
 	const mapContainer = document.getElementById('map');
 	json(`http://${window.ROOT_URL}/data/tract-data2.geojson`, tractData => {
+		console.log(tractData);
 		window.tractDataFeatures = tractData.features;
 		drawMap(mapContainer, tractData);
 	});
