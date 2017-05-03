@@ -3,8 +3,73 @@ $tablet-min-width:450px;
 
 $triangle-dimension: 8px;
 
+// DESKTOP VARS
+$map-width:250px;
+$numbers-width:200px;
+$numbers-width-padding:15px;
+
+@mixin make_columns($valign:flex-start){
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-between;
+	align-items: $valign;
+}
+
 
 .profile{
+	@include sans-serif();
+	display: flex;
+	justify-content:space-between;
+	align-items: flex-start;
+	flex-wrap:wrap;
+    // transition: max-height 1000ms ease;
+    overflow: hidden;
+    max-height:0;
+    margin-top:25px;
+
+   &.profile--visible{
+    	// This is the class which will create a css animation when the profile opens. Cribbed from here:
+    	// http://stackoverflow.com/questions/3508605/how-can-i-transition-height-0-to-height-auto-using-css
+		max-height:10000000vh;
+		// transition: max-height 1000ms ease;
+    }
+	
+	&__meta{
+		width:100%;
+		// background:yellow
+	}
+
+	&__map{
+		width:100%;
+		height:100%;
+		// padding-bottom:75%;
+		margin-bottom: 15px;
+		// border:1px solid $trib-gray2;
+	}
+
+	&__columns{ 
+		display: flex;
+		justify-content:space-between;
+		align-items: flex-start;
+		flex-wrap:wrap;
+		width: 100%; 
+		align-items:stretch;
+	}
+
+	&__column{ 
+		width:100%; 
+		
+		&--map{
+			width:100%;
+			height: 250px;
+			margin-bottom:15px;
+		}
+		
+		&--gauges{
+			text-align:center;
+		}
+	}
+
 
 	&__address{
 		@include label6();
@@ -24,51 +89,36 @@ $triangle-dimension: 8px;
 		text-align:center;
 	}
 
-	&__attributes{
-		list-style-type: none;
-		margin:0;
-		padding:0;
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		flex-wrap:wrap;
-		
-		li.attribute{
-			@include sans-serif();
-			margin:0 0 15px 0;
-			padding-bottom:15px;
-			border-bottom:1px solid $trib-gray4;
-			width:100%;
-			// &--ratio{
-			// 	width:100%;
-			// }
-			// &--assessed{
-			// 	width: 45%
-			// }
-			// &--market-value{
-			// 	width: 45%
-			// }
-			// &--appeals{
-			// 	width: 45%
-			// }
-			// &--tax-rate{
-			// 	width: 45%
-			// }
-		}
-		&--numbers{
-			@include sans-serif();
-			.attribute{
-				margin-bottom:15px;
-			}
-		}
+	&__over-under{
+		background:$trib-grey4;
+		padding:10px;
+		// color:white;
+		margin-top:15px;
+		margin-bottom:15px;
+
 	}
 }
 
+.big-number{
+	font-weight:bold;
+	font-size:30px;
+	margin:0;
+	padding:0;
+}
+p, span, strong{
+	&.overvalued {
+		color: $trib-red2;
+	}
+	&.undervalued {
+		color: $trib-orange;
+	}
+}
 
 .gauge{
 	position:relative;
-	height:70px;
-	// background:#eee;
+	height:50px;
+	// width: 48%;
+
 
 	&__label{
 		@include sans-serif();
@@ -90,7 +140,7 @@ $triangle-dimension: 8px;
 		position:absolute;
 		width:$triangle-dimension;
 		height:$triangle-dimension;
-		top:19px;
+		// top:19px;
 		margin: 0 0 0 #{$triangle-dimension / -2};
 	}
 
@@ -98,39 +148,116 @@ $triangle-dimension: 8px;
 		width: 100%;
 		height: 20px;
 		position: absolute;
-		top: 28px;
+		top: 10px;
+		left: 0;
 		fill:$trib-blue2;
 		fill-opacity:.2;
 	}
 }
 
+
+
 @media all and (min-width:$tablet-min-width){
+	.profile{		
+		&__map{
+			width: 100%;
+			padding-bottom:0;
+			height:200px;
+		}
+	}
 
 }
 
 @media all and (min-width:$desktop-min-width){
 
-	.profile__attributes{		
-		li.attribute{
 
-			&--assessed{
-				width: 45%
+	.profile{
+		// @include clearfix();
+		display:block;
+		
+		&__column--data{
+			text-align:center;
+		}
+
+		&__map{
+			// So the heights of the columns appear equalized.
+			height:100%;
+		}
+
+		&__values{
+			@include make_columns();
+			// padding:15px;
+			// background:$trib-gray4;
+		}
+
+		&__tract{
+			font-size:24px;
+			margin-top:0;
+		}
+	}
+
+	// adjust arrangement of main columns
+	.profile__columns{
+		width:auto;
+		// margin-left:275px;
+		display: flex;
+		justify-content:space-between;
+		align-items: stretch;
+		flex-wrap:wrap;
+		
+		&--gauges {
+			padding: 20px;
+			background:rgba($trib-blue2, .05);
+			margin: 25px 0 0 0;
+			& > div{
+					// This is the width of the gauge columns underneath the values stuff.
+					width:45%;
+					p{
+						margin: 0 0 3px 0;
+						text-align:left;
+					}
+				}
 			}
-			&--market-value{
-				width: 45%
+
+		.profile__column{
+			&--data{
+				width:300px; // fallback
+				width: calc(100% - #{$numbers-width} - #{$map-width} - 50px);
 			}
-			&--appeals{
-				width: 45%
+
+			&--numbers{
+				margin-top:0;
+				border-top: none;
+				width: $numbers-width - ($numbers-width-padding * 2);
+				padding:$numbers-width-padding;
+				background:rgba($trib-blue2, .05);
 			}
-			&--tax-rate{
-				width: 45%
+			&--map{
+				width: $map-width;
+				height:auto;
+			}
+		}
+	}
+
+	// This is the list of numbers on the right side
+	.profile__attributes {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+
+		li{
+			margin-bottom: 10px;
+			padding-bottom:10px;
+			border-bottom:1px solid $trib-gray4;
+
+			&:last-child{
+				margin-bottom: 0;
+				padding-bottom: 0;
+				border-bottom:none;
 			}
 		}
 	}
 
 
-	.profile__attributes li:last-child{
-		border-bottom:none;
-		padding-bottom:0;
-	}
+
 }

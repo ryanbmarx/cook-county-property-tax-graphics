@@ -14,10 +14,6 @@ $profile_column_gutter:25px;
 // Gauge chart triangle
 $triangle-dimension: 8px;
 
-// DESKTOP VARS
-$map-width:250px;
-$numbers-width:150px;
-$numbers-width-padding:15px;
 
 
 // Required for everything, too, but can be broken down into smaller explicit imports if desired. 
@@ -78,59 +74,68 @@ body{
 }
 
 
-.profile{
-	display: flex;
-	justify-content:space-between;
-	align-items: flex-start;
-	flex-wrap:wrap;
-    // transition: max-height 1000ms ease;
-    overflow: hidden;
-    max-height:0;
+// .profile{
+// 	display: flex;
+// 	justify-content:space-between;
+// 	align-items: flex-start;
+// 	flex-wrap:wrap;
+//     // transition: max-height 1000ms ease;
+//     overflow: hidden;
+//     max-height:0;
 
-   &.profile--visible{
-    	// This is the class which will create a css animation when the profile opens. Cribbed from here:
-    	// http://stackoverflow.com/questions/3508605/how-can-i-transition-height-0-to-height-auto-using-css
-		max-height:10000000vh;
-		// transition: max-height 1000ms ease;
-    }
-	&__meta{
-		width:100%;
-		// background:yellow
-	}
+//    &.profile--visible{
+//     	// This is the class which will create a css animation when the profile opens. Cribbed from here:
+//     	// http://stackoverflow.com/questions/3508605/how-can-i-transition-height-0-to-height-auto-using-css
+// 		max-height:10000000vh;
+// 		// transition: max-height 1000ms ease;
+//     }
+// 	&__meta{
+// 		width:100%;
+// 		// background:yellow
+// 	}
 
-	&__map{
-		width:100%;
-		height:100%;
-		// padding-bottom:75%;
-		margin-bottom: 15px;
-		// border:1px solid $trib-gray2;
-	}
+// 	&__map{
+// 		width:100%;
+// 		height:100%;
+// 		// padding-bottom:75%;
+// 		margin-bottom: 15px;
+// 		// border:1px solid $trib-gray2;
+// 	}
 
-	&__columns{ 
-		display: flex;
-		justify-content:space-between;
-		align-items: flex-start;
-		flex-wrap:wrap;
-		width: 100%; 
-		align-items:stretch;
-	}
+// 	&__columns{ 
+// 		display: flex;
+// 		justify-content:space-between;
+// 		align-items: flex-start;
+// 		flex-wrap:wrap;
+// 		width: 100%; 
+// 		align-items:stretch;
+// 	}
 
-	&__column{ 
-		width:100%; 
+// 	&__column{ 
+// 		width:100%; 
 		
-		&--map{
-			width:100%;
-			height: 250px;
-			margin-bottom:15px;
-		}
+// 		&--map{
+// 			width:100%;
+// 			height: 250px;
+// 			margin-bottom:15px;
+// 		}
 		
-		// &--numbers{
-		// 	margin-top:15px;
-		// 	padding-top:15px;
-		// 	border-top: 1px solid $trib-gray4;
-		// }
-	}
-}
+// 		&--gauges{
+// 			text-align:center;
+// 		}
+// 	}
+
+// 	// &__over-under{
+// 	// 	padding:10px;
+		
+// 	// 	&--overvalued {
+// 	// 		background: $trib-orange;
+// 	// 	}
+// 	// 	&--undervalued {
+// 	// 		background: $trib-red2;
+// 	// 	}
+// 	// }
+// }
 
 
 
@@ -162,54 +167,11 @@ body{
 		}
 	}
 
-	.profile{		
-		&__map{
-			width: 100%;
-			padding-bottom:0;
-			height:200px;
-		}
-	}
+
 }
 
 @media all and (min-width:$desktop-min-width){
 
 
-	.profile__column--gauges{
-		width:300px; // fallback
-		width: calc(100% - #{$numbers-width} - #{$map-width} - 50px);
-		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-	}
-	.profile__column--numbers{
-		margin-top:0;
-		border-top: none;
-		width: $numbers-width - ($numbers-width-padding * 2);
-		padding:$numbers-width-padding;
-		background:rgba($trib-blue2, .05);
-
-	}
-	.profile__column--map{
-		width: $map-width;
-		height:auto;
-	}
-
-	.profile{
-		@include clearfix();
-		display:block;
-
-		&__map{
-			height:100%;
-		}
-		
-		&__columns{
-			width:auto;
-			// margin-left:275px;
-			display: flex;
-			justify-content:space-between;
-			align-items: stretch;
-			flex-wrap:wrap;
-		}
-
-	}
+	
 }
