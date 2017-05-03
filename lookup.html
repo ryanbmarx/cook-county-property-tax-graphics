@@ -17,68 +17,18 @@
   <section class="lookup">
     <h1 class='lookup__headline'>{{ lookup_headline|process_text() }}</h1>
     <p class='lookup__chatter'>{{ lookup_chatter|process_text() }}</p>
-    {# {% include '_subtemplates/_map-buttons.html' %} #}
-    
+
     {% include '_subtemplates/_form.html' %}
-    <div id="profile" class='profile'>
-      <div id='profile__meta' class="profile__meta"> {# headers here #}  </div>
-      <div class='profile__columns'>
-        <div class='profile__column profile__column--map'>
-          <div id='map' class="profile__map"></div>
-        </div>
-        <div class='profile__column profile__column--data'>
-          <h2 class='profile__tract'>A typical home in <span id='tract'>XXXXX</span> is <strong id='over-under'>XXXXXVALUED</strong></h2>
-          <div class='profile__values'>
-            <div class='number'>
-              <p>Sold at market for:</p>
-              <p id='market' class='big-number'>$XXX,XXX</p>
-            </div>
-            <div class='number'>
-              <p>Should have assessed value of 10%:</p>
-              <p  id='assessed-ten-per' class='big-number'>$XX,XXX</p>
-            </div>
-            <div class='number'>
-              <p>Actually assessed at:</p>
-              <p id='assessed-actual' class='big-number'><span>$XX,XXX</span></p>
-            </div>
-          </div>
-          <div class='profile__columns profile__columns--gauges'>
-            <div>
-              <p><strong id='appealed-sentence'>XX%</strong> of assessments in the tract were appealed</p>
-              <div id='appealed'></div>
-            </div>
-            <div>
-              <p>The typical home's effective tax rate was <strong id='tax-rate-sentence'>XX%</strong></p>
-              <div id="tax-rate">XXXXXXX</div>
-            </div>
-          </div>
-        </div>
-        <div class='profile__column profile__column--numbers'></div>
-      </div>
-    </div>
+    {% include '_subtemplates/_profile.html' %}
+
   </section>
   <section class='credits'>
     {{ map_sources|markdown }}
     <a id='methodology-link' class='methodology-link' href="#lookup">Methodology</a>
   </section>
-
-
-      {# <h2>{{ map_methodology_headline }}</h2>
-      <style type="text/css">
-        .methods p{
-          color:#aaa;
-        }
-      </style>
-       <div class='methods'>
-        {{ map_methodology_blurb|markdown }}
-      </div> #}
-
-
-      <script src="//{{ ROOT_URL }}/js/app.min.js"></script>
-
-
-    </body>
-    </html>
+  <script src="//{{ ROOT_URL }}/js/app.min.js"></script>
+</body>
+</html>
 
 
 

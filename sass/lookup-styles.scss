@@ -38,8 +38,9 @@ $triangle-dimension: 8px;
 @import 'leaflet';
 @import 'form';
 @import 'profile';
-// @import 'map-buttons';
-// @import 'legends';
+@import 'gauges';
+
+
 body{
 	// For some reason there is a margin showing up in iframes
     // margin:0;
@@ -72,73 +73,6 @@ body{
 		@include sans-serif-text(16px, 1.5em, normal);
 	}
 }
-
-
-// .profile{
-// 	display: flex;
-// 	justify-content:space-between;
-// 	align-items: flex-start;
-// 	flex-wrap:wrap;
-//     // transition: max-height 1000ms ease;
-//     overflow: hidden;
-//     max-height:0;
-
-//    &.profile--visible{
-//     	// This is the class which will create a css animation when the profile opens. Cribbed from here:
-//     	// http://stackoverflow.com/questions/3508605/how-can-i-transition-height-0-to-height-auto-using-css
-// 		max-height:10000000vh;
-// 		// transition: max-height 1000ms ease;
-//     }
-// 	&__meta{
-// 		width:100%;
-// 		// background:yellow
-// 	}
-
-// 	&__map{
-// 		width:100%;
-// 		height:100%;
-// 		// padding-bottom:75%;
-// 		margin-bottom: 15px;
-// 		// border:1px solid $trib-gray2;
-// 	}
-
-// 	&__columns{ 
-// 		display: flex;
-// 		justify-content:space-between;
-// 		align-items: flex-start;
-// 		flex-wrap:wrap;
-// 		width: 100%; 
-// 		align-items:stretch;
-// 	}
-
-// 	&__column{ 
-// 		width:100%; 
-		
-// 		&--map{
-// 			width:100%;
-// 			height: 250px;
-// 			margin-bottom:15px;
-// 		}
-		
-// 		&--gauges{
-// 			text-align:center;
-// 		}
-// 	}
-
-// 	// &__over-under{
-// 	// 	padding:10px;
-		
-// 	// 	&--overvalued {
-// 	// 		background: $trib-orange;
-// 	// 	}
-// 	// 	&--undervalued {
-// 	// 		background: $trib-red2;
-// 	// 	}
-// 	// }
-// }
-
-
-
 
 .credits{
 	@include agate();
