@@ -1,0 +1,32 @@
+<html>
+<head>
+  <title>Cook County Overvalued/Undervalued Map</title>
+  <script src="js/vendor.min.js"></script>
+  <script type="text/javascript">
+  	window.ROOT_URL = "{{ ROOT_URL }}";
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/map-styles.css">
+</head>
+<body>
+  <div class="map-wrapper">
+	<div class="map-meta">
+		<h1 class="map-meta__headline">Map title goes here Map title goes here</h1>
+		<p class="map-meta__description">Lorem ipsuThis map shows, by Cook County census tract, whether the median home is ...</p>
+		<dl class="map-meta__legend">
+			<dt>
+				<span class="map-meta__legend-box map-meta__legend-box--over"></span>
+			</dt>
+
+			<dd>... overvalued</dd>
+			<dt>
+				<span class="map-meta__legend-box map-meta__legend-box--under"></span>
+			</dt>
+			<dd>... undervalued</dd>
+			
+		</dl>
+	</div>
+  	<div id='map'></div>
+  </div>
+  <script src="js/map.min.js"></script>
+</body>
+</html>
