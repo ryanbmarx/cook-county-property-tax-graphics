@@ -12,7 +12,8 @@ module.exports = function(grunt) {
     'underscore',
     '@turf/turf',
     'pym.js',
-    'd3-pre'
+    'd3-pre',
+    'lodash.debounce'
   ];
 
 
@@ -85,15 +86,15 @@ module.exports = function(grunt) {
         ]
       }
     },
-    fairness: {
-      src: ['js/src/fairness-map.js'],
-      dest: 'js/fairness-map.min.js',
+    map: {
+      src: ['js/src/map.js'],
+      dest: 'js/map.min.js',
       options: {
         plugin: [
           [
             'minifyify', {
-              map: 'fairness-map.min.js.map',
-              output: './js/fairness-map.min.js.map'
+              map: 'map.min.js.map',
+              output: './js/map.min.js.map'
             }
           ]
         ],
@@ -140,7 +141,7 @@ module.exports = function(grunt) {
       files: {
         'css/styles.css': 'sass/styles.scss',
         'css/triennial-styles.css': 'sass/triennial-styles.scss',
-        'css/fairness-styles.css': 'sass/fairness-styles.scss',
+        'css/map-styles.css': 'sass/map-styles.scss',
         'css/lookup-styles.css': 'sass/lookup-styles.scss'
       }
     }
@@ -157,7 +158,7 @@ module.exports = function(grunt) {
     },
     js: {
       files: ['js/src/**/*.js'],
-      tasks: ['browserify:app']
+      tasks: ['browserify:map', 'browserify:app']
     }
   };
 
