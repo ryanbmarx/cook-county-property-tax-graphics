@@ -103,7 +103,11 @@ p, span, strong{
 
 @media all and (min-width:$desktop-min-width){
 
-	.number .big-number{ font-size:35px; }
+	.number {
+		width: 30%;
+	    max-width: 200px;
+		.big-number{ font-size:35px; }
+	}
 
 	.profile{
 		display:block;
