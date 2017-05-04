@@ -10,18 +10,26 @@
 <body>
   <div class="map-wrapper">
 	<div class="map-meta">
-		<h1 class="map-meta__headline">Map title goes here Map title goes here</h1>
-		<p class="map-meta__description">Lorem ipsuThis map shows, by Cook County census tract, whether the median home is ...</p>
+		{% if map_headline %}
+			<h1 class="map-meta__headline">{{ map_headline }}</h1>
+		{% else %}
+			<h1 class="map-meta__headline">{{ map_chatter }}</h1>
+		{% endif%}
+
+		{% if map_headline and map_chatter %}
+			<p class="map-meta__description">{{ map_chatter }}</p>
+		{% endif%}
+		
 		<dl class="map-meta__legend">
 			<dt>
 				<span class="map-meta__legend-box map-meta__legend-box--over"></span>
 			</dt>
 
-			<dd>... overvalued</dd>
+			<dd>{{ map_key_overvalued }}</dd>
 			<dt>
 				<span class="map-meta__legend-box map-meta__legend-box--under"></span>
 			</dt>
-			<dd>... undervalued</dd>
+			<dd>{{ map_key_undervalued }}</dd>
 			
 		</dl>
 	</div>
