@@ -106,7 +106,7 @@ p, span, strong{
 	.number {
 		width: 30%;
 	    max-width: 200px;
-		.big-number{ font-size:35px; }
+		.big-number{ font-size:30px; }
 	}
 
 	.profile{
@@ -123,7 +123,7 @@ p, span, strong{
 		}
 
 		&__values{
-			@include make_columns();
+			@include make_columns(flex-end);
 		}
 
 		&__tract{
