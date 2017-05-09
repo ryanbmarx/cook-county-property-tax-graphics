@@ -25,6 +25,17 @@ NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
 
+function valueMapOpacityScale(ratio){
+	console.log(ratio, ' --> ', Math.abs(1 - ratio));
+	// This is a super-simple custom scale to highlight the gradiations. 
+	// If a ratio is close to 1, it gets a lighter opacity than ratios much larger/smaller than 1
+	if (Math.abs(1 - ratio) < 0.1){
+		return .65
+	}
+	return 1;
+}
+
+
 function valueMapScale(ratio){
 	// This is a super-simple custom scale. If the value is greater than 1, return a color. If it
 	// is less than 1, return a different color. If it is one, return white, or at least a very light grey;
@@ -90,7 +101,8 @@ function tracts(app){
 			.attr('data-name', d => d.properties.TRACT)
 			.attr('class', 'tract')
 			.attr( "d", geoPath)
-			.style('fill', d => valueMapScale(d.properties.ratio));
+			.style('fill', d => valueMapScale(d.properties.ratio))
+			.style('opacity', d=> valueMapOpacityScale(d.properties.ratio));
 	
 	svg.append('g')
 		.classed('chicago', true)

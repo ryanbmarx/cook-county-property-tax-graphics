@@ -16,7 +16,6 @@ function addGauge(value, formatter, scale, valueName){
 	
 	const scaleDomain = scale.domain();
 	
-	// console.log(scaleDomain);
 
 	let profileString = `
 		<div class='gauge'>
@@ -75,6 +74,8 @@ function displayProfile(feature, placeData){
 	const 	assessedTenPercent = properties.value * 0.1,
 			overUnder = properties.av1 > assessedTenPercent ? 'overvalued' : 'undervalued';
 
+	console.log(assessedTenPercent, overUnder);
+	
 	document.getElementById('tract').innerHTML = properties.NAMELSAD10.toLowerCase();
 	document.getElementById('market').innerHTML = formatters.currencyRounded(properties.value);
 	document.getElementById('assessed-ten-per').innerHTML = formatters.currencyRounded(assessedTenPercent);
@@ -93,11 +94,11 @@ function displayProfile(feature, placeData){
 					${formatters.percentage(properties.appeal_fla)}			
 				</li>
 				<li class='attribute'>
-					<strong>Effective overall tax rate: </strong>
+					<strong>Effective tax rate for a typical home: </strong>
 					${formatters.percentage(properties.erate)}			
 				</li>
 				<li class='attribute'>
-					<strong>Taxes: </strong>
+					<strong>Median annual property tax: </strong>
 					${formatters.currencyRounded(properties.taxes)}			
 				</li>
 				<li class='attribute'>
@@ -105,59 +106,14 @@ function displayProfile(feature, placeData){
 					${formatters.currencyRounded(properties.medhinc)}			
 				</li>
 				<li class='attribute'>
-					<strong>Tract population that is white, not hispanic: </strong>
+					<strong>Percentage of tract population that is non-Hispanic white: </strong>
 					${formatters.percentage(properties.white)}			
 				</li>
 				<li class='attribute'>
-					<strong>Homes in this tract's data: </strong>
+					<strong>Number of homes sold in this tract: </strong>
 					${properties.N}
 				</li>
 			</ul>`;
-		// if the window width suggests a mobile device, we just want a nice batch of lists for the profile.
-		// 	document.querySelector('.profile__column--gauges').innerHTML = `
-		// 	<ul class='profile__attributes'>
-		// 		<li class='attribute attribute--ratio'>
-		// 			<strong>Median home value ratio (after any appeals):</strong>
-		// 			${addGauge(properties.ratio1,formatters.ratio, window.gaugeratio1, "ratio1")}
-		// 		</li>
-		// 		<li class='attribute attribute--assessed'>
-		// 			<strong>Assessed value:</strong>
-		// 			${addGauge(properties.value,formatters.currencyRounded, window.gaugevalue, "value")}			
-		// 		</li>
-		// 		<li class='attribute attribute--market-value'>
-		// 			<strong>Home value: </strong>
-		// 			${addGauge(properties.av1, formatters.currency, window.gaugeav1, "av1")}			
-		// 		</li>
-		// 	</ul>`;
-
-		// // // Column 3
-		// document.querySelector('.profile__column--numbers').innerHTML = `
-		// 	<ul class='profile__attributes profile__attributes--numbers'>
-		// 		<li class='attribute'>
-		// 			<strong>Appealed assessments: </strong>
-		// 			${formatters.percentage(properties.appeal_fla)}			
-		// 		</li>
-		// 		<li class='attribute'>
-		// 			<strong>Effective overall tax rate: </strong>
-		// 			${formatters.percentage(properties.erate)}			
-		// 		</li>
-		// 		<li class='attribute'>
-		// 			<strong>Taxes: </strong>
-		// 			${formatters.currencyRounded(properties.taxes)}			
-		// 		</li>
-		// 		<li class='attribute'>
-		// 			<strong>Median household income: </strong>
-		// 			${formatters.currencyRounded(properties.medhinc)}			
-		// 		</li>
-		// 		<li class='attribute'>
-		// 			<strong>Percentage white, not hispanic: </strong>
-		// 			${formatters.percentage(properties.white)}			
-		// 		</li>
-		// 		<li class='attribute'>
-		// 			<strong>Number of homes in dataset: </strong>
-		// 			${formatters.percentage(properties.N)}
-		// 		</li>
-		// 	</ul>`;
 	} else {
 		// Add the gauges for the two charts.
 
@@ -172,7 +128,7 @@ function displayProfile(feature, placeData){
 		document.querySelector('.profile__column--numbers').innerHTML = `
 			<ul class='profile__attributes profile__attributes--numbers'>
 				<li class='attribute'>
-					<strong>Taxes: </strong>
+					<strong>Median annual property tax: </strong>
 					${formatters.currencyRounded(properties.taxes)}			
 				</li>
 				<li class='attribute'>
@@ -180,11 +136,11 @@ function displayProfile(feature, placeData){
 					${formatters.currencyRounded(properties.medhinc)}			
 				</li>
 				<li class='attribute'>
-					<strong>Tract population that is white, not hispanic: </strong>
+					<strong>Percentage of tract population that is non-Hispanic white: </strong>
 					${formatters.percentage(properties.white)}			
 				</li>
 				<li class='attribute'>
-					<strong>Homes in this tract's data: </strong>
+					<strong>Number of homes sold in this tract: </strong>
 					${properties.N}
 				</li>
 			</ul>`;
