@@ -1,13 +1,18 @@
 
 <div class='profile-lookup'>
 	<div class='profile-lookup__inner'>
-		<input id='search-address' type='text' name='address' value='2423 w. cullom' placeholder='Search for an address'>
-		<button type='submit' id='search-address-submit'>
-			<svg viewBox="0 0 25 25" class='submit-arrow'>
-				  <use xlink:href="#arrow" />
-			</svg>
-			{# <img alt='Submit button' src='http://{{ ROOT_URL }}/img/arrow.svg' /> #}
-		</button>
+		<form>
+			<input id='search-address' type='text' name='address' value='2423 w. cullom' placeholder='Search for an address'>
+			<button type='submit' id='search-address-submit'>
+				<svg viewBox="0 0 25 25" class='submit-icon submit-icon--arrow submit-icon--visible'>
+					  <use xlink:href="#arrow" />
+				</svg>
+				<svg viewBox="0 0 25 25" class='submit-icon submit-icon--spinner'>
+					  <use xlink:href="#spinner" />
+				</svg>
+				{# <img alt='Submit button' src='http://{{ ROOT_URL }}/img/arrow.svg' /> #}
+			</button>
+		</form>
 	</div>
 	<p class='profile-lookup__error-message'></p>
 	<p class='profile-lookup__note'>{{ form_note }}</p>
