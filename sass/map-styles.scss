@@ -79,7 +79,15 @@ body{
 		@include trib-legend__box(0);
 
 		&--over{ background: $over-color; }
+		&--over-little{ 
+			background: lighten($over-color, 25%); 
+			// opacity:.5; 
+		}
 		&--perfect{ background: $perfect-color; }
+		&--under-little{ 
+			background: lighten($under-color, 25%); 
+
+		}
 		&--under{ background: $under-color; }
 	}
 }
