@@ -64,17 +64,11 @@ function displayProfile(feature, placeData){
 
  	// Make the input address the full and proper address
  	document.getElementById("search-address").value = placeData.address;
-	// Load the tract meta data
-	// document.getElementById('profile__meta').innerHTML = `
-	// 	<h2 class='profile__address'>${placeName}</h2>
-	// 	${communityArea}`;
-	
 
+	// Load the tract meta data
 
 	const 	assessedTenPercent = properties.value * 0.1,
 			overUnder = properties.av1 > assessedTenPercent ? 'overvalued' : 'undervalued';
-
-	console.log(assessedTenPercent, overUnder);
 	
 	document.getElementById('tract').innerHTML = properties.NAMELSAD10.toLowerCase();
 	document.getElementById('market').innerHTML = formatters.currencyRounded(properties.value);
@@ -151,7 +145,7 @@ function displayProfile(feature, placeData){
 		const width = gaugeLabel.getBoundingClientRect().width
 		gaugeLabel.style.marginLeft = `${width * -0.5}px`;
 	}
-	// Now animate the profile open by using our css class
+	// Now open the profile by using our css class
 	const profile = document.querySelector('.profile');
 	profile.classList.add('profile--visible');
 }

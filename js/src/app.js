@@ -177,7 +177,6 @@ function spinner(){
 	// Just switches between the submit arrow and the loading spinner on the form, so people know it's working.
 	const icons = document.querySelectorAll(".submit-icon");
 	for (var icon of icons){
-		console.log(icon);
 		icon.classList.toggle('submit-icon--visible')
 	}
 
@@ -200,7 +199,6 @@ window.onload = function(){
 
 	const mapContainer = document.getElementById('map');
 	json(`http://${window.ROOT_URL}/data/tract-data2.geojson`, tractData => {
-		console.log(tractData);
 		window.tractDataFeatures = tractData.features;
 		drawMap(mapContainer, tractData);
 	});
@@ -208,6 +206,10 @@ window.onload = function(){
 
 	// The submit button which should geocode and trigger a profile
 	document.getElementById('search-address-submit').addEventListener('click', e => {
+		
+		// Quash the default behavior
+		e.preventDefault();
+
 		// Get the input address from the form
 		const address = document.getElementById('search-address').value;
 
@@ -218,7 +220,6 @@ window.onload = function(){
 			.then(function(response) {
 				
 				const data = JSON.parse(response).resourceSets[0];
-				console.log(JSON.parse(response).resourceSets[0]);
 				if (data.estimatedTotal > 0) {
 					// if the geocoding returns at least one entry, then
 					// do this. This ain't no guarantee that the address 
@@ -240,7 +241,6 @@ window.onload = function(){
 					const userGeo = findTract(userCoordinates.coordinates);
 
 					if (!userGeo){
-						console.log("it's not in cook county!");
 						triggerWarning("trigger", window.error_not_in_cook_county);
 					} else {					
 						// Map the user's geo stuff
@@ -254,14 +254,12 @@ window.onload = function(){
 					}
 				} else {
 					// If the geocoding returned no entries
-					console.error("User location geocoding failed");
 					triggerWarning("trigger", window.error_not_found)
 					
 				}
 				window.pymChild.sendHeight();
 			}, function(error) {
 				const userCoordinates = error;
-				console.error("User location geocoding failed", error);
 			});
 
 	});	
