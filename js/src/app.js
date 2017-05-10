@@ -173,6 +173,16 @@ window.addEventListener('load', function() {
 }, false);
 
 
+function spinner(){
+	// Just switches between the submit arrow and the loading spinner on the form, so people know it's working.
+	const icons = document.querySelectorAll(".submit-icon");
+	for (var icon of icons){
+		console.log(icon);
+		icon.classList.toggle('submit-icon--visible')
+	}
+
+}
+
 window.onload = function(){
 
   	// Create a trigger to detect whether we are on a mobile width, which is < 450
@@ -201,9 +211,11 @@ window.onload = function(){
 		// Get the input address from the form
 		const address = document.getElementById('search-address').value;
 
+		// Switch to loading spinner in case geocoding takes some time.
+		spinner();
+
 		getCoord(address)
 			.then(function(response) {
-
 				
 				const data = JSON.parse(response).resourceSets[0];
 				console.log(JSON.parse(response).resourceSets[0]);
@@ -236,6 +248,9 @@ window.onload = function(){
 	
 						// Call the profile function, sending it our desired tract
 						displayProfile(userGeo.tract, userCoordinates);
+
+						// Now that we have a a displayed profile, switch back to the submit arrow
+						spinner();
 					}
 				} else {
 					// If the geocoding returned no entries

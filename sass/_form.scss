@@ -1,5 +1,10 @@
 $submit-button-width:50px;
 $error_color:$trib-red3;
+
+@keyframes spin { 
+	100% { transform:rotate(360deg); } 
+}
+
  .profile-lookup{
 	@include clearfix();
 	// display:flex;
@@ -72,7 +77,7 @@ $error_color:$trib-red3;
 	}
 
 	button[type='submit']{
-		opacity:.2;
+	
 		position:absolute;
 		top:50%;
 		right:0;
@@ -82,14 +87,11 @@ $error_color:$trib-red3;
 
 		cursor:pointer;
 
-		background:rgba(white, .25);
+		background:#f0f0f0;
 		padding:0;
 		border:none;
 		transition:all 150ms ease;
 
-		img, .submit-arrow{
-			width:25px;
-		}
 	}
 
 	input[type='text']:focus ~ button[type='submit']{
@@ -98,6 +100,22 @@ $error_color:$trib-red3;
 	}
 }
 
+.submit-icon{
+	width:25px;
+	display:none;
+
+	&.submit-icon--visible{
+		display:block;
+	}
+
+	&--arrow{
+		opacity:.2;
+	}
+	
+	&--spinner{
+	    animation:spin 2s linear infinite;
+	}
+}
 
 @media all and (max-width: $tablet-max-width){
 
