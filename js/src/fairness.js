@@ -26,7 +26,6 @@ HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
 
 function valueMapOpacityScale(ratio){
-	console.log(ratio, ' --> ', Math.abs(1 - ratio));
 	// This is a super-simple custom scale to highlight the gradiations. 
 	// If a ratio is close to 1, it gets a lighter opacity than ratios much larger/smaller than 1
 	if (Math.abs(1 - ratio) < 0.1){
@@ -49,8 +48,6 @@ function valueMapScale(ratio){
 }
 
 function tracts(app){
-	console.log('making tracts')
-
 	const 	containerBox = app.mapContainer.node().getBoundingClientRect(),
 			width = containerBox.width,
 			height = containerBox.height;
