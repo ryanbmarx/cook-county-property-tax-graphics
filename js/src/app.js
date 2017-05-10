@@ -173,13 +173,16 @@ window.addEventListener('load', function() {
 }, false);
 
 
-function spinner(){
+function spinner(iconToShow){
 	// Just switches between the submit arrow and the loading spinner on the form, so people know it's working.
 	const icons = document.querySelectorAll(".submit-icon");
 	for (var icon of icons){
-		icon.classList.toggle('submit-icon--visible')
+		if (icon.classList.contains(`submit-icon--${iconToShow}`)){
+			icon.classList.add('submit-icon--visible')
+		} else {
+			icon.classList.remove('submit-icon--visible')
+		}
 	}
-
 }
 
 window.onload = function(){
@@ -214,7 +217,7 @@ window.onload = function(){
 		const address = document.getElementById('search-address').value;
 
 		// Switch to loading spinner in case geocoding takes some time.
-		spinner();
+		spinner('spinner');
 
 		getCoord(address)
 			.then(function(response) {
@@ -250,7 +253,7 @@ window.onload = function(){
 						displayProfile(userGeo.tract, userCoordinates);
 
 						// Now that we have a a displayed profile, switch back to the submit arrow
-						spinner();
+						spinner('arrow');
 					}
 				} else {
 					// If the geocoding returned no entries
@@ -267,6 +270,7 @@ window.onload = function(){
 	// Reset the red/errored form after 300ms of typing to "clear" the error.
 	document.getElementById('search-address').addEventListener('input', e => {
 		setTimeout(function(){
+			spinner('arrow');
 			triggerWarning("clear")
 		}, 300);
 	});

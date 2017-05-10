@@ -38,7 +38,7 @@ $error_color:$trib-red3;
 			color:white;
 			transition: all 200ms ease;
 		}
-
+		
 		.profile-lookup__error-message{
 			opacity:1;
 			max-height: 100vh;
@@ -87,7 +87,7 @@ $error_color:$trib-red3;
 
 		cursor:pointer;
 
-		background:#f0f0f0;
+		background:transparent;
 		padding:0;
 		border:none;
 		transition:all 150ms ease;
