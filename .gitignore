@@ -12,4 +12,4 @@ js/*.js
 js/*.map 
 .DS_Store
 img/*.svg
-map.html
+# map.html

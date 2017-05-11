@@ -1,7 +1,5 @@
-// import * as d3 from 'd3';
-var d3 = require('d3');
+import * as d3 from 'd3';
 import getTribColors from'./getTribColors.js';
-const queue = require('d3-queue').queue;
 const debounce = require('lodash.debounce');
 
 import * as topojson from 'topojson'
@@ -9,9 +7,6 @@ import * as topojson from 'topojson'
 // https://github.com/fivethirtyeight/d3-pre
 const Prerender = require('d3-pre');
 const prerender = Prerender(d3);
-
-
-
 
 const 	aboveOneColor = getTribColors('trib-red2'),
 		otherColor = 'rgba(255,255,255,.3)',
@@ -50,12 +45,6 @@ function tracts(app){
 			width = containerBox.width,
 			height = containerBox.height;
 
-	// Nudge the map down to the center if we are one "desktop mode", which is 
-	// when the window is wider than the map-wrapper's maximum width, which, 
-	// at the time of this writing, is 600px;
-	const 	mapWrapper = app.mapContainer.parentElement,
-			mapMaxWidth = 600;
-
 	// Remove old map
 	app.mapContainer.selectAll('*').remove();
 
@@ -90,10 +79,9 @@ function tracts(app){
 	const tracts = svg.append('g')
 		.classed('tracts', true)
 		.selectAll('.tracts')
-					// topojson.feature, per the docs, returns the GeoJSON Feature or FeatureCollection 
-			// for the specified object in the given topology. In this case, it's a collection,
-			// which is why we call the features attribute after it.
-
+		// topojson.feature, per the docs, returns the GeoJSON Feature or FeatureCollection 
+		// for the specified object in the given topology. In this case, it's a collection,
+		// which is why we call the features attribute after it.
 		.data( topojson.feature(app.data, app.data.objects.tracts).features);
 
 
@@ -104,8 +92,6 @@ function tracts(app){
 			.attr( "d", geoPath)
 			.style('fill', d => valueMapScale(d.properties.ratio))
 			.style('opacity', d=> valueMapOpacityScale(d.properties.ratio));
-
-	console.log('chicgao', topojson.feature(app.data, app.data.objects.chicago).features);
 	
 	svg.append('g')
 		.classed('chicago', true)
@@ -127,45 +113,11 @@ class CookCountyMap{
 		 app.options = options;
 		 app.mapContainer = d3.select(options.mapContainer);
 		 app.data = options.data;
-		 console.log(app.data);
-		// define the layers of map data I want
-		// Source of map base layers: http://code.highcharts.com/mapdata/
-		 app.mapLayers =[
-		 	{
-		 		id:'chicago',
-		 		url: `http://${window.ROOT_URL}/data/chicago-boundary.geojson`
-		 	}
-		 ];
-
- 		const mapDataQueue = queue();
-		app.mapLayers.forEach(layer => {
-			mapDataQueue.defer(d3.json,layer.url);
-		});
-
-		mapDataQueue.awaitAll(app.drawMap.bind(app));
-		// app.drawMap()
-		// Generate a scale for the effective tax rate.
-		// const erateExtent = d3.extent(app.data.features, d => d.properties.erate);
-		// const erateColorRamp=['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
-		// app.erateScale = d3.scaleQuantile()
-		// 	.domain(app.data.features.map(d => d.properties.erate))
-		// 	.range(erateColorRamp);
-		// buildErateLegend(erateColorRamp, '#day1-header-display');
-
-
+		app.drawMap();
 	}
 
-	
-
 	drawMap(){
-
-		// Insert our extra map layers/add-ons into the array 
 		const app = this;
-		for (var i=0; i < arguments[1].length; i++ ){
-			app.mapLayers[i].data = arguments[1][i];
-		}
-
-
 		tracts(app);
 		const debounced = debounce(function(){tracts(app);}, 200);
 		window.addEventListener('resize', debounced);
