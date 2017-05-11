@@ -1,9 +1,10 @@
-import * as d3 from 'd3';
+// import * as d3 from 'd3';
+var d3 = require('d3');
 import getTribColors from'./getTribColors.js';
 const queue = require('d3-queue').queue;
 const debounce = require('lodash.debounce');
 
-
+import * as topojson from 'topojson'
 
 // https://github.com/fivethirtyeight/d3-pre
 const Prerender = require('d3-pre');
@@ -11,9 +12,6 @@ const prerender = Prerender(d3);
 
 
 
-// https://github.com/fivethirtyeight/d3-pre
-// import Prerender from 'd3-pre';
-// const  prerender = Prerender(d3);
 
 const 	aboveOneColor = getTribColors('trib-red2'),
 		otherColor = 'rgba(255,255,255,.3)',
@@ -64,7 +62,8 @@ function tracts(app){
 	// Put the svg inside the passed container
 	const svg = app.mapContainer.append('svg')
 				.attr("width", width)
-				.attr("height", height);
+				.attr("height", height)
+				.attr("data-prerender-minify", true);
 
 	// Create a unit projection.
 	let projection = d3.geoMercator()
@@ -74,7 +73,7 @@ function tracts(app){
 	const geoPath = d3.geoPath().projection(projection);
 
 	// Compute the bounds of a feature of interest, then derive scale & translate.
-	var bounds = geoPath.bounds(app.data),
+	var bounds = geoPath.bounds(topojson.mesh(app.data, app.data.objects.tracts)),
 		dx = bounds[1][0] - bounds[0][0],
 		dy = bounds[1][1] - bounds[0][1],
 		x = (bounds[0][0] + bounds[1][0]) / 2,
@@ -91,7 +90,12 @@ function tracts(app){
 	const tracts = svg.append('g')
 		.classed('tracts', true)
 		.selectAll('.tracts')
-		.data( app.data.features);
+					// topojson.feature, per the docs, returns the GeoJSON Feature or FeatureCollection 
+			// for the specified object in the given topology. In this case, it's a collection,
+			// which is why we call the features attribute after it.
+
+		.data( topojson.feature(app.data, app.data.objects.tracts).features);
+
 
 	tracts.enter()
 		.append( "path" )
@@ -100,11 +104,13 @@ function tracts(app){
 			.attr( "d", geoPath)
 			.style('fill', d => valueMapScale(d.properties.ratio))
 			.style('opacity', d=> valueMapOpacityScale(d.properties.ratio));
+
+	console.log('chicgao', topojson.feature(app.data, app.data.objects.chicago).features);
 	
 	svg.append('g')
 		.classed('chicago', true)
 		.selectAll('path')
-		.data(app.mapLayers[0].data.features)
+		.data(topojson.feature(app.data, app.data.objects.chicago).features)
 		.enter()
 			.append( "path" )
 			.attr( "d", geoPath)
@@ -121,7 +127,7 @@ class CookCountyMap{
 		 app.options = options;
 		 app.mapContainer = d3.select(options.mapContainer);
 		 app.data = options.data;
-
+		 console.log(app.data);
 		// define the layers of map data I want
 		// Source of map base layers: http://code.highcharts.com/mapdata/
 		 app.mapLayers =[
@@ -137,7 +143,7 @@ class CookCountyMap{
 		});
 
 		mapDataQueue.awaitAll(app.drawMap.bind(app));
-
+		// app.drawMap()
 		// Generate a scale for the effective tax rate.
 		// const erateExtent = d3.extent(app.data.features, d => d.properties.erate);
 		// const erateColorRamp=['#fef0d9', '#fdcc8a', '#fc8d59', '#e34a33', '#b30000'];
@@ -151,7 +157,7 @@ class CookCountyMap{
 
 	
 
-	drawMap(error){
+	drawMap(){
 
 		// Insert our extra map layers/add-ons into the array 
 		const app = this;
@@ -159,7 +165,6 @@ class CookCountyMap{
 			app.mapLayers[i].data = arguments[1][i];
 		}
 
-		// prerender.start();
 
 		tracts(app);
 		const debounced = debounce(function(){tracts(app);}, 200);

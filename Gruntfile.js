@@ -13,7 +13,8 @@ module.exports = function(grunt) {
     '@turf/turf',
     'pym.js',
     'd3-pre',
-    'lodash.debounce'
+    'lodash.debounce',
+    'topojson'
   ];
 
 
@@ -158,7 +159,7 @@ module.exports = function(grunt) {
     },
     js: {
       files: ['js/src/**/*.js'],
-      tasks: ['browserify:map', 'browserify:app']
+      tasks: ['browserify:map']
     }
   };
 
