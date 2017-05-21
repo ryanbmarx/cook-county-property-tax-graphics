@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="//{{ ROOT_URL }}/css/triennial-styles.css">
+  <script src="//{{ ROOT_URL }}/js/vendor.min.js"></script>
+  <script>
+    window.ROOT_URL = "{{ ROOT_URL }}";
+  </script>
+</head>
+<body>
+  <div class="graphic-wrapper">
+    <h1 class='chart-headline'>{{ tri_headline }}</h1>
+    {{ tri_intro|markdown }}
+    {% include "_subtemplates/_form.html" %}
+    <select id='townshipSelect'>
+      <option label='all' value="all">All</option>
+      {% for twp in townships %}
+      <option value={{ twp.town }}>{{ twp.descr }}</option>
+      {% endfor %}
+    </select>
+    <figure class='chart'>
+      <figcaption class='chart__labels'>
+        <h3 class='chart__township-label'>All townships</h3>
+        <h4 class='chart__township-sublabel'>All three triennial groupings</h4>
+      </figcaption>
+      <div id='triennial-chart' class='chart__holder'></div>
+    </figure>
+    <p class='sources'>Sources: Analysis of assessor data</p>
+  </div>
+  <script src="//{{ ROOT_URL }}/js/triennial.min.js"></script>
+</body>
+</html>

@@ -159,7 +159,7 @@ module.exports = function(grunt) {
     },
     js: {
       files: ['js/src/**/*.js'],
-      tasks: ['browserify:map']
+      tasks: ['browserify:triennial']
     }
   };
 

@@ -1,4 +1,4 @@
-"Town","N","mv_sum","netcon","median_sales","median_ass","mad","mean","weighted","prd","COD","Descr","TaxYear","Tri"
+"town","n","mv_sum","netcon","median_sales","median_ass","mad","mean","weighted","prd","cod","descr","tax_year","tri"
 "73",5379,974500466,1847771555,0.54,8.6,0.08,0.532,0.53,1.01,12.45,"Lake View","2003","1"
 "74",3244,674694210,1281103896,0.54,8.6,0.09,0.535,0.53,1.02,13.42,"North","2003","1"
 "71",6141,929447997,1775492231,0.53,8.5,0.08,0.531,0.52,1.01,12.61,"Jefferson Park","2003","1"

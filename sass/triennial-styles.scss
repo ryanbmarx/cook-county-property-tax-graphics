@@ -26,17 +26,49 @@ $mobile-max-width:449px;
 
 
 // ---- IMPORT PROJECT STYLES FROM PARTIAL FILES HERE ---------------------------------------------
-
+@import "form";
 
 // ---- WRITE MORE PROJECT STYLES HERE ---------------------------------------------
 .chart{
-  height:450px;
+	position:relative;
+
+	&__labels{
+		position: absolute;
+		top: 0;
+    	left: 45px;
+
+	}
+
+&__township-label{
+	  	@include label7();
+	  	margin: 0 0 7px 0;
+	  }
+
+  &__township-sublabel{
+  	@include sans-serif();
+  	font-style: italic;
+  	margin:0;
+  }
+
+	&__holder{
+	  height:450px;
+	}
+  
+	  
 }
 
 .triennial{
-  &--1{stroke:$trib-blue1;}
-  &--2{stroke:$trib-blue2;}
-  &--3{stroke:$trib-blue4;}
+	stroke:$trib-blue2;
+}
+
+.acceptable-range{
+	fill: $trib-tan;
+}
+
+.acceptable-range-label {
+	@include sans-serif();
+	font-style:italic;
+
 }
 
 .chart-headline{

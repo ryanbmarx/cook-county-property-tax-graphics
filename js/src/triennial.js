@@ -1,16 +1,19 @@
 import * as d3 from 'd3';
 import * as _ from 'underscore';
 
+NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
+HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
+
 function filterData(rawData, category){
 	// creates an array of two-key objects: the x and y values for our chart.
 	let retval = [];
 	rawData.forEach(datum => {
 		retval.push({
-			townName: datum['Descr'],
-			town:datum['Town'],
-			tri: datum['Tri'],
+			townName: datum['descr'],
+			town:datum['town'],
+			tri: datum['tri'],
 			y: parseFloat(datum[category]),
-			x: parseInt(datum['TaxYear'])
+			x: parseInt(datum['tax_year'])
 		});
 	})
 	return retval;
@@ -27,15 +30,55 @@ function filterToTown(data, town){
 	return retval;
 }
 
+function highlightLine(town){
+	// console.log(direction, d, i, line);
+	const 	transitionDuration = 400, 
+			townLine = d3.select(`path[data-town="${ town }"]`),
+			tri = townLine.node().dataset.tri,
+			townName = townLine.node().dataset.townName;
+
+	/*
+On May 20, 2017, at 7:23 PM, Grotto, Jason <jgrotto@chicagotribune.com> wrote:
+
+1 = City (Chicago)
+2 = North Suburban
+3 = South and West Suburban
+	*/
+
+	d3.select('.chart__township-label').text(`${townName} Township`);
+	d3.select('.chart__township-sublabel').text(`With triennial grouping ${tri}`);
+
+	console.log(townName);
+
+		d3.selectAll('.triennial')
+			.transition()
+			.duration(transitionDuration)
+			.style('stroke-width', 1)
+			.style('opacity', 0);
+
+		d3.selectAll(`.triennial[data-tri="${ tri }"]`)
+			.transition()
+			.duration(transitionDuration)
+			.style('opacity', .25)
+			.style('stroke-width', 1);
+		
+		townLine
+			.transition()
+			.duration(transitionDuration)
+			.style('opacity', 1)
+			.style('stroke-width', 3);
+}
+
 
 function drawChart(rawData, container, category, chartTitle){
 	// update the headline
-	d3.select('.chart-headline').text(chartTitle);
+	
+	console.log(rawData, container, category, chartTitle);
 
 	const bbox = container.node().getBoundingClientRect(),
 		height = bbox.height,
 		width = bbox.width,
-		margin = {top: 0, right:0, bottom:20, left:60},
+		margin = {top: 0, right:0, bottom:20, left:20},
 		innerHeight = height - margin.top - margin.bottom,
 		innerWidth = width - margin.right - margin.left;
 
@@ -50,14 +93,11 @@ function drawChart(rawData, container, category, chartTitle){
 		.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 
-
-
 	const data = filterData(rawData, category);
-	console.log(data, container, category, chartTitle);
-
+	console.log(data);
 	const 	yExtent = d3.extent(data, d => d.y),
 			yScale = d3.scaleLinear()
-				.domain(yExtent)
+				.domain([0,yExtent[1]])
 				.range([innerHeight, 0]);
 
 
@@ -74,7 +114,7 @@ function drawChart(rawData, container, category, chartTitle){
 
 	svg.append('g')
 		.attr('class', 'x axis')
-		.attr('transform', `translate(0, ${innerHeight})`)
+		.attr('transform', `translate(${margin.left}, ${innerHeight})`)
 		.call(xAxis);
 
 
@@ -84,61 +124,77 @@ function drawChart(rawData, container, category, chartTitle){
 		.attr('transform', `translate(${margin.left}, 0)`)
 		.call(yAxis);
 	
+	// Add the acceptable range box before we draw the lines
 
-function highlightLine(direction, d, i, line){
-	console.log(direction, d, i, line);
-	if (direction == "over"){
-		d3.selectAll('.triennial')
-			.style('opacity', .2);
-		d3.select(line)
-			.style('opacity', 1)
-			.style('stroke-width', 3);
+	chartInner.append('rect')
+		.attr('x', 0)
+		.attr('y', yScale(15))
+		.attr('height', yScale(5) - yScale(15))
+		.attr('width', innerWidth)
+		.classed('acceptable-range', true)
 
-	} else {
-		d3.selectAll('.triennial')
-			.style('opacity', 1)
-			.style('stroke-width', 1.5);
-	}
-	
-}
+	chartInner.append('text')
+		.classed('acceptable-range-label', true)
+		.attr('x', 15)
+		.attr('y', yScale(5) - 15)
+		.text('Acceptable range')
+
+	// chartInner.append('text')
+	// 	.classed('chart__township-label', true)
+	// 	.attr('x', 15)
+	// 	.attr('y', 15)
+
 
 
 	const uniqueListOfTowns = _.uniq(data, false, d => d.town);	
+	console.log(uniqueListOfTowns);
 	uniqueListOfTowns.forEach(town => {
 		const townData = filterToTown(data, town.town);
 		
 		chartInner.append("path")
 			.datum(townData)
 			.attr("fill", "none")
-			// .attr("stroke", "steelblue")
+			.attr("stroke", "steelblue")
 			.attr("stroke-linejoin", "round")
 			.attr("stroke-linecap", "round")
 			.attr("stroke-width", 1.5)
+			.attr('data-tri', d => d[0]['tri'])
+			.attr('data-town', d => d[0]['town'])
+			.attr('data-town-name', d => d[0]['townName'])
 			.attr("d", line)
 			.attr('class', d => {
 				return `triennial triennial--${d[0]['tri']}`;
 			})
-			.attr('id', d => d[0]['town'])
-            .on("mouseover", function(d,i){
-            	console.log('hovering one');
-            	highlightLine("over", d,i, this);
+            .on("click", (d,i) => {
+   				const township = d[0]['town']
+   				document.querySelector(`#townshipSelect option[value="${township}"]`).selected = "selected"
+   				highlightLine(township);
             })
-            .on("mouseout", function(d,i){
-            	console.log('hovering off');
-            	highlightLine("off", d,i, this);
-            });
+            // .on("mouseout", function(d,i){
+            // 	console.log('hovering off');
+            // 	highlightLine("off", d,i, this);
+            // });
 	})
 
 
 }
 
-window.onload = function(){
+// document.querySelector('#highlightButton').addEventListener('click', e => {
+// 	highlightLine("72");
+// });
+
+document.querySelector('#townshipSelect').addEventListener('change', e => {
+	const selectedTownship = e.target.value;
+	highlightLine(selectedTownship);
+});
+
+window.addEventListener('load', function(e){
 
 	const 	container = d3.select('#triennial-chart'),
-			category = "prd",
+			category = "cod",
 			categoryLookup = {
-				Town :" Township ID",
-				N :" Sample size",
+				town :" Township ID",
+				n :" Sample size",
 				mv_sum :" Total market value (assessor)",
 				netcon :" Total sale price (actual sales)",
 				median_sales :" Median sale price",
@@ -146,15 +202,14 @@ window.onload = function(){
 				mad :" Median absolute deviation",
 				weighted :" Weighted mean",
 				prd :" Price-related differential",
-				COD :" Coefficient of dispersion",
-				Descr :" Township ID",
-				TaxYear :" Tax year",
-				Tri:"Triennial are"
+				cod :" Coefficient of dispersion",
+				descr :" Township ID",
+				tax_year :" Tax year",
+				tri:"Triennial are"
 			};
 
 	d3.csv(`http://${window.ROOT_URL}/data/tri_stats.csv`, (err, triennialData) => {
 		if (err) throw err;
-		console.log('raw', triennialData);
 		drawChart(triennialData, container, category, categoryLookup[category]);
 	})
-}
+});

@@ -8,6 +8,8 @@ import * as topojson from 'topojson'
 const Prerender = require('d3-pre');
 const prerender = Prerender(d3);
 
+prerender.start();
+
 const 	aboveOneColor = getTribColors('trib-red2'),
 		otherColor = 'rgba(255,255,255,.3)',
 		belowOneColor = getTribColors('trib-orange');
