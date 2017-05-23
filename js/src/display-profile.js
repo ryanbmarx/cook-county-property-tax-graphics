@@ -24,22 +24,32 @@ function addGauge(value, formatter, scale, valueName){
 
 		// Now add the min and max. I would do it with a domain.forEach, but there only are two and each 
 		// needs a slightly different treatment, so manual it is.
-	
-		profileString += `
-			<span class='gauge__label gauge__label--axis' style='left:0'>
-				${formatter(scaleDomain[0])}
-			</span>`
-		profileString += `<span class='gauge__label gauge__label--axis' style='left:50%;margin-left: -25px;'>All tracts</span>`;
-		profileString += `
-			<span class='gauge__label gauge__label--axis' style='right:0;text-align:right'>
-				${formatter(scaleDomain[1])}
-			</span>`
-
-
-		// If the attribute is a ratio, then we want to highlight 1, whereever it is on the gauge.
 		if (valueName.indexOf('ratio') > -1){
-			profileString += `<span class='gauge__label gauge__label--axis gauge__label--center' style='left:${scale(1)}%'>${formatter(1)}</span>`
+			profileString += `<div class='gauge__labels'>
+				<span class='gauge__label gauge__label--axis' style='left:0'>
+					-${formatter(1 - scaleDomain[0])}
+				</span>`
+			profileString += `<span class='gauge__label gauge__label--axis' style='left:50%;margin-left: -25px;'>Evenly valued <br /><strong>All Tracts</strong></span>`;
+			profileString += `
+				<span class='gauge__label gauge__label--axis' style='right:0;text-align:right'>
+					+${formatter(scaleDomain[1] - 1)}
+				</span></div>`
+		} else {
+			profileString += `<div class='gauge__labels'>
+				<span class='gauge__label gauge__label--axis' style='left:0'>
+					${formatter(scaleDomain[0])}
+				</span>`
+			profileString += `<span class='gauge__label gauge__label--axis' style='left:50%;margin-left: -25px;'><strong>All tracts</strong></span>`;
+			profileString += `
+				<span class='gauge__label gauge__label--axis' style='right:0;text-align:right'>
+					${formatter(scaleDomain[1])}
+				</span></div>`
 		}
+
+		// // If the attribute is a ratio, then we want to highlight 1, whereever it is on the gauge.
+		// if (valueName.indexOf('ratio') > -1){
+		// 	profileString += `<span class='gauge__label gauge__label--axis gauge__label--center' style='left:${scale(1)}%'>${formatter(1)}</span>`
+		// }
 
 		return profileString + "</div>";
 }
@@ -67,22 +77,38 @@ function displayProfile(feature, placeData){
 
 	// Load the tract meta data
 
-	const 	assessedTenPercent = properties.value * 0.1,
-			overUnder = properties.av1 > assessedTenPercent ? 'overvalued' : 'undervalued';
+	const 	assessedTenPercent = properties.value * 0.1;
+	let	overUnder, overUnderClass;
+	if (properties.ratio1 > 1){
+		overUnder = `overvalued by ${formatters.percentage(properties.ratio1 - 1)}`;
+		overUnderClass = "overvalued";
+	} else if (properties.ratio1 < 1){ 
+		overUnder = `undervalued by ${formatters.percentage(1 - properties.ratio1)}`;
+		overUnderClass = "undervalued";
+	} else {
+		overUnder = "properly valued";
+		overUnderClass = "even";
+	}
 	
 	document.getElementById('tract').innerHTML = properties.NAMELSAD10.toLowerCase();
-	document.getElementById('market').innerHTML = formatters.currencyRounded(properties.value);
-	document.getElementById('assessed-ten-per').innerHTML = formatters.currencyRounded(assessedTenPercent);
-	document.getElementById('assessed-actual').innerHTML = `<span>${formatters.currencyRounded(properties.av1)}</span>`;
-	document.querySelector('#assessed-actual span').classList = overUnder.toLowerCase();
+	// document.getElementById('market').innerHTML = formatters.currencyRounded(properties.value);
+	// document.getElementById('assessed-ten-per').innerHTML = formatters.currencyRounded(assessedTenPercent);
+	// document.getElementById('assessed-actual').innerHTML = `<span>${formatters.currencyRounded(properties.av1)}</span>`;
+	// document.querySelector('#assessed-actual span').classList = overUnder.toLowerCase();
 	document.getElementById('over-under').innerHTML = overUnder;
-	document.getElementById('over-under').classList = overUnder.toLowerCase();
+	document.getElementById('over-under').classList = overUnderClass.toLowerCase();
 
+	// Add the main ratio gauge chart
+	document.getElementById('ratio-chart').innerHTML = addGauge(properties.ratio1, formatters.percentage, window.gaugeratio1, "ratio1");
 
 	if (window.mobile){
 
 			document.querySelector('.profile__column--numbers').innerHTML = `
-			<ul class='profile__attributes profile__attributes--numbers'>
+			<ul class='profile__attributes profile__attributes--median-home-sales-price'>
+				<li class='attribute'>
+					<strong>Median home sales price: </strong>
+					${formatters.currencyRounded(properties.value)}			
+				</li>
 				<li class='attribute'>
 					<strong>Percentage of assessments appealed: </strong>
 					${formatters.percentage(properties.appeal_fla)}			
@@ -121,6 +147,10 @@ function displayProfile(feature, placeData){
 	
 		document.querySelector('.profile__column--numbers').innerHTML = `
 			<ul class='profile__attributes profile__attributes--numbers'>
+				<li class='attribute'>
+					<strong>Median home sales price: </strong>
+					${formatters.currencyRounded(properties.value)}			
+				</li>
 				<li class='attribute'>
 					<strong>Median annual property tax: </strong>
 					${formatters.currencyRounded(properties.taxes)}			

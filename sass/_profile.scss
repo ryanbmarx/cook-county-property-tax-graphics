@@ -45,7 +45,8 @@ $numbers-width-padding:15px;
 	&__tract{
 		// main headline
 		@include sans-serif-text(30px, 1.4em, bold);
-		margin:0 0 10px 0;
+	    max-width: 440px;
+	    margin: 0 auto 10px auto;
 		text-align:center;
 	}
 
@@ -139,7 +140,7 @@ p, span, strong{
 		&--gauges {
 			padding: 20px;
 			background:rgba($trib-blue2, .05);
-			margin: 30px 0 0 0;
+			margin: 40px 0 0 0;
 
 			.gauge-wrapper {
 				// This is the width of the gauge columns underneath the values stuff.
