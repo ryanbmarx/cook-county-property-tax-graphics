@@ -1,18 +1,26 @@
 $gauge_chart_height: 25px;
+$gauge_height: $gauge_chart_height + 48px;
+$gauge_chart_ratio_additional_height: 25px;
 
-.gauge{ display:none }
+// .gauge{ display:none }
 
-@media all and (min-width:$desktop-min-width){
+// @media all and (min-width:$desktop-min-width){
 	.gauge-label{
 		@include sans-serif();
 		margin: 0 0 3px 0;
 		text-align:left;
+		padding-top:23px;
+		border-top:1px solid #eee;
 	}
 
 	.gauge{
 		display:block;
 		position:relative;
-		height:50px;
+		height:$gauge_height;
+
+		margin-bottom: 25px;
+		// padding-bottom: 25px;
+		// border-bottom: 1px solid #eee;
 
 		&__labels{
 			display: flex;
@@ -20,14 +28,14 @@ $gauge_chart_height: 25px;
 			justify-content: space-between;
 			position: absolute;
 			left: 0;
-			top: $gauge_chart_height + 15px;
+			bottom: 0;
 			width: 100%;
 		}
 
 		&__label{
 			@include sans-serif();
-			position:absolute;
-			top:0;
+			// position:absolute;
+			// top:0;
 			margin:0 0 0 0;
 		}
 
@@ -50,10 +58,42 @@ $gauge_chart_height: 25px;
 			width: 100%;
 			height: $gauge_chart_height;
 			position: absolute;
-			top: 10px;
+			top: $triangle-dimension + 3px;
 			left: 0;
 			fill:$trib-blue2;
 			fill-opacity:.2;
 		}
+	}
+
+#ratio-chart{
+	margin-bottom:25px;
+	// Make the main gauge chart just a little bit taller.
+	.gauge{
+		height: $gauge_height + $triangle-dimension-ratio + $gauge_chart_ratio_additional_height;
+		
+		&__chart{
+			top: $triangle-dimension-ratio + 3px;
+			height: $gauge_chart_height + $gauge_chart_ratio_additional_height
+		}
+		&__triangle{
+			// position:absolute;
+			width:$triangle-dimension-ratio;
+			height:$triangle-dimension-ratio;
+			margin: 0 0 0 #{$triangle-dimension-ratio / -2};
+		}
+	}
+}
+
+@media all and (min-width:$desktop-min-width){
+	.gauge{
+		margin-bottom:0;
+	}
+	
+	.gauge-label{
+		// @include sans-serif();
+		// margin: 0 0 3px 0;
+		// text-align:left;
+		padding-top:0;
+		border-top:none;
 	}
 }

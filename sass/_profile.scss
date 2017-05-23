@@ -63,7 +63,11 @@ $numbers-width-padding:15px;
 		
 		&--gauges{
 			// These are the gauge charts. Don't want them until desktop
-			display:none;
+			// display:none;
+		}
+
+		.gauge-wrapper{
+			width:100%;
 		}
 	}
 
@@ -140,7 +144,7 @@ p, span, strong{
 		&--gauges {
 			padding: 20px;
 			background:rgba($trib-blue2, .05);
-			margin: 40px 0 0 0;
+			margin: 0 0 0 0;
 
 			.gauge-wrapper {
 				// This is the width of the gauge columns underneath the values stuff.
