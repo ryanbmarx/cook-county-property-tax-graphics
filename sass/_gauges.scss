@@ -56,12 +56,16 @@ $gauge_chart_ratio_additional_height: 25px;
 
 		&__chart{
 			width: 100%;
+			width: calc(100% - 2px);
 			height: $gauge_chart_height;
 			position: absolute;
 			top: $triangle-dimension + 3px;
 			left: 0;
-			fill:$trib-blue2;
+			// fill:$trib-blue2;
 			fill-opacity:.2;
+			border-right: 1px solid black;
+			border-left: 1px solid black;
+			background:white;
 		}
 	}
 
@@ -73,7 +77,8 @@ $gauge_chart_ratio_additional_height: 25px;
 		
 		&__chart{
 			top: $triangle-dimension-ratio + 3px;
-			height: $gauge_chart_height + $gauge_chart_ratio_additional_height
+			height: $gauge_chart_height + $gauge_chart_ratio_additional_height;
+			background: rgba(0,78,135,0.05);
 		}
 		&__triangle{
 			// position:absolute;
@@ -82,13 +87,21 @@ $gauge_chart_ratio_additional_height: 25px;
 			margin: 0 0 0 #{$triangle-dimension-ratio / -2};
 		}
 	}
+
+	.scatterline__square{
+		fill:$trib-orange;
+
+		&--over{
+			fill:$trib-red2;			
+		}
+	}
 }
 
 @media all and (min-width:$desktop-min-width){
 	.gauge{
 		margin-bottom:0;
 	}
-	
+
 	.gauge-label{
 		// @include sans-serif();
 		// margin: 0 0 3px 0;

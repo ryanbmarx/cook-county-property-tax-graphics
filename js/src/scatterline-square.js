@@ -87,27 +87,44 @@ class scatterlineSquare{
 		// 	.selectAll('text').remove();
 
 		
-		chartInner.append('line')
-			.classed('scatterline__line', true)
-			.attr('x1', 0)
-			.attr('x2', innerWidth)
-			.attr('y1', innerHeight / 2)
-			.attr('y2', innerHeight / 2)
-			.style('stroke', 'black')
-			.style('stroke-width', 1);
+		// chartInner.append('line')
+		// 	.classed('scatterline__line', true)
+		// 	.attr('x1', 0)
+		// 	.attr('x2', innerWidth)
+		// 	.attr('y1', innerHeight / 2)
+		// 	.attr('y2', innerHeight / 2)
+		// 	.style('stroke', 'black')
+		// 	.style('stroke-width', .2);
 
 		chartInner.selectAll('rect')
 			.data(data)
 			.enter()
 				.append('rect')
 				.classed('scatterline__square', true)
-				.style('fill', getTribColors('trib-blue2'))
+				.classed('scatterline__square--over', d => {
+					if (category.indexOf('ratio') > -1 && d[category] > 1) return true;
+					return false;
+				})
+				// .style('fill', getTribColors('trib-blue2'))
 				.style('opacity', .3)
 				.attr('width', rectWidth)
 				.attr('height', rectHeight)
 				.attr('x', d => scatterScale(d[category]) - (rectWidth / 2))
 				.attr('y', (innerHeight - rectHeight) / 2)
-				.attr('data-value', d => d[category]);
+				.attr('data-value', d => d[category])
+				.each( function(d, i) {
+					if (category.indexOf('ratio') > -1) {
+						if (d[category] > 1) {
+							d3.select(this).attr('fill', getTribColors('trib-red2'));
+						} else if (d[category] < 1) {
+							d3.select(this).attr('fill', getTribColors('trib-orange'));	
+						}else {
+							d3.select(this).attr('fill', "black");	
+						}
+					} else {
+						d3.select(this).attr('fill', getTribColors('trib-blue2'));
+					} 
+				});
 	}
 	
 }
