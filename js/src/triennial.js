@@ -32,23 +32,32 @@ function filterToTown(data, town){
 
 function highlightLine(town){
 	// console.log(direction, d, i, line);
-	const 	transitionDuration = 400, 
-			townLine = d3.select(`path[data-town="${ town }"]`),
-			tri = townLine.node().dataset.tri,
-			townName = townLine.node().dataset.townName;
+	const 	transitionDuration = 400;
 
-	/*
-On May 20, 2017, at 7:23 PM, Grotto, Jason <jgrotto@chicagotribune.com> wrote:
+	if (town == "all" ){
 
-1 = City (Chicago)
-2 = North Suburban
-3 = South and West Suburban
-	*/
+		d3.selectAll('.triennial')
+			.transition()
+			.duration(transitionDuration)
+			.style('stroke-width', 1)
+			.style('opacity', 1);
 
-	d3.select('.chart__township-label').text(`${townName} Township`);
-	d3.select('.chart__township-sublabel').text(`With triennial grouping ${tri}`);
+	} else {
+		/*
+		On May 20, 2017, at 7:23 PM, Grotto, Jason <jgrotto@chicagotribune.com> wrote:
 
-	console.log(townName);
+		1 = City (Chicago)
+		2 = North Suburban
+		3 = South and West Suburban
+		*/
+
+
+		const 	townLine = d3.select(`path[data-town="${ town }"]`),
+				tri = townLine.node().dataset.tri,
+				townName = townLine.node().dataset.townName;
+
+		d3.select('.chart__township-label').text(`${townName} Township`);
+		d3.select('.chart__township-sublabel').text(`With triennial grouping ${tri}`);
 
 		d3.selectAll('.triennial')
 			.transition()
@@ -67,8 +76,8 @@ On May 20, 2017, at 7:23 PM, Grotto, Jason <jgrotto@chicagotribune.com> wrote:
 			.duration(transitionDuration)
 			.style('opacity', 1)
 			.style('stroke-width', 3);
+	}
 }
-
 
 function drawChart(rawData, container, category, chartTitle){
 	// update the headline
@@ -78,7 +87,7 @@ function drawChart(rawData, container, category, chartTitle){
 	const bbox = container.node().getBoundingClientRect(),
 		height = bbox.height,
 		width = bbox.width,
-		margin = {top: 0, right:0, bottom:20, left:20},
+		margin = {top: 0, right:20, bottom:20, left:20},
 		innerHeight = height - margin.top - margin.bottom,
 		innerWidth = width - margin.right - margin.left;
 
@@ -102,19 +111,22 @@ function drawChart(rawData, container, category, chartTitle){
 
 
 	const 	xExtent = d3.extent(data, d => d.x),
-			xScale = d3.scaleTime()
+			xScale = d3.scaleLinear()
 			    .range([0, innerWidth])
-			    .domain([new Date(xExtent[0], 1, 1), new Date(xExtent[1], 1, 1)]);
+			    .domain(xExtent)
 
-	const line = d3.line()
-	    .y(d => yScale(d.y))
-	    .x(d => xScale(new Date(d.x, 1, 1)));
+
+	const 	line = d3.line()
+			    .y(d => yScale(d.y))
+			    .x(d => xScale(d.x));
 	
-	const xAxis = d3.axisBottom(xScale);
+	const 	xAxis = d3.axisBottom(xScale)
+						.tickFormat(d3.format("d"));
 
 	svg.append('g')
 		.attr('class', 'x axis')
 		.attr('transform', `translate(${margin.left}, ${innerHeight})`)
+		.attr('width', innerWidth)
 		.call(xAxis);
 
 

@@ -31,6 +31,8 @@ $mobile-max-width:449px;
 // ---- WRITE MORE PROJECT STYLES HERE ---------------------------------------------
 .chart{
 	position:relative;
+	margin: 15px 0;
+	padding:0;
 
 	&__labels{
 		position: absolute;

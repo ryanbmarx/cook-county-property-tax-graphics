@@ -14,7 +14,7 @@
     {{ tri_intro|markdown }}
     {% include "_subtemplates/_form.html" %}
     <select id='townshipSelect'>
-      <option label='all' value="all">All</option>
+      <option value="all">All</option>
       {% for twp in townships %}
       <option value={{ twp.town }}>{{ twp.descr }}</option>
       {% endfor %}

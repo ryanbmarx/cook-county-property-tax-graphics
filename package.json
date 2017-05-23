@@ -5,7 +5,7 @@
   "main": "js/src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run getCharts && grunt && npm run build:prerender",
+    "build": "npm run getCharts && grunt",
     "watch": "grunt watch",
     "simplifyMapData": "geo2topo tracts=./data/day1header.geojson chicago=./data/chicago-boundary.geojson | toposimplify -P 2 -f | topoquantize 1e3 > ./data/mapData.json",
     "getCharts": "rm -rf screen.png && phantomjs --debug=false scripts/render2.js",
