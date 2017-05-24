@@ -188,7 +188,21 @@ function drawChart(rawData, container, category, chartTitle){
             // });
 	})
 
+	chartInner.append('line')
+		.attr('x1', xScale(2009))
+		.attr('y1', 0)
+		.attr('x2', xScale(2009))
+		.attr('y2', innerHeight)
+		.style('stroke', 'black')
+		.style('stroke-width', 1)
+		.style('stroke-dasharray', 4);
 
+	chartInner.append('text')
+		.classed('label--2009', true)
+		.attr('x', xScale(2009) - 3)
+		.attr('y', 25)
+		.attr('text-anchor', 'end')
+		.html('Houlihan quits &#9656;')
 }
 
 // document.querySelector('#highlightButton').addEventListener('click', e => {

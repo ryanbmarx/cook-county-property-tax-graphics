@@ -73,6 +73,10 @@ $mobile-max-width:449px;
 
 }
 
+.label--2009{
+	@include sans-serif();
+}
+
 .chart-headline{
   @include label7();
   margin:0 0 5px 0;
