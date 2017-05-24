@@ -182,16 +182,23 @@ function drawChart(rawData, container, category, chartTitle){
    				document.querySelector(`#townshipSelect option[value="${township}"]`).selected = "selected"
    				highlightLine(township);
             })
-            // .on("mouseout", function(d,i){
-            // 	console.log('hovering off');
-            // 	highlightLine("off", d,i, this);
-            // });
+            .each((d,i) => {
+            	console.log(d, i, this)
+            	const 	currentLine = d3.select(this),
+            			last = d.length - 1;
+            	currentLine.attr('data-year-first', d[0]['x']);
+            	currentLine.attr('data-year-last', d[last]['x']);
+            	currentLine.attr('data-cod-first', d[0]['y']);
+            	currentLine.attr('data-cod-last', d[last]['y']);
+            	currentLine.attr('data-cod-change',d3.format('.1f')(d[0]['y'] - d[last]['y']));
+            })
+
 	})
 
 	chartInner.append('line')
-		.attr('x1', xScale(2009))
+		.attr('x1', xScale(2010.9))
 		.attr('y1', 0)
-		.attr('x2', xScale(2009))
+		.attr('x2', xScale(2010.9))
 		.attr('y2', innerHeight)
 		.style('stroke', 'black')
 		.style('stroke-width', 1)
@@ -199,10 +206,20 @@ function drawChart(rawData, container, category, chartTitle){
 
 	chartInner.append('text')
 		.classed('label--2009', true)
-		.attr('x', xScale(2009) - 3)
-		.attr('y', 25)
-		.attr('text-anchor', 'end')
-		.html('Houlihan quits &#9656;')
+		.attr('x', xScale(2010.9) + 3)
+		.attr('y', innerHeight - 25)
+		.attr('text-anchor', 'start')
+		.html('&#9666; Dec. 6, 2010: Berrios takes office')
+
+	const mugSize = 75;
+
+	chartInner.append('image')
+		.attr('width', mugSize)
+		.attr('height', mugSize)
+		.attr('x', xScale(2010.9) + 17)
+		.attr('y', innerHeight - mugSize - 45)
+		.attr('xlink:href', `http://${window.ROOT_URL}/img/berrios-mug-circle.png`);
+
 }
 
 // document.querySelector('#highlightButton').addEventListener('click', e => {
