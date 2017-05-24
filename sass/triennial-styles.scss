@@ -87,6 +87,28 @@ $mobile-max-width:449px;
   margin:0 0 5px 0;
 }
 
+.notation{
+	background-color:$trib-blue2;
+	padding:10px;
+	    position: absolute;
+    right: 0;
+    top: 0;
+    width: 120px;
+    text-align:center;
+    opacity: 0;
+	&__big-number{
+		@include sans-serif-text(40px, 1em, bold);
+		color:white;
+		margin:0 0 7px 0;
+	}
+
+	&__years{
+		@include sans-serif();
+		color:white;
+		margin:0;
+	}
+}
+
 .sources{
   @include agate();
 }

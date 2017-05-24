@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import * as _ from 'underscore';
+import getTribColor from './getTribColors.js'
 
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
@@ -42,6 +43,11 @@ function highlightLine(town){
 			.style('stroke-width', 1)
 			.style('opacity', 1);
 
+		d3.select('.notation')
+			.transition()
+			.duration(transitionDuration)
+			.style('opacity', 0)
+
 	} else {
 		/*
 		On May 20, 2017, at 7:23 PM, Grotto, Jason <jgrotto@chicagotribune.com> wrote:
@@ -76,6 +82,15 @@ function highlightLine(town){
 			.duration(transitionDuration)
 			.style('opacity', 1)
 			.style('stroke-width', 3);
+
+		const yearsString = `${townLine.node().dataset.yearFirst}-${townLine.node().dataset.yearLast - 2000}`;
+		d3.select('.notation__big-number').node().innerHTML = townLine.node().dataset.codChange;
+		d3.select('.notation__years').node().innerHTML = yearsString;
+		d3.select('.notation')
+			.transition()
+			.duration(transitionDuration)
+			.style('opacity', 1)
+
 	}
 }
 
@@ -136,6 +151,41 @@ function drawChart(rawData, container, category, chartTitle){
 		.attr('transform', `translate(${margin.left}, 0)`)
 		.call(yAxis);
 	
+	// // Build the notation box
+	// const notation = svg.append('g')
+	// 	.attr('class', 'notation')
+	// 	.attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+
+	// const 	xPos = innerWidth * .75,
+	// 		yPos = 25,
+	// 		rectWidth = 200,
+	// 		rectHeight = 72,
+	// 		rectPadding = 10;
+
+	// notation.append('rect')
+	// 	.classed('notation__background', true)
+	// 	.attr('x', xPos - rectPadding)
+	// 	.attr('y', yPos - rectPadding)
+	// 	.attr('width', rectWidth + rectPadding + rectPadding)
+	// 	.attr('height', rectHeight + rectPadding + rectPadding);
+		
+
+	// notation.append('text')
+	// 	.classed('notation__big-number', true)
+	// 	.attr('x', xPos)
+	// 	.attr('y', yPos)
+	// 	.attr('dy', '1em')
+	// 	.html('-99.9');
+
+	// notation.append('text')
+	// 	.classed('notation__years', true)
+	// 	.attr('x', xPos)
+	// 	.attr('y', yPos + 45)
+	// 	.attr('dy', '1em')
+	// 	.html('Change XXXX-XX');
+
+
 	// Add the acceptable range box before we draw the lines
 
 	chartInner.append('rect')
@@ -177,21 +227,22 @@ function drawChart(rawData, container, category, chartTitle){
 			.attr('class', d => {
 				return `triennial triennial--${d[0]['tri']}`;
 			})
+			.attr('data-year-first', d => d[0]['x'])
+        	.attr('data-year-last', d => d[d.length - 1]['x'])
+        	.attr('data-cod-first', d => d[0]['y'])
+        	.attr('data-cod-last', d => d[d.length - 1]['y'])
+        	.attr('data-cod-change', d => d3.format('.1f')(d[0]['y'] - d[d.length - 1]['y']))
             .on("click", (d,i) => {
    				const township = d[0]['town']
    				document.querySelector(`#townshipSelect option[value="${township}"]`).selected = "selected"
    				highlightLine(township);
             })
-            .each((d,i) => {
-            	console.log(d, i, this)
-            	const 	currentLine = d3.select(this),
-            			last = d.length - 1;
-            	currentLine.attr('data-year-first', d[0]['x']);
-            	currentLine.attr('data-year-last', d[last]['x']);
-            	currentLine.attr('data-cod-first', d[0]['y']);
-            	currentLine.attr('data-cod-last', d[last]['y']);
-            	currentLine.attr('data-cod-change',d3.format('.1f')(d[0]['y'] - d[last]['y']));
-            })
+            // .each((d,i) => {
+            // 	console.log(d, i, this)
+            // 	const 	currentLine = d3.select(this),
+            // 			last = d.length - 1;
+            	
+            // })
 
 	})
 
@@ -211,14 +262,25 @@ function drawChart(rawData, container, category, chartTitle){
 		.attr('text-anchor', 'start')
 		.html('&#9666; Dec. 6, 2010: Berrios takes office')
 
-	const mugSize = 75;
-
+	const 	mugSize = 76,
+			mugXPos = xScale(2010.9);
+			
 	chartInner.append('image')
 		.attr('width', mugSize)
 		.attr('height', mugSize)
-		.attr('x', xScale(2010.9) + 17)
+		.attr('x', mugXPos + 17)
 		.attr('y', innerHeight - mugSize - 45)
 		.attr('xlink:href', `http://${window.ROOT_URL}/img/berrios-mug-circle.png`);
+	
+	chartInner.append('circle')
+		.attr('width', mugSize)
+		.attr('height', mugSize)
+		.attr('cx', mugXPos + 17 + (mugSize/2))
+		.attr('cy', innerHeight - (mugSize / 2) - 45)
+		.attr('r', mugSize / 2)
+		.style('stroke', getTribColor('trib-grey4'))
+		.style('stroke-width',5)
+		.style('fill','transparent');
 
 }
 
