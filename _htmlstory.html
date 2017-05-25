@@ -1,65 +1,22 @@
 
 {% block content %}
-<div style='display:none;height:0'>{% include 'img/sprite.svg' %}</div>
-<div class="graphic-wrapper">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatum, dignissimos ex ad, sit veritatis, perspiciatis veniam nemo maiores laborum temporibus, dolor atque itaque eaque natus. Vel explicabo id earum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatum, dignissimos ex ad, sit veritatis, perspiciatis veniam nemo maiores laborum temporibus, dolor atque itaque eaque natus. Vel explicabo id earum!</p>
-{% include '_subtemplates/_map-buttons.html' %}
-  <div class='row'>
-    <div class='row__profile-wrapper'>
-      {% include '_subtemplates/_form.html' %}
-      <div id="profile" class='profile'></div>
-    </div>
-    <div class='row__map-wrapper'>
-      <div id='legend' class='row__legend'></div>
-      <div id='map'></div>
-    </div>
-  </div>
-  <section class='credits'>
-    <h2>{{ map_methodology_headline }}</h2>
-    <style type="text/css">
-      .trb_mainContent .methods p{
-        color:#aaa;
-      }
-    </style>
-    <div class='methods'>
-    {# {{ map_methodology_blurb|markdown }} #}
-    </div>
-    {{ map_sources|markdown }}
-    {{ map_credits|markdown }}
-  </section>
-</div>
-{% endblock content %}
+  <style type="text/css">
+    iframe{
+      width:260px;
+      height:1000px;
+      display:block;
+      margin: 25px auto;
+    }
+  </style>
+  <iframe src='triennial.html'></iframe>
 
-{% block library_scripts %}
-{# Uncomment this if you are using libraries such as jQuery #}
-<script src="//{{ ROOT_URL }}/js/vendor.min.js"></script>
+
+    <iframe style="width:450px;"src='triennial.html'></iframe>
+
+    <iframe style="width:750px;"src='triennial.html'></iframe>
 
 {% endblock %}
 
 {% block scripts %}
-{# Uncomment this if you are using custom JavaScript #}
-<script src="//{{ ROOT_URL }}/js/app.min.js"></script>
-<script>
-(function(document) {
-    // document.addEventListener('DOMContentLoaded', function(){
-    //   console.log('dom loaded')
-    // pymChild = new pym.Child({
-    //   renderCallback:resizer
-    // });
-    //   resizer();
-    // });
 
-  window.ROOT_URL = "{{ ROOT_URL }}";
-  
-  var CSS = [
-    "//{{ ROOT_URL }}/css/styles.css"
-  ];
-  CSS.forEach(function(url) {
-    var link = document.createElement('link');
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('href', url);
-    document.head.appendChild(link);
-  });
-})(document);
-</script>
 {% endblock scripts %}
