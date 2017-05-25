@@ -161,11 +161,11 @@ function startUpPym(){
 	window.pymChild = new pym.Child({ polling: 500 });
 	pymChild.sendHeight();
 	pymChild.sendMessage('childLoaded');
-	document.getElementById('methodology-link').addEventListener('click', function(e){
-		e.preventDefault();
-		var scrollTarget = e.target.href.split("#")[1] + "-methodology";
-		pymChild.scrollParentTo(scrollTarget);	
-	})
+	// document.getElementById('methodology-link').addEventListener('click', function(e){
+	// 	e.preventDefault();
+	// 	var scrollTarget = e.target.href.split("#")[1] + "-methodology";
+	// 	pymChild.scrollParentTo(scrollTarget);	
+	// })
 }
 // Listen for the loaded event then run the pym stuff.
 window.addEventListener('load', function() {  
