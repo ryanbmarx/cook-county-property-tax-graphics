@@ -44,8 +44,8 @@ $numbers-width-padding:15px;
 	
 	&__tract{
 		// main headline
-		@include sans-serif-text(30px, 1.4em, bold);
-	    max-width: 440px;
+		@include sans-serif-text(23px, 1.4em, bold);
+	    max-width: 400px;
 	    margin: 0 auto 10px auto;
 		text-align:center;
 	}
@@ -132,7 +132,7 @@ p, span, strong{
 		}
 
 		&__tract{
-			font-size:24px;
+			font-size:30px;
 		}
 	}
 
