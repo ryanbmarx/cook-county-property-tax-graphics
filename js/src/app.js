@@ -7,7 +7,7 @@ import displayProfile from './display-profile.js';
 var pym = require('pym.js');
 import getCoord from './get-coord.js';
 import * as utils from './geocoding-utils.js';
-
+import * as topojson from 'topojson';
 
 
 // This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
@@ -147,9 +147,15 @@ window.addEventListener('load', function(e){
 
 
 	const mapContainer = document.getElementById('map');
-	json(`http://${window.ROOT_URL}/data/tract-data2.geojson`, tractData => {
-		window.tractDataFeatures = tractData.features;
-		drawMap(mapContainer, tractData);
+	json(`http://${window.ROOT_URL}/data/tract-data-topo.json`, tractData => {
+
+		// Take the topojson, extract the tract data, convert it to geojson
+		const geojson = topojson.feature(tractData, tractData.objects.tracts);
+		
+		// Stash the FeatureCollection here for later use
+		window.tractDataFeatures = geojson.features;
+				
+		drawMap(mapContainer, geojson);
 	});
 
 
