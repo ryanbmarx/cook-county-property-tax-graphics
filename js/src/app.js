@@ -5,6 +5,8 @@ import {scaleLinear, json, max, min} from 'd3';
 import {point, inside} from '@turf/turf';
 import displayProfile from './display-profile.js';
 var pym = require('pym.js');
+import getCoord from './get-coord.js';
+import * as utils from './geocoding-utils.js';
 
 
 
@@ -12,47 +14,6 @@ var pym = require('pym.js');
 // as outlined in this Stack Overflow question: http://stackoverflow.com/questions/22754315/foreach-loop-for-htmlcollection-elements
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
-
-function triggerWarning(trigger, message){
-	if (trigger == 'trigger'){
-		document.querySelector('.profile-lookup__error-message').innerHTML = message;
-		document.querySelector('.profile-lookup').classList.add('profile-lookup--error');
-	} else if (trigger == 'clear') {
-		document.querySelector('.profile-lookup').classList.remove('profile-lookup--error');
-	}
-}
-
-function getCoord(address){
-	// Generates a promise used to download a small json object with the user's coordiates based on the input address
-	return new Promise(function(resolve, reject){
-		// Make the request
-
-		const requestUrl = `https://qyf1ag22mj.execute-api.us-east-1.amazonaws.com/production/locations?q=${encodeURI(address)}&userLocation=41.8337329,-87.7321555`
-		const geoRequest = json(requestUrl)
-		
-		var request = new XMLHttpRequest();
-		request.open('GET', requestUrl);
-
-		request.onload = function(){
-			if (request.status == 200){
-				// success
-				resolve(request.response);
-			} else {
-				// Failure
-				reject(Error('ERROR!'));
-			}
-		}
-	    // Handle network errors
-	    request.onerror = function() {
-	      reject(Error("Network Error"));
-	    };
-
-	    // Make the request
-	    request.send();
-	});
-}
-
-
 
 function drawMap(container, data, propertyToMap){
 	// instantiates the leaflet map
@@ -161,31 +122,16 @@ function startUpPym(){
 	window.pymChild = new pym.Child({ polling: 500 });
 	pymChild.sendHeight();
 	pymChild.sendMessage('childLoaded');
-	// document.getElementById('methodology-link').addEventListener('click', function(e){
-	// 	e.preventDefault();
-	// 	var scrollTarget = e.target.href.split("#")[1] + "-methodology";
-	// 	pymChild.scrollParentTo(scrollTarget);	
-	// })
 }
+
 // Listen for the loaded event then run the pym stuff.
 window.addEventListener('load', function() {  
 	startUpPym(); 
 }, false);
 
 
-function spinner(iconToShow){
-	// Just switches between the submit arrow and the loading spinner on the form, so people know it's working.
-	const icons = document.querySelectorAll(".submit-icon");
-	for (var icon of icons){
-		if (icon.classList.contains(`submit-icon--${iconToShow}`)){
-			icon.classList.add('submit-icon--visible')
-		} else {
-			icon.classList.remove('submit-icon--visible')
-		}
-	}
-}
 
-window.onload = function(){
+window.addEventListener('load', function(e){
 
   	// Create a trigger to detect whether we are on a mobile width, which is < 450
   	// Also, keep monitoring the window width so when the profile finally is shown, 
@@ -217,7 +163,7 @@ window.onload = function(){
 		const address = document.getElementById('search-address').value;
 
 		// Switch to loading spinner in case geocoding takes some time.
-		spinner('spinner');
+		utils.spinner('spinner');
 
 		getCoord(address)
 			.then(function(response) {
@@ -230,7 +176,7 @@ window.onload = function(){
 					// address. Only in this case will we show a profile.
 					
 					// Start by clearing any existing error
-					triggerWarning("clear")
+					utils.triggerWarning("clear")
 
 					const userCoordinates =  {
 						address: data.resources[0].name,
@@ -244,7 +190,7 @@ window.onload = function(){
 					const userGeo = findTract(userCoordinates.coordinates);
 
 					if (!userGeo){
-						triggerWarning("trigger", window.error_not_in_cook_county);
+						utils.triggerWarning("trigger", window.error_not_in_cook_county);
 					} else {					
 						// Map the user's geo stuff
 						mapUserGeo(userGeo.point, userGeo.tract);
@@ -253,11 +199,11 @@ window.onload = function(){
 						displayProfile(userGeo.tract, userCoordinates);
 
 						// Now that we have a a displayed profile, switch back to the submit arrow
-						spinner('arrow');
+						utils.spinner('arrow');
 					}
 				} else {
 					// If the geocoding returned no entries
-					triggerWarning("trigger", window.error_not_found)
+					utils.triggerWarning("trigger", window.error_not_found)
 					
 				}
 				window.pymChild.sendHeight();
@@ -270,8 +216,8 @@ window.onload = function(){
 	// Reset the red/errored form after 300ms of typing to "clear" the error.
 	document.getElementById('search-address').addEventListener('input', e => {
 		setTimeout(function(){
-			spinner('arrow');
-			triggerWarning("clear")
+			utils.spinner('arrow');
+			utils.triggerWarning("clear")
 		}, 300);
 	});
-};
+});
