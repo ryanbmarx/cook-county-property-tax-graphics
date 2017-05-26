@@ -5,6 +5,7 @@ import getCoord from './get-coord.js';
 import * as utils from './geocoding-utils.js';
 import {point, inside} from '@turf/turf';
 const pym = require('pym.js');
+import {feature} from 'topojson';
 
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
@@ -162,40 +163,6 @@ function drawChart(rawData, container, category, chartTitle){
 		.attr('class', 'y axis')
 		.attr('transform', `translate(${margin.left}, 0)`)
 		.call(yAxis);
-	
-	// // Build the notation box
-	// const notation = svg.append('g')
-	// 	.attr('class', 'notation')
-	// 	.attr('transform', `translate(${margin.left}, ${margin.top})`);
-
-
-	// const 	xPos = innerWidth * .75,
-	// 		yPos = 25,
-	// 		rectWidth = 200,
-	// 		rectHeight = 72,
-	// 		rectPadding = 10;
-
-	// notation.append('rect')
-	// 	.classed('notation__background', true)
-	// 	.attr('x', xPos - rectPadding)
-	// 	.attr('y', yPos - rectPadding)
-	// 	.attr('width', rectWidth + rectPadding + rectPadding)
-	// 	.attr('height', rectHeight + rectPadding + rectPadding);
-		
-
-	// notation.append('text')
-	// 	.classed('notation__big-number', true)
-	// 	.attr('x', xPos)
-	// 	.attr('y', yPos)
-	// 	.attr('dy', '1em')
-	// 	.html('-99.9');
-
-	// notation.append('text')
-	// 	.classed('notation__years', true)
-	// 	.attr('x', xPos)
-	// 	.attr('y', yPos + 45)
-	// 	.attr('dy', '1em')
-	// 	.html('Change XXXX-XX');
 
 
 	// Add the acceptable range box before we draw the lines
@@ -300,30 +267,18 @@ window.addEventListener('load', function(e){
 	pymChild.sendHeight();
 
 	const 	container = d3.select('#triennial-chart'),
-			category = "cod",
-			categoryLookup = {
-				town :" Township ID",
-				n :" Sample size",
-				mv_sum :" Total market value (assessor)",
-				netcon :" Total sale price (actual sales)",
-				median_sales :" Median sale price",
-				median_ass :" Median assessment level (as a percentage)",
-				mad :" Median absolute deviation",
-				weighted :" Weighted mean",
-				prd :" Price-related differential",
-				cod :" Coefficient of dispersion",
-				descr :" Township ID",
-				tax_year :" Tax year",
-				tri:"Triennial are"
-			};
+			category = "cod";
+			
 
 	// TODO !!! d3-queue;
 	d3.csv(`http://${window.ROOT_URL}/data/tri_stats.csv`, (err, triennialData) => {
 		if (err) throw err;
-		d3.json(`http://${window.ROOT_URL}/data/cook-county-townships.geojson`, (err, townshipGeoData) => {
+		d3.json(`http://${window.ROOT_URL}/data/cook-county-townships-topo.json`, (err, townshipGeoData) => {
 			if (err) throw err;
-			window.townshipGeoData = townshipGeoData;
-			drawChart(triennialData, container, category, categoryLookup[category]);
+			const geojson = feature(townshipGeoData, townshipGeoData.objects.townships);
+			window.townshipGeoData = geojson;
+
+			drawChart(triennialData, container, category);
 		});
 	})
 });
