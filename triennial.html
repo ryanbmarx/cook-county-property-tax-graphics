@@ -6,6 +6,8 @@
   <script src="//{{ ROOT_URL }}/js/vendor.min.js"></script>
   <script>
     window.ROOT_URL = "{{ ROOT_URL }}";
+    window.error_not_found = "{{ error_not_found_message }}";
+    window.error_not_in_cook_county = "{{ error_not_in_cook_county }}";
   </script>
 </head>
 <body>
@@ -15,7 +17,7 @@
     {{ tri_intro|markdown }}
     {% include "_subtemplates/_form.html" %}
     <select id='townshipSelect'>
-      <option value="all">All</option>
+      <option value="all">All townships</option>
       {% for twp in townships %}
       <option value={{ twp.town }}>{{ twp.descr }}</option>
       {% endfor %}

@@ -2,8 +2,12 @@
 @import 'base-variables';
 
 // ---- ADD MORE VARIABLES HERE ---------------------------------------------
+$tablet-min-width:450px;
+$desktop-min-width:850px;
+
 $tablet-max-width:849px;
 $mobile-max-width:449px;
+
 
 // Required for everything, too, but can be broken down into smaller explicit imports if desired. 
 @import 'base-mixins';
@@ -35,13 +39,14 @@ $mobile-max-width:449px;
 	padding:0;
 
 	&__labels{
-		position: absolute;
-		top: 0;
-    	left: 45px;
+		margin: 0 0 15px 0;
+		// position: absolute;
+		// top: 0;
+  //   	left: 45px;
 
 	}
 
-&__township-label{
+	&__township-label{
 	  	@include label7();
 	  	margin: 0 0 7px 0;
 	  }
@@ -53,10 +58,13 @@ $mobile-max-width:449px;
   }
 
 	&__holder{
-	  height:450px;
+	  height:300px;
 	}
-  
-	  
+}
+
+#townshipSelect{
+	width:100%;
+	margin:15px 0 0 0;
 }
 
 .triennial{
@@ -113,11 +121,18 @@ $mobile-max-width:449px;
   @include agate();
 }
 
-@media all and (max-width: $tablet-max-width){
+@media all and (min-width: $tablet-min-width){
+	.chart{
+		&__labels{
+			position: absolute;
+			top: 0;
+	    	left: 45px;
 
+		}
+	}
 }
 
 
-@media all and (max-width: $mobile-max-width){
+@media all and (min-width: $desktop-min-width){
 
 }
