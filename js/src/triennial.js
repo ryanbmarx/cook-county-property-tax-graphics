@@ -299,7 +299,7 @@ function findTownship(coordinates){
 		{id:17, label: "Evanston"},
 		{id:18, label: "Hanover"},
 		{id:70, label: "Hyde Park"},
-		{id:71, label: "Jefferson Park"},
+		{id:71, label: "Jefferson"},
 		{id:72, label: "Lake"},
 		{id:73, label: "Lake View"},
 		{id:19, label: "Lemont"},
@@ -320,10 +320,10 @@ function findTownship(coordinates){
 		{id:33, label: "River Forest"},
 		{id:34, label: "Riverside"},
 		{id:75, label: "Rogers Park"},
-		{id:35, label: "Schaumberg"},
+		{id:35, label: "Schaumburg"},
 		{id:76, label: "South"},
 		{id:36, label: "Stickney"},
-		{id:37, label: "Thorton"},
+		{id:37, label: "Thornton"},
 		{id:77, label: "West"},
 		{id:38, label: "Wheeling"},
 		{id:39, label: "Worth"}
@@ -332,11 +332,12 @@ function findTownship(coordinates){
 	const pointLoc = point(coordinates);
 	let retval = false
 	for (var i=0; i< window.townshipGeoData.features.length; i++){
-		// For every feature (tract) in the data, test if the point is inside it.
+		// For every feature (twp) in the data, test if the point is inside it.
 		const township = window.townshipGeoData.features[i];
 		if (inside(pointLoc, township) ){
-			// If the tract is the one we're looking for, then return our data object
-			console.log(township);
+			console.log("the township feature is", township);
+			console.log("the township's name is", township.properties.name);
+			// If we have found the geometry that contains the point, then search our lookup for the needed id so we can highlight the line
 			for (let i = 0; i < twpLookup.length; i++) {
 				const 	searchingTownship = twpLookup[i].label.toUpperCase(),
 						foundTownship = township.properties.name;
