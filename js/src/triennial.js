@@ -37,11 +37,11 @@ function filterToTown(data, town){
 }
 
 function highlightLine(town){
-	console.log(town);
+	// console.log(town);
 	const 	transitionDuration = 400;
 
 	// Change the select menu to geocoded township
-	console.log(document.querySelector(`#townshipSelect`).value);
+	// console.log(document.querySelector(`#townshipSelect`).value);
 	
 	document.querySelector(`#townshipSelect`).value = town;
 
@@ -187,7 +187,6 @@ function drawChart(rawData, container, category, chartTitle){
 	// console.log(uniqueListOfTowns);
 	uniqueListOfTowns.forEach(town => {
 		const townData = filterToTown(data, town.town);
-		
 		chartInner.append("path")
 			.datum(townData)
 			.attr("fill", "none")
@@ -224,11 +223,25 @@ function drawChart(rawData, container, category, chartTitle){
 		.style('stroke-dasharray', 4);
 
 	chartInner.append('text')
-		.classed('label--2009', true)
-		.attr('x', xScale(2010.9) + 3)
+		.classed('label--2010', true)
+		.attr('x', xScale(2010.9) - 3)
 		.attr('y', innerHeight - 25)
-		.attr('text-anchor', 'start')
-		.html('&#9666; Dec. 2010: Berrios takes office')
+		.attr('text-anchor', 'end')
+		.style('font-family', "'Arial', sans-serif")
+		.style('font-size', "13px")
+		.attr('dy', '-0.1em')
+		.html('Dec. 2010: &#9656;')
+
+
+	chartInner.append('text')
+		.classed('label--2010', true)
+		.attr('x', xScale(2010.9) - 14)
+		.attr('y', innerHeight - 25)
+		.attr('dy', '1.2em')
+		.attr('text-anchor', 'end')
+		.style('font-family', "'Arial', sans-serif")
+		.style('font-size', "13px")
+		.html('Berrios takes office')
 
 
 	if (window.innerWidth >= 450){
@@ -335,17 +348,17 @@ function findTownship(coordinates){
 		// For every feature (twp) in the data, test if the point is inside it.
 		const township = window.townshipGeoData.features[i];
 		if (inside(pointLoc, township) ){
-			console.log("the township feature is", township);
-			console.log("the township's name is", township.properties.name);
+			// console.log("the township feature is", township);
+			// console.log("the township's name is", township.properties.name);
 			// If we have found the geometry that contains the point, then search our lookup for the needed id so we can highlight the line
 			for (let i = 0; i < twpLookup.length; i++) {
 				const 	searchingTownship = twpLookup[i].label.toUpperCase(),
 						foundTownship = township.properties.name;
 				
-				console.log(twpLookup[i], searchingTownship, foundTownship, searchingTownship == foundTownship);
+				// console.log(twpLookup[i], searchingTownship, foundTownship, searchingTownship == foundTownship);
 
 				if (searchingTownship == foundTownship) {
-					console.log('true!', twpLookup[i].id)
+					// console.log('true!', twpLookup[i].id)
 					retval = twpLookup[i].id;
 					break;
 				};
@@ -388,14 +401,14 @@ document.getElementById('search-address-submit').addEventListener('click', e => 
 						data.resources[0].geocodePoints[0].coordinates[0]
 					]
 				}
-				console.log('returned loc', userCoordinates);
+				// console.log('returned loc', userCoordinates);
 				// Generate an object the with geojson for both the user's address and corresponding tract
 				const userGeo = findTownship(userCoordinates.coordinates);
 				// const userGeo = false;
 				if (!userGeo){
 					utils.triggerWarning("trigger", window.error_not_in_cook_county);
 				} else {		
-					console.log("Township id is ", userGeo);			
+					// console.log("Township id is ", userGeo);			
 					// Now that we have a a displayed profile, switch back to the submit arrow
 					utils.spinner('arrow');
 

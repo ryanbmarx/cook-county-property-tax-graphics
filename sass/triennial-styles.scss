@@ -80,7 +80,7 @@ $mobile-max-width:449px;
 }
 
 .acceptable-range-label {
-	@include sans-serif();
+	@include sans-serif-text(13px, 1.3em);
 	font-style:italic;
 
 }
