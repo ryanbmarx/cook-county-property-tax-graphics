@@ -214,9 +214,9 @@ function drawChart(rawData, container, category, chartTitle){
 	})
 
 	chartInner.append('line')
-		.attr('x1', xScale(2010.9))
+		.attr('x1', xScale(2008))
 		.attr('y1', 0)
-		.attr('x2', xScale(2010.9))
+		.attr('x2', xScale(2008))
 		.attr('y2', innerHeight)
 		.style('stroke', 'black')
 		.style('stroke-width', 1)
@@ -224,48 +224,23 @@ function drawChart(rawData, container, category, chartTitle){
 
 	chartInner.append('text')
 		.classed('label--2010', true)
-		.attr('x', xScale(2010.9) - 3)
+		.attr('x', xScale(2008) - 3)
 		.attr('y', innerHeight - 25)
 		.attr('text-anchor', 'end')
 		.style('font-family', "'Arial', sans-serif")
 		.style('font-size', "13px")
 		.attr('dy', '-0.1em')
-		.html('Dec. 2010: &#9656;')
-
+		.html('2008: Housing&#9656;')
 
 	chartInner.append('text')
 		.classed('label--2010', true)
-		.attr('x', xScale(2010.9) - 14)
+		.attr('x', xScale(2008) - 8)
 		.attr('y', innerHeight - 25)
-		.attr('dy', '1.2em')
 		.attr('text-anchor', 'end')
 		.style('font-family', "'Arial', sans-serif")
 		.style('font-size', "13px")
-		.html('Berrios takes office')
-
-
-	if (window.innerWidth >= 450){
-		const 	mugSize = 76,
-				mugXPos = xScale(2010.9);
-
-		chartInner.append('image')
-			.classed('chart-mug', true)
-			.attr('width', mugSize)
-			.attr('height', mugSize)
-			.attr('x', mugXPos + 17)
-			.attr('y', innerHeight - mugSize - 45)
-			.attr('xlink:href', `http://${window.ROOT_URL}/img/berrios-mug-circle.png`);
-		
-		chartInner.append('circle')
-			.attr('width', mugSize)
-			.attr('height', mugSize)
-			.attr('cx', mugXPos + 17 + (mugSize/2))
-			.attr('cy', innerHeight - (mugSize / 2) - 45)
-			.attr('r', mugSize / 2)
-			.style('stroke', getTribColor('trib-grey4'))
-			.style('stroke-width',5)
-			.style('fill','transparent');
-	}
+		.attr('dy', '1.2em')
+		.html('market collapses')
 }
 
 document.querySelector('#townshipSelect').addEventListener('change', e => {
