@@ -174,11 +174,11 @@ function drawChart(rawData, container, category, chartTitle){
 		.attr('width', innerWidth)
 		.classed('acceptable-range', true)
 
-	chartInner.append('text')
-		.classed('acceptable-range-label', true)
-		.attr('x', 15)
-		.attr('y', yScale(5) - 15)
-		.text('Acceptable range')
+	// chartInner.append('text')
+	// 	.classed('acceptable-range-label', true)
+	// 	.attr('x', 15)
+	// 	.attr('y', yScale(5) - 15)
+	// 	.text('Acceptable range')
 
 
 
@@ -224,19 +224,19 @@ function drawChart(rawData, container, category, chartTitle){
 
 	chartInner.append('text')
 		.classed('label--2010', true)
-		.attr('x', xScale(2008) - 3)
+		.attr('x', xScale(2008) + 3)
 		.attr('y', innerHeight - 25)
-		.attr('text-anchor', 'end')
+		.attr('text-anchor', 'start')
 		.style('font-family', "'Arial', sans-serif")
 		.style('font-size', "13px")
 		.attr('dy', '-0.1em')
-		.html('2008: Housing&#9656;')
+		.html('&#9666;2008: Housing')
 
 	chartInner.append('text')
 		.classed('label--2010', true)
-		.attr('x', xScale(2008) - 8)
+		.attr('x', xScale(2008) + 8)
 		.attr('y', innerHeight - 25)
-		.attr('text-anchor', 'end')
+		.attr('text-anchor', 'start')
 		.style('font-family', "'Arial', sans-serif")
 		.style('font-size', "13px")
 		.attr('dy', '1.2em')

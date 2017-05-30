@@ -39,7 +39,7 @@ $mobile-max-width:449px;
 	padding:0;
 
 	&__labels{
-		margin: 0 0 15px 0;
+		margin: 0 0 5px 0;
 		// position: absolute;
 		// top: 0;
   //   	left: 45px;
@@ -48,17 +48,28 @@ $mobile-max-width:449px;
 
 	&__township-label{
 	  	@include label7();
-	  	margin: 0 0 7px 0;
+	  	margin: 0 0 2px 0;
 	  }
 
   &__township-sublabel{
   	@include sans-serif();
   	font-style: italic;
-  	margin:0;
+  	margin: 0 0 2px 0;
   }
 
 	&__holder{
 	  height:300px;
+	}
+	&__township-legend{
+		@include trib-legend();
+		margin-bottom:0;
+		
+		span{
+			@include trib-legend__box(0);
+		}
+		dd{
+
+		}
 	}
 }
 
@@ -77,6 +88,7 @@ $mobile-max-width:449px;
 
 .acceptable-range{
 	fill: $trib-tan;
+	background:$trib-tan;
 }
 
 .acceptable-range-label {
