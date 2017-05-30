@@ -19,7 +19,7 @@ function clickTrack(uniquePhrase){
 	    // variableOverrides
 	    null
 	  );
-	  console.log(window.s);
+	  // console.log(window.s);
 	}
 	
 	catch (ReferenceError) {
