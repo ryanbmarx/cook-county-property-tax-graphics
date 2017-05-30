@@ -29,7 +29,7 @@ function addGauge(value, formatter, scale, valueName){
 				<span class='gauge__label gauge__label--axis'>
 					-${formatter(1 - scaleDomain[0])}
 				</span>`
-			profileString += `<span class='gauge__label gauge__label--axis' style='text-align:center;'>Evenly valued <br /><strong>All Tracts</strong></span>`;
+			profileString += `<span class='gauge__label gauge__label--axis' style='text-align:center;'>Evenly valued <br /><strong>All tracts</strong></span>`;
 			profileString += `
 				<span class='gauge__label gauge__label--axis' style='right:0;text-align:right'>
 					+${formatter(scaleDomain[1] - 1)}
@@ -91,50 +91,13 @@ function displayProfile(feature, placeData){
 	}
 	
 	document.getElementById('tract').innerHTML = properties.NAMELSAD10.toLowerCase();
-	// document.getElementById('market').innerHTML = formatters.currencyRounded(properties.value);
-	// document.getElementById('assessed-ten-per').innerHTML = formatters.currencyRounded(assessedTenPercent);
-	// document.getElementById('assessed-actual').innerHTML = `<span>${formatters.currencyRounded(properties.av1)}</span>`;
-	// document.querySelector('#assessed-actual span').classList = overUnder.toLowerCase();
 	document.getElementById('over-under').innerHTML = overUnder;
 	document.getElementById('over-under').classList = overUnderClass.toLowerCase();
 
 	// Add the main ratio gauge chart
 	document.getElementById('ratio-chart').innerHTML = addGauge(properties.ratio1, formatters.percentage, window.gaugeratio1, "ratio1");
 
-	// if (window.mobile){
 
-	// 		document.querySelector('.profile__column--numbers').innerHTML = `
-	// 		<ul class='profile__attributes profile__attributes--median-home-sales-price'>
-	// 			<li class='attribute'>
-	// 				<strong>Median home sales price: </strong>
-	// 				${formatters.currencyRounded(properties.value)}			
-	// 			</li>
-	// 			<li class='attribute'>
-	// 				<strong>Percentage of assessments appealed: </strong>
-	// 				${formatters.percentage(properties.appeal_fla)}			
-	// 			</li>
-	// 			<li class='attribute'>
-	// 				<strong>Effective tax rate for a typical home: </strong>
-	// 				${formatters.percentage(properties.erate)}			
-	// 			</li>
-	// 			<li class='attribute'>
-	// 				<strong>Median annual property tax: </strong>
-	// 				${formatters.currencyRounded(properties.taxes)}			
-	// 			</li>
-	// 			<li class='attribute'>
-	// 				<strong>Median household income: </strong>
-	// 				${formatters.currencyRounded(properties.medhinc)}			
-	// 			</li>
-	// 			<li class='attribute'>
-	// 				<strong>Percentage of tract population that is non-Hispanic white: </strong>
-	// 				${formatters.percentage(properties.white)}			
-	// 			</li>
-	// 			<li class='attribute'>
-	// 				<strong>Number of homes sold in this tract: </strong>
-	// 				${properties.N}
-	// 			</li>
-	// 		</ul>`;
-	// } else {
 		// Add the gauges for the two charts.
 
 		document.getElementById('appealed').innerHTML = addGauge(properties.appeal_fla, formatters.percentage, window.gaugeappeal_fla, "appeal_fla");
@@ -146,26 +109,26 @@ function displayProfile(feature, placeData){
 		// Add the list of auxilliary data points
 	
 		document.querySelector('.profile__column--numbers').innerHTML = `
+			<p><strong>For the ${properties.N} homes sold in this tract:</strong></p>
 			<ul class='profile__attributes profile__attributes--numbers'>
 				<li class='attribute'>
-					<strong>Median home sales price: </strong>
+					Median home sales price:
 					${formatters.currencyRounded(properties.value)}			
 				</li>
 				<li class='attribute'>
-					<strong>Median annual property tax: </strong>
+					Median annual property tax:
 					${formatters.currencyRounded(properties.taxes)}			
 				</li>
+				</ul>
+				<p><strong>According to the 2010 census:</strong></p>
+				<ul class='profile__attributes profile__attributes--numbers'>
 				<li class='attribute'>
-					<strong>Median household income: </strong>
+					Median household income in this tract:
 					${formatters.currencyRounded(properties.medhinc)}			
 				</li>
 				<li class='attribute'>
-					<strong>Percentage of tract population that is non-Hispanic white: </strong>
+					Percentage of tract residents who were non-Hispanic white:
 					${formatters.percentage(properties.white)}			
-				</li>
-				<li class='attribute'>
-					<strong>Number of homes sold in this tract: </strong>
-					${properties.N}
 				</li>
 			</ul>`;
 	// }
