@@ -16,8 +16,7 @@ $gauge_chart_ratio_additional_height: 25px;
 	.gauge{
 		display:block;
 		position:relative;
-		height:$gauge_height;
-
+		margin-top: 10px;
 		margin-bottom: 25px;
 		// padding-bottom: 25px;
 		// border-bottom: 1px solid #eee;
@@ -26,9 +25,9 @@ $gauge_chart_ratio_additional_height: 25px;
 			display: flex;
 			align-items: flex-start;
 			justify-content: space-between;
-			position: absolute;
-			left: 0;
-			bottom: 0;
+			// position: absolute;
+			// left: 0;
+			// bottom: 0;
 			width: 100%;
 		}
 
@@ -51,14 +50,14 @@ $gauge_chart_ratio_additional_height: 25px;
 			position:absolute;
 			width:$triangle-dimension;
 			height:$triangle-dimension;
-			margin: 0 0 0 #{$triangle-dimension / -2};
+			margin: #{$triangle-dimension * -1} 0 0 #{$triangle-dimension / -2};
 		}
 
 		&__chart{
 			width: 100%;
 			width: calc(100% - 2px);
 			height: $gauge_chart_height;
-			position: absolute;
+			// position: absolute;
 			top: $triangle-dimension + 3px;
 			left: 0;
 			// fill:$trib-blue2;
@@ -73,8 +72,8 @@ $gauge_chart_ratio_additional_height: 25px;
 	margin-bottom:25px;
 	// Make the main gauge chart just a little bit taller.
 	.gauge{
-		height: $gauge_height + $triangle-dimension-ratio + $gauge_chart_ratio_additional_height;
-		
+		// height: $gauge_height + $triangle-dimension-ratio + $gauge_chart_ratio_additional_height;
+		margin-top: 20px;
 		&__chart{
 			top: $triangle-dimension-ratio + 3px;
 			height: $gauge_chart_height + $gauge_chart_ratio_additional_height;
@@ -84,7 +83,7 @@ $gauge_chart_ratio_additional_height: 25px;
 			// position:absolute;
 			width:$triangle-dimension-ratio;
 			height:$triangle-dimension-ratio;
-			margin: 0 0 0 #{$triangle-dimension-ratio / -2};
+			margin: #{$triangle-dimension-ratio * -1} 0 0 #{$triangle-dimension-ratio / -2};
 		}
 	}
 
@@ -100,6 +99,7 @@ $gauge_chart_ratio_additional_height: 25px;
 @media all and (min-width:$desktop-min-width){
 	.gauge{
 		margin-bottom:0;
+		margin-top:20px;
 	}
 
 	.gauge-label{

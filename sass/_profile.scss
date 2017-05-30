@@ -76,6 +76,7 @@ $numbers-width-padding:15px;
 		&--numbers{
 			padding:$numbers-width-padding;
 			background:rgba($trib-blue2, .05);
+			width: 100%;
 		}
 
 		&--map{
