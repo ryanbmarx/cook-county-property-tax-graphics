@@ -8,6 +8,7 @@ var pym = require('pym.js');
 import getCoord from './get-coord.js';
 import * as utils from './geocoding-utils.js';
 import * as topojson from 'topojson';
+import clickTrack from './click-track.js';
 
 
 // This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
@@ -164,6 +165,9 @@ window.addEventListener('load', function(e){
 		
 		// Quash the default behavior
 		e.preventDefault();
+
+		// trigger a clickTrack
+		clickTrack('LOOKUP: User submitted address');
 
 		// Get the input address from the form
 		const address = document.getElementById('search-address').value;

@@ -6,6 +6,8 @@ import * as utils from './geocoding-utils.js';
 import {point, inside} from '@turf/turf';
 const pym = require('pym.js');
 import {feature} from 'topojson';
+import clickTrack from './click-track.js';
+
 
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
@@ -37,7 +39,10 @@ function filterToTown(data, town){
 }
 
 function highlightLine(town){
-	// console.log(town);
+	
+	// Measure this function as a proxy for both dropdown and address searches
+	clickTrack('TOWNSHIP: User has chosen a township');
+
 	const 	transitionDuration = 400;
 
 	// Change the select menu to geocoded township
@@ -172,15 +177,7 @@ function drawChart(rawData, container, category, chartTitle){
 		.attr('y', yScale(15))
 		.attr('height', yScale(5) - yScale(15))
 		.attr('width', innerWidth)
-		.classed('acceptable-range', true)
-
-	// chartInner.append('text')
-	// 	.classed('acceptable-range-label', true)
-	// 	.attr('x', 15)
-	// 	.attr('y', yScale(5) - 15)
-	// 	.text('Acceptable range')
-
-
+		.classed('acceptable-range', true);
 
 
 	const uniqueListOfTowns = _.uniq(data, false, d => d.town);	
