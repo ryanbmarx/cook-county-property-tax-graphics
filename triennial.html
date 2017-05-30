@@ -9,6 +9,7 @@
     window.error_not_found = "{{ error_not_found_message }}";
     window.error_not_in_cook_county = "{{ error_not_in_cook_county }}";
   </script>
+
 </head>
 <body>
   <div style='display:none;height:0'>{% include 'img/sprite.svg' %}</div>
@@ -38,6 +39,8 @@
     </figure>
     <p class='sources'>Sources: Analysis of assessor data</p>
   </div>
+  <script type="text/javascript" src="http://www.chicagotribune.com/hive/javascripts/metrics/s_code_trb.js"></script>
+  {% omnitag request, OMNITURE, None, title, 'dataproject' %}
   <script src="//{{ ROOT_URL }}/js/triennial.min.js"></script>
 </body>
 </html>
