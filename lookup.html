@@ -20,10 +20,9 @@
 
     {% include '_subtemplates/_form.html' %}
     {% include '_subtemplates/_profile.html' %}
-
-  </section>
-  <section class='credits'>
+  <div class='credits'>
     {{ lookup_sources|markdown }}
+  </div>
   </section>
   <script src="//{{ ROOT_URL }}/js/app.min.js"></script>
 </body>
