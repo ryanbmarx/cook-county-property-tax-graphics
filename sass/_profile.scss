@@ -147,9 +147,10 @@ p, span, strong{
 			background:rgba($trib-blue2, .05);
 			margin: 0 0 0 0;
 
-			.gauge-wrapper {
+			.gauge-wrapper:first-child {
 				// This is the width of the gauge columns underneath the values stuff.
-				width:45%;
+				// width:45%;
+				margin-bottom: 15px;
 			}
 		}
 
@@ -191,4 +192,25 @@ p, span, strong{
 			}
 		}
 	}
+}
+
+@media all and (min-width:1000px){
+	// Some light tweaks for the wider screen
+
+		.profile__columns--gauges {
+
+			.gauge-wrapper {
+				// This is the width of the gauge columns underneath the values stuff.
+				width:45%;
+				display: flex;
+				flex-wrap: wrap;
+				align-items: flex-end;
+				align-content: flex-end;
+
+				&:first-child{
+					margin-bottom:0;
+				}
+			}
+		}
+
 }
