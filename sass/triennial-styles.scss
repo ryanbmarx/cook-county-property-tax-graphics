@@ -40,26 +40,23 @@ $mobile-max-width:449px;
 
 	&__labels{
 		margin: 0 0 5px 0;
-		// position: absolute;
-		// top: 0;
-  //   	left: 45px;
-
 	}
 
 	&__township-label{
-	  	@include label7();
-	  	margin: 0 0 2px 0;
-	  }
+		@include label7();
+		margin: 0 0 2px 0;
+	}
 
-  &__township-sublabel{
-  	@include sans-serif();
-  	font-style: italic;
-  	margin: 0 0 2px 0;
-  }
+	&__township-sublabel{
+		@include sans-serif();
+		font-style: italic;
+		margin: 0 0 2px 0;
+	}
 
 	&__holder{
-	  height:300px;
+		height:300px;
 	}
+	
 	&__township-legend{
 		@include trib-legend();
 		margin-bottom:0;
@@ -102,13 +99,13 @@ $mobile-max-width:449px;
 }
 
 .chart-headline{
-  @include label7();
-  margin:0 0 5px 0;
+	@include label7();
+	margin:0 0 5px 0;
 }
 
 .chart-subheadline{
-  @include sans-serif();
-  margin:0 0 5px 0;
+	@include sans-serif();
+	margin:0 0 5px 0;
 }
 
 // .notation{
@@ -134,7 +131,7 @@ $mobile-max-width:449px;
 // }
 
 .sources{
-  @include agate();
+	@include agate();
 }
 
 @media all and (min-width: $tablet-min-width){
@@ -142,8 +139,8 @@ $mobile-max-width:449px;
 		&__labels{
 			position: absolute;
 			top: 0;
-	    	left: 45px;
-    	    max-width: 140px;
+			left: 45px;
+			max-width: 140px;
 
 		}
 	}
