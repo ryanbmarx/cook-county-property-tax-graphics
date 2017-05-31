@@ -168,6 +168,14 @@ p, span, strong{
 				margin-top:0;
 				border-top: none;
 				width: $numbers-width - ($numbers-width-padding * 2);
+
+				p{
+					margin:20px 0 10px 0;
+
+					&:first-child{
+						margin:0 0 10px 0;
+					}
+				}
 			}
 			&--map{
 				width: $map-width;
