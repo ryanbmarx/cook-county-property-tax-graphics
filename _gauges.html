@@ -10,7 +10,9 @@
 			margin: 0 0 15px 0;
 		}
 
-	</style>
+	</style>	
+	<script type="text/javascript" src='http://{{ ROOT_URL }}/js/vendor.min.js'></script>
+
 </head>
 <body>
 
@@ -20,7 +22,6 @@
 		<div id='{{ chart }}' class='chart' title='{{ chart }}' data-chart='{{ chart }}'></div>
 	{% endfor %}
 
-	<script type="text/javascript" src='http://{{ ROOT_URL }}/js/vendor.min.js'></script>
 	<script type="text/javascript" src='http://{{ ROOT_URL }}/js/gauge.min.js'></script>
 	<script type="text/javascript">
 		window.ROOT_URL = "{{ ROOT_URL }}";

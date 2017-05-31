@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import scatterlineSquare from './scatterline-square.js';
 
 window.onload = function(){
-	d3.json(`http://${window.ROOT_URL}/data/tract-data2.geojson`, (err, data) => {
+	d3.json(`http://${window.ROOT_URL}/data/tract-data.geojson`, (err, data) => {
 		if (err) throw err;
 
 		const features = data.features;
