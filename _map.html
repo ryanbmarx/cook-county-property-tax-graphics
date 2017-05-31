@@ -6,11 +6,6 @@
   	window.ROOT_URL = "{{ ROOT_URL }}";
   </script>
   <link rel="stylesheet" type="text/css" href="css/map-styles.css">
-  <style>
-  	#map img{
-  		width:100%;
-  	}
-  </style>
 </head>
 <body>
   <div class="map-wrapper">
@@ -49,11 +44,9 @@
 			<dd>{{ map_key_undervalued }}</dd>
 		</dl>
 	</div>
-  	<div id='map'>
-  		<img src='http://{{ ROOT_URL }}/img/map.png' />
-  	</div>
+  	<div id='map'></div>
   	<div class='map-sources'>{{ map_sources|markdown|process_text() }}</div>
   </div>
-  {# <script src="js/map.min.js"></script> #}
+  <script src="js/map.min.js"></script>
 </body>
 </html>

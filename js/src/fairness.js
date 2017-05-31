@@ -4,21 +4,9 @@ const debounce = require('lodash.debounce');
 
 import * as topojson from 'topojson'
 
-// https://github.com/fivethirtyeight/d3-pre
-const Prerender = require('d3-pre');
-const prerender = Prerender(d3);
-
-prerender.start();
-
 const 	aboveOneColor = getTribColors('trib-red2'),
 		otherColor = 'rgba(255,255,255,.3)',
 		belowOneColor = getTribColors('trib-orange');
-
-// This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
-// as outlined in this Stack Overflow question: http://stackoverflow.com/questions/22754315/foreach-loop-for-htmlcollection-elements
-NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
-HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
-
 
 function valueMapOpacityScale(ratio){
 	// This is a super-simple custom scale to highlight the gradiations. 

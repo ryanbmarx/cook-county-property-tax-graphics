@@ -5,11 +5,12 @@
   "main": "js/src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run getCharts && grunt",
+    "build": "npm run getCharts && grunt && npm run build:map",
     "watch": "grunt watch",
     "simplifyMapData": "geo2topo tracts=./data/day1header.geojson chicago=./data/chicago-boundary.geojson | toposimplify -P 2 -f | topoquantize 1e3 > ./data/mapData.json",
     "getCharts": "rm -rf screen.png && phantomjs --debug=false scripts/render2.js",
     "build:prerender": "cp _map.html map.html && tarbell generate _out && d3-pre _out/map.html && mv _out/map.html ./map.html && rm -rf _out",
+    "build:map": "rm -rf img/map.png && phantomjs scripts/render-map.js && svg2png img/map.svg --output=img/map.png && rm -rf img/map.svg",
     "publish": "npm run build && tarbell publish && rm -rf ./map.html"
   },
   "repository": {
@@ -23,6 +24,7 @@
     "babel-preset-es2015": "^6.9.0",
     "babelify": "^7.3.0",
     "browserify": "^10.2.4",
+    "d3-pre": "^1.3.0",
     "d3-pre-cli": "^1.1.4",
     "grunt": "^0.4.5",
     "grunt-browserify": "^3.8.0",
@@ -31,7 +33,7 @@
     "grunt-svgstore": "^1.0.0",
     "minifyify": "^7.3.3",
     "request": "^2.81.0",
-    "d3-pre": "^1.3.0",
+    "svg2png": "^4.1.1",
     "trib-styles": "git+https://tribune.unfuddle.com/git/tribune_trib-styles/"
   },
   "browserify": {
