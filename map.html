@@ -1,10 +1,10 @@
 <html>
 <head>
   <title>Cook County Overvalued/Undervalued Map</title>
-  <script src="js/vendor.min.js"></script>
+{#   <script src="js/vendor.min.js"></script>
   <script type="text/javascript">
   	window.ROOT_URL = "{{ ROOT_URL }}";
-  </script>
+  </script> #}
   <link rel="stylesheet" type="text/css" href="css/map-styles.css">
   <style>
   	#map img{
@@ -54,6 +54,6 @@
   	</div>
   	<div class='map-sources'>{{ map_sources|markdown|process_text() }}</div>
   </div>
-  {# <script src="js/map.min.js"></script> #}
+  <script src="js/map.min.js"></script>
 </body>
 </html>
