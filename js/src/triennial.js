@@ -120,13 +120,13 @@ function drawChart(rawData, container, category, chartTitle){
 		innerWidth = width - margin.right - margin.left;
 
 	const svg = container.append('svg')
-		.style('height', height)
-		.style('width', width);
+		.attr('height', height)
+		.attr('width', width);
 
 	const chartInner = svg.append('g')
 		.classed('chart-inner', true)
-		.style('height', innerHeight)
-		.style('width', innerWidth)
+		.attr('height', innerHeight)
+		.attr('width', innerWidth)
 		.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 
@@ -221,19 +221,19 @@ function drawChart(rawData, container, category, chartTitle){
 
 	chartInner.append('text')
 		.classed('label--2010', true)
-		.attr('x', xScale(2008) - 3)
+		.attr('x', xScale(2008) + 3)
 		.attr('y', innerHeight - 25)
-		.attr('text-anchor', 'end')
+		.attr('text-anchor', 'start')
 		.style('font-family', "'Arial', sans-serif")
 		.style('font-size', "13px")
 		.attr('dy', '-0.1em')
-		.html('2008: Housing &#9656;')
+		.html('&#9666; 2008: Housing')
 
 	chartInner.append('text')
 		.classed('label--2010', true)
-		.attr('x', xScale(2008) - 14)
+		.attr('x', xScale(2008) + 14)
 		.attr('y', innerHeight - 25)
-		.attr('text-anchor', 'end')
+		.attr('text-anchor', 'start')
 		.style('font-family', "'Arial', sans-serif")
 		.style('font-size', "13px")
 		.attr('dy', '1.2em')
