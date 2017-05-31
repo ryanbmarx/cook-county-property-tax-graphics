@@ -1,8 +1,9 @@
 import * as L from "leaflet";
 import 'leaflet-providers';
-import {debounce} from 'underscore';
+import debounce from 'lodash.debounce';
 import {scaleLinear, json, max, min} from 'd3';
-import {point, inside} from '@turf/turf';
+import {point} from '@turf/helpers';
+import inside from '@turf/inside';
 import displayProfile from './display-profile.js';
 var pym = require('pym.js');
 import getCoord from './get-coord.js';
@@ -34,12 +35,12 @@ function drawMap(container, data, propertyToMap){
 
 	// Build the needed scales for our little ratio gauges
 	var gaugeAttributes = [
-		'taxes', 
+		// 'taxes', 
 		'ratio1', 
-		'value',
-		'av1', 
-		'medhinc',
-		'white',
+		// 'value',
+		// 'av1', 
+		// 'medhinc',
+		// 'white',
 		'erate',
 		'appeal_fla'
 	];

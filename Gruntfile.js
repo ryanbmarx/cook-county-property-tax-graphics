@@ -9,11 +9,11 @@ module.exports = function(grunt) {
     'd3',
     'leaflet',
     'leaflet-providers',
-    'underscore',
-    '@turf/turf',
+    '@turf/helpers',
+    '@turf/inside',
     'pym.js',
-    'd3-pre',
     'lodash.debounce',
+    'lodash.uniq',
     'topojson'
   ];
 
@@ -75,6 +75,27 @@ module.exports = function(grunt) {
             'minifyify', {
               map: 'triennial.min.js.map',
               output: './js/triennial.min.js.map'
+            }
+          ]
+        ],
+        transform: [
+          [
+            'babelify', {
+              presets: ['es2015']
+            }
+          ]
+        ]
+      }
+    },
+ triennial: {
+      src: ['js/src/map-render.js'],
+      dest: 'js/map-render.min.js',
+      options: {
+        plugin: [
+          [
+            'minifyify', {
+              map: 'map-render.min.js.map',
+              output: './js/map-render.min.js.map'
             }
           ]
         ],
@@ -159,7 +180,7 @@ module.exports = function(grunt) {
     },
     js: {
       files: ['js/src/**/*.js'],
-      tasks: ['browserify:map']
+      tasks: ['browserify']
     }
   };
 

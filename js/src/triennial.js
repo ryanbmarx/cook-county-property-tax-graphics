@@ -1,9 +1,10 @@
 import * as d3 from 'd3';
-import * as _ from 'underscore';
+import uniq from 'lodash.uniq';
 import getTribColor from './getTribColors.js';
 import getCoord from './get-coord.js';
 import * as utils from './geocoding-utils.js';
-import {point, inside} from '@turf/turf';
+import {point} from '@turf/helpers';
+import inside from '@turf/inside';
 const pym = require('pym.js');
 import {feature} from 'topojson';
 import clickTrack from './click-track.js';
@@ -180,7 +181,7 @@ function drawChart(rawData, container, category, chartTitle){
 		.classed('acceptable-range', true);
 
 
-	const uniqueListOfTowns = _.uniq(data, false, d => d.town);	
+	const uniqueListOfTowns = uniq(data, false, d => d.town);	
 	// console.log(uniqueListOfTowns);
 	uniqueListOfTowns.forEach(town => {
 		const townData = filterToTown(data, town.town);
