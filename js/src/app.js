@@ -2,15 +2,14 @@ import * as L from "leaflet";
 import 'leaflet-providers';
 import debounce from 'lodash.debounce';
 import {scaleLinear, json, max, min} from 'd3';
-import {point} from '@turf/helpers';
-import inside from '@turf/inside';
 import displayProfile from './display-profile.js';
 var pym = require('pym.js');
 import getCoord from './get-coord.js';
 import * as utils from './geocoding-utils.js';
 import * as topojson from 'topojson';
 import clickTrack from './click-track.js';
-
+import {point} from '@turf/helpers';
+import inside from '@turf/inside';
 
 // This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
 // as outlined in this Stack Overflow question: http://stackoverflow.com/questions/22754315/foreach-loop-for-htmlcollection-elements
