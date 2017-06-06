@@ -32,12 +32,12 @@
           <dt>
             <span class='acceptable-range'></span>
           </dt>
-          <dd>Acceptable range</dd>
+          <dd>Acceptable range for COD scores</dd>
         </dl>
       </figcaption>
       <div id='triennial-chart' class='chart__holder'></div>
     </figure>
-    <p class='sources'>Sources: Analysis of assessor data</p>
+    <p class='sources'>{{ tri_sources|process_text() }}</p>
   </div>
   <script type="text/javascript" src="http://www.chicagotribune.com/hive/javascripts/metrics/s_code_trb.js"></script>
   {% omnitag request, OMNITURE, None, title, 'dataproject' %}
