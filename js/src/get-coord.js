@@ -17,6 +17,7 @@ function getCoord(address){
 			} else {
 				// Failure
 				reject(Error('ERROR!'));
+				reject(TypeError('TYPE ERROR!'));
 			}
 		}
 	    // Handle network errors
