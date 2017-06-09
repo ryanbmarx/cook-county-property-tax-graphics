@@ -3,18 +3,19 @@ import 'leaflet-providers';
 import debounce from 'lodash.debounce';
 import {scaleLinear, json, max, min} from 'd3';
 import displayProfile from './display-profile.js';
-var pym = require('pym.js');
+// var pym = require('pym.js');
 import getCoord from './get-coord.js';
 import * as utils from './geocoding-utils.js';
 import * as topojson from 'topojson';
 import clickTrack from './click-track.js';
 import {point} from '@turf/helpers';
 import inside from '@turf/inside';
+var Promise = require('es6-promise').Promise;
+
+
 
 // This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
 // as outlined in this Stack Overflow question: http://stackoverflow.com/questions/22754315/foreach-loop-for-htmlcollection-elements
-NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
-HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
 function drawMap(container, data, propertyToMap){
 	// instantiates the leaflet map
@@ -120,9 +121,9 @@ function mapUserGeo(point, polygon){
 }
 
 function startUpPym(){
-	window.pymChild = new pym.Child({ polling: 500 });
-	pymChild.sendHeight();
-	pymChild.sendMessage('childLoaded');
+	window.pymChild = new pym.Child({ polling:500 });
+	window.pymChild.sendHeight();
+	// window.pymChild.sendMessage('childLoaded');
 }
 
 // Listen for the loaded event then run the pym stuff.
@@ -149,7 +150,6 @@ window.addEventListener('load', function(e){
 
 	const mapContainer = document.getElementById('map');
 	json(`http://${window.ROOT_URL}/data/tract-data-topo.json`, tractData => {
-
 		// Take the topojson, extract the tract data, convert it to geojson
 		const geojson = topojson.feature(tractData, tractData.objects.tracts);
 		
@@ -207,6 +207,7 @@ window.addEventListener('load', function(e){
 	
 						// Call the profile function, sending it our desired tract
 						displayProfile(userGeo.tract, userCoordinates);
+						window.pymChild.sendHeight();
 
 						// Now that we have a a displayed profile, switch back to the submit arrow
 						utils.spinner('arrow');
@@ -219,6 +220,8 @@ window.addEventListener('load', function(e){
 				window.pymChild.sendHeight();
 			}, function(error) {
 				const userCoordinates = error;
+			}).catch( function(error){
+				console.log('error', error, error.stack);
 			});
 
 	});	
