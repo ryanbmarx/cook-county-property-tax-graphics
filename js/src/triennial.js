@@ -8,10 +8,8 @@ import inside from '@turf/inside';
 const pym = require('pym.js');
 import {feature} from 'topojson';
 import clickTrack from './click-track.js';
+const Promise = require('es6-promise').Promise;
 
-
-NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
-HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
 function filterData(rawData, category){
 	// creates an array of two-key objects: the x and y values for our chart.
@@ -46,9 +44,7 @@ function highlightLine(town){
 
 	const 	transitionDuration = 400;
 
-	// Change the select menu to geocoded township
-	// console.log(document.querySelector(`#townshipSelect`).value);
-	
+	// Change the select menu to geocoded township	
 	document.querySelector(`#townshipSelect`).value = town;
 
 	if (String(town).indexOf("all") > -1 ){
@@ -75,8 +71,8 @@ function highlightLine(town){
 
 
 		const 	townLine = d3.select(`path[data-town="${ town }"]`),
-				tri = townLine.node().dataset.tri,
-				townName = townLine.node().dataset.townName;
+				tri = townLine.node().getAttribute('data-tri'),
+				townName = townLine.node().getAttribute('data-town-name');
 
 		d3.select('.chart__township-label').text(`${townName} Township`);
 		d3.select('.chart__township-sublabel').text(`With triennial grouping ${tri}`);
@@ -98,15 +94,6 @@ function highlightLine(town){
 			.duration(transitionDuration)
 			.style('opacity', 1)
 			.style('stroke-width', 3);
-
-		// const yearsString = `${townLine.node().dataset.yearFirst}-${townLine.node().dataset.yearLast - 2000}`;
-		// d3.select('.notation__big-number').node().innerHTML = townLine.node().dataset.codChange;
-		// d3.select('.notation__years').node().innerHTML = yearsString;
-		// d3.select('.notation')
-		// 	.transition()
-		// 	.duration(transitionDuration)
-		// 	.style('opacity', 1)
-
 	}
 }
 
@@ -182,7 +169,6 @@ function drawChart(rawData, container, category, chartTitle){
 
 
 	const uniqueListOfTowns = uniq(data, false, d => d.town);	
-	// console.log(uniqueListOfTowns);
 	uniqueListOfTowns.forEach(town => {
 		const townData = filterToTown(data, town.town);
 		chartInner.append("path")
@@ -317,21 +303,16 @@ function findTownship(coordinates){
 	// Create a geojson point of the user's address, using turf so it's compatible with the turf analysis functions.
 	const pointLoc = point(coordinates);
 	let retval = false
-	for (var i=0; i< window.townshipGeoData.features.length; i++){
+	for (let i=0; i< window.townshipGeoData.features.length; i++){
 		// For every feature (twp) in the data, test if the point is inside it.
 		const township = window.townshipGeoData.features[i];
 		if (inside(pointLoc, township) ){
-			// console.log("the township feature is", township);
-			// console.log("the township's name is", township.properties.name);
 			// If we have found the geometry that contains the point, then search our lookup for the needed id so we can highlight the line
-			for (let i = 0; i < twpLookup.length; i++) {
+			for (let i=0; i < twpLookup.length; i++) {
 				const 	searchingTownship = twpLookup[i].label.toUpperCase(),
 						foundTownship = township.properties.name;
 				
-				// console.log(twpLookup[i], searchingTownship, foundTownship, searchingTownship == foundTownship);
-
 				if (searchingTownship == foundTownship) {
-					// console.log('true!', twpLookup[i].id)
 					retval = twpLookup[i].id;
 					break;
 				};
@@ -374,14 +355,12 @@ document.getElementById('search-address-submit').addEventListener('click', e => 
 						data.resources[0].geocodePoints[0].coordinates[0]
 					]
 				}
-				// console.log('returned loc', userCoordinates);
 				// Generate an object the with geojson for both the user's address and corresponding tract
 				const userGeo = findTownship(userCoordinates.coordinates);
 				// const userGeo = false;
 				if (!userGeo){
 					utils.triggerWarning("trigger", window.error_not_in_cook_county);
 				} else {		
-					// console.log("Township id is ", userGeo);			
 					// Now that we have a a displayed profile, switch back to the submit arrow
 					utils.spinner('arrow');
 
