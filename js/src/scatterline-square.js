@@ -1,14 +1,6 @@
 import * as d3 from 'd3';
 import getTribColors from './getTribColors.js'
 
-// This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
-// as outlined in this Stack Overflow question: http://stackoverflow.com/questions/22754315/foreach-loop-for-htmlcollection-elements
-// NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
-// HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
-
-
-// (data, category, container)
-
 function styleFeature(featureFillColor){
 	// http://leafletjs.com/reference.html#path-options
 	return {
@@ -55,8 +47,6 @@ class scatterlineSquare{
 			.domain(extent)
 			.range([0,innerWidth])
 			.nice();
-
-		// console.log(scatterScale, extent);
 
 		const xAxis = d3.axisBottom(scatterScale)
 		    .tickSize((rectHeight / 2) + 5)
