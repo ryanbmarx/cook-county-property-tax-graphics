@@ -1,11 +1,5 @@
-var pym = require('pym.js');
+const pym = require('pym.js');
 import {format} from 'd3';
-
-// This allows iteration over an HTMLCollection (as I've done in setting the checkbutton event listeners,
-// as outlined in this Stack Overflow question: http://stackoverflow.com/questions/22754315/foreach-loop-for-htmlcollection-elements
-NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
-HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
-
 
 function addGauge(value, formatter, scale, valueName){
 
@@ -46,11 +40,6 @@ function addGauge(value, formatter, scale, valueName){
 				</span></div>`
 		}
 
-		// // If the attribute is a ratio, then we want to highlight 1, whereever it is on the gauge.
-		// if (valueName.indexOf('ratio') > -1){
-		// 	profileString += `<span class='gauge__label gauge__label--axis gauge__label--center' style='left:${scale(1)}%'>${formatter(1)}</span>`
-		// }
-
 		return profileString + "</div>";
 }
 
@@ -74,7 +63,7 @@ function displayProfile(feature, placeData){
 
  	// Make the input address the full and proper address
  	document.getElementById("search-address").value = placeData.address;
-
+	
 	// Load the tract meta data
 
 	const 	assessedTenPercent = properties.value * 0.1;
@@ -92,7 +81,7 @@ function displayProfile(feature, placeData){
 	
 	document.getElementById('tract').innerHTML = properties.NAMELSAD10.toLowerCase();
 	document.getElementById('over-under').innerHTML = overUnder;
-	document.getElementById('over-under').classList = overUnderClass.toLowerCase();
+	// document.getElementById('over-under').classList = overUnderClass.toLowerCase();
 
 	// Add the main ratio gauge chart
 	document.getElementById('ratio-chart').innerHTML = addGauge(properties.ratio1, formatters.percentage, window.gaugeratio1, "ratio1");
@@ -109,7 +98,7 @@ function displayProfile(feature, placeData){
 		// Add the list of auxilliary data points
 	
 		document.querySelector('.profile__column--numbers').innerHTML = `
-			<p><strong>For the ${properties.N} homes sold in this tract:</strong></p>
+			<p><strong>For the ${formatters.integer(properties.N)} homes sold in this tract:</strong></p>
 			<ul class='profile__attributes profile__attributes--numbers'>
 				<li class='attribute'>
 					Median home sales price:
@@ -131,16 +120,20 @@ function displayProfile(feature, placeData){
 					${formatters.percentage(properties.white)}			
 				</li>
 			</ul>`;
-	// }
+			
 	// center the labels
 	const gaugeLabels = document.querySelectorAll('.gauge__label--center');
-	for (var gaugeLabel of gaugeLabels){
-		const width = gaugeLabel.getBoundingClientRect().width
-		gaugeLabel.style.marginLeft = `${width * -0.5}px`;
+	for (const i=0; i<gaugeLabels.length; i++){
+		let 	gaugeLabel = gaugeLabels[i],
+				width = gaugeLabel.getBoundingClientRect().width
+		gaugeLabel.setAttribute('style', `margin-left:${width * -0.5}px`);
 	}
 	// Now open the profile by using our css class
 	const profile = document.querySelector('.profile');
-	profile.classList.add('profile--visible');
+	const profileClassList = profile.getAttribute('class');
+	profile.setAttribute('class', 'profile ' + 'profile--visible');
+	window.pymChild.sendHeight();
+
 }
 
 
