@@ -76,12 +76,15 @@ $numbers-width-padding:15px;
 
 	&__column{ 
 		// Generic class to make something a column
+
 		&--numbers{
 			padding:$numbers-width-padding;
 			background:rgba($trib-blue2, .05);
 			width: 100%;
 		}
-
+		&--data{
+			width: 100%;
+		}
 		&--map{
 			width:100%;
 			height: 250px;
