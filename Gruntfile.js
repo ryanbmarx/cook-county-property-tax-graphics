@@ -39,7 +39,8 @@ module.exports = function(grunt) {
         transform: [
           [
             'babelify', {
-              presets: ['es2015']
+              presets: ['es2015'],
+              plugins:['es6-promise']
             }
           ]
         ]
@@ -87,7 +88,7 @@ module.exports = function(grunt) {
         ]
       }
     },
- triennial: {
+ maprender: {
       src: ['js/src/map-render.js'],
       dest: 'js/map-render.min.js',
       options: {
@@ -180,7 +181,7 @@ module.exports = function(grunt) {
     },
     js: {
       files: ['js/src/**/*.js'],
-      tasks: ['browserify']
+      tasks: ['browserify:app', 'browserify:triennial']
     }
   };
 
