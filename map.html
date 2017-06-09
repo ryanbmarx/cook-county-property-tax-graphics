@@ -1,16 +1,24 @@
 <html>
 <head>
   <title>Cook County Overvalued/Undervalued Map</title>
-{#   <script src="js/vendor.min.js"></script>
-  <script type="text/javascript">
-  	window.ROOT_URL = "{{ ROOT_URL }}";
-  </script> #}
+
   <link rel="stylesheet" type="text/css" href="css/map-styles.css">
   <style>
   	#map img{
   		width:100%;
   	}
   </style>
+	<script src="https://pym.nprapps.org/pym.v1.min.js"></script>
+	<script>
+	function startUpPym(){
+		var pymChild = new pym.Child({});
+		pymChild.sendHeight();
+		// pymChild.sendMessage('childLoaded');
+	}
+	// Listen for the loaded event then run the pym stuff.
+	window.addEventListener('load', function() {  startUpPym(); }, false);
+	</script>
+
 </head>
 <body>
   <div class="map-wrapper">
@@ -54,6 +62,6 @@
   	</div>
   	<div class='map-sources'>{{ map_sources|markdown|process_text() }}</div>
   </div>
-  <script src="js/map.min.js"></script>
+  {# <script src="js/map.min.js"></script> #}
 </body>
 </html>
