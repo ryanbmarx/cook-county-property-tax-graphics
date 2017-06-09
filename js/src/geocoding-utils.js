@@ -1,4 +1,5 @@
 
+
 function triggerWarning(trigger, message){
 	if (trigger == 'trigger'){
 		document.querySelector('.profile-lookup__error-message').innerHTML = message;
@@ -10,8 +11,11 @@ function triggerWarning(trigger, message){
 
 function spinner(iconToShow){
 	// Just switches between the submit arrow and the loading spinner on the form, so people know it's working.
+
 	const icons = document.querySelectorAll(".submit-icon");
-	for (var icon of icons){
+	
+	for (let i=0; i < icons.length; i++){
+		const icon = icons[i];
 		if (icon.classList.contains(`submit-icon--${iconToShow}`)){
 			icon.classList.add('submit-icon--visible')
 		} else {
