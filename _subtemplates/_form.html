@@ -4,16 +4,21 @@
 		<form>
 			<input id='search-address' type='text' name='address' placeholder='Search for an address'>
 			<button type='submit' id='search-address-submit'>
-				<svg viewBox="0 0 25 25" class='submit-icon submit-icon--arrow submit-icon--visible'>
-					  <use xlink:href="#arrow" />
-				</svg>
-				<svg viewBox="0 0 25 25" class='submit-icon submit-icon--spinner'>
-					  <use xlink:href="#spinner" />
-				</svg>
-				{# <img alt='Submit button' src='http://{{ ROOT_URL }}/img/arrow.svg' /> #}
+				<span class='submit-icon submit-icon--arrow submit-icon--visible'>
+					<svg viewBox="0 0 25 25" class=''>
+						  <use xlink:href="#arrow" />
+					</svg>
+				</span>
+				<span class='submit-icon submit-icon--spinner'>
+					<svg viewBox="0 0 25 25" >
+						  <use xlink:href="#spinner" />
+					</svg>
+				</use>
 			</button>
 		</form>
 	</div>
 	<p class='profile-lookup__error-message'></p>
 	<p class='profile-lookup__note'>{{ form_note }}</p>
+    <p class='profile-lookup__note'><em>Works best on Chrome, Firefox and Safari</em></p>
+
 </div>
