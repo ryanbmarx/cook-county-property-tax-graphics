@@ -20,6 +20,8 @@ $triangle-dimension-ratio: 16px;
 // Required for everything, too, but can be broken down into smaller explicit imports if desired. 
 @import 'base-mixins';
 
+
+
 // ---- MAKE OR IMPORT MORE MIXINS HERE ---------------------------------------------
 
 // Class imports. Uncomment the ones you want to use.
@@ -40,6 +42,8 @@ $triangle-dimension-ratio: 16px;
 @import 'form';
 @import 'profile';
 @import 'gauges';
+
+// html, body { width:auto; height:auto; }
 
 
 body{

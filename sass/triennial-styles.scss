@@ -33,6 +33,8 @@ $mobile-max-width:449px;
 @import "form";
 
 // ---- WRITE MORE PROJECT STYLES HERE ---------------------------------------------
+html, body { width:auto; height:auto; }
+
 .chart{
 	position:relative;
 	margin: 15px 0;
